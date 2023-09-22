@@ -196,11 +196,9 @@ public class PlayFragment extends BaseLazyFragment {
         mHandler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message msg) {
-                switch (msg.what) {
-                    case 100:
-                        stopParse();
-                        errorWithRetry("嗅探错误", false);
-                        break;
+                if (msg.what == 100) {
+                    stopParse();
+                    errorWithRetry("嗅探错误", false);
                 }
                 return false;
             }
@@ -227,7 +225,7 @@ public class PlayFragment extends BaseLazyFragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                long skip = st * 1000;
+                long skip = st * 1000L;
                 if (CacheManager.getCache(MD5.string2MD5(url)) == null) {
                     return skip;
                 }
@@ -1644,11 +1642,7 @@ public class PlayFragment extends BaseLazyFragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             settings.setMediaPlaybackRequiresUserGesture(false);
         }
-        if (Hawk.get(HawkConfig.DEBUG_OPEN, false)) {
-            settings.setBlockNetworkImage(false);
-        } else {
-            settings.setBlockNetworkImage(true);
-        }
+        settings.setBlockNetworkImage(!Hawk.get(HawkConfig.DEBUG_OPEN, false));
         settings.setUseWideViewPort(true);
         settings.setDomStorageEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -1717,11 +1711,7 @@ public class PlayFragment extends BaseLazyFragment {
         settings.setDomStorageEnabled(true);
         settings.setJavaScriptEnabled(true);
 
-        if (Hawk.get(HawkConfig.DEBUG_OPEN, false)) {
-            settings.setBlockNetworkImage(false);
-        } else {
-            settings.setBlockNetworkImage(true);
-        }
+        settings.setBlockNetworkImage(!Hawk.get(HawkConfig.DEBUG_OPEN, false));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             settings.setMediaPlaybackRequiresUserGesture(false);
