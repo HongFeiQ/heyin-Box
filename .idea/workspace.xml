@@ -12,25 +12,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf75d9e0-7211-4967-8db1-8455e1be07ff" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/JSThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/okhttp3/OkHttpDataSource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/MyTsExtractor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/TsBinarySearchSeeker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/TsDurationReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/app/proguard-rules.pro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/release/output-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/output-metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/com.github.tvbox.osc.data.AppDataBase/2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/JsLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/JsLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/api/ApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/api/ApiConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/ControlManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/ControlManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/DataReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/server/DataReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/dialog/ApiDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/dialog/ApiDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/SpiderJS.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/SpiderJS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegAudioRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegAudioRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegAudioDecoder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegAudioRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegDecoderException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegLibrary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/okhttp/OkHttpDataSource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/MyTsExtractor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsBinarySearchSeeker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsDurationReader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/okhttp3/OkHttpClientReplace.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/okhttp3/OkHttpClientReplace.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/ExoMediaSourceHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/ExoMediaSourceHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/OkHttpDataSource.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_api.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/MyBundledHlsMediaChunkExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/MyBundledHlsMediaChunkExtractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/MyHlsExtractorFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/MyHlsExtractorFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/version.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/version.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +53,7 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="TVBox" type="f1a62948:ProjectNode" />
+                <item name="HE影" type="f1a62948:ProjectNode" />
               </path>
             </expand>
             <select />
@@ -90,37 +92,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ApkExportedModule&quot;: &quot;HE影.app&quot;,
-    &quot;ExportApk.ApkPathForHE影.app&quot;: &quot;J:\\heyin\\Box-main\\app&quot;,
-    &quot;ExportApk.ApkPathForTVBox.app&quot;: &quot;J:\\heyin\\Box-main\\app&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;android-custom-viewJ:/heyin/Box-main/app/src/main/java/xyz/doikki/videoplayer/player/BaseVideoView.java_SELECTED&quot;: &quot;BaseVideoView&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;J:/heyin/drpyboxd-master&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ApkExportedModule": "HE影.app",
+    "ExportApk.ApkPathForHE影.app": "J:\\heyin\\Box-main\\app",
+    "ExportApk.ApkPathForTVBox.app": "J:\\heyin\\Box-main\\app",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "android-custom-viewJ:/heyin/Box-main/app/src/main/java/xyz/doikki/videoplayer/player/BaseVideoView.java_SELECTED": "BaseVideoView",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "J:/heyin/Box-main",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;ExportApk.BuildVariants&quot;: [
-      &quot;release&quot;
+  "keyToStringList": {
+    "ExportApk.BuildVariants": [
+      "release"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="xyz.doikki.videoplayer.exo" />
       <recent name="com.github.tvbox.osc.bean" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="J:\heyin\Box-main" />
+      <recent name="J:\heyin\Box-main\app\src\main\java\xyz\doikki\videoplayer\exo" />
       <recent name="J:\heyin\Box-main\app\src\main\res\drawable" />
       <recent name="J:\heyin\Box-main\app" />
       <recent name="J:\heyin\Box-main\app\src\main\res\layout" />
-      <recent name="J:\heyin\Box-main\app\src\main\res" />
-      <recent name="J:\heyin\Box-main\app\src\main\java\com\github\tvbox\osc\server" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.github.tvbox.osc.util" />

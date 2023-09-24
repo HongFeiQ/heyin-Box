@@ -2,4 +2,5 @@ rootProject.name = "HE影"
 include ':app'
 include ':quickjs'
 include ':pyramid'
-//include ':player'
+//include ':ijkplayer'
+//include ':catvod'

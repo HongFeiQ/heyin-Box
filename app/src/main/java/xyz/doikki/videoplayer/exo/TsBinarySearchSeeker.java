@@ -1,4 +1,4 @@
-package com.google.androidx.media3.exoplayer.extractor.ts;
+package xyz.doikki.videoplayer.exo;
 
 import androidx.media3.extractor.ExtractorInput;
 import androidx.media3.extractor.PositionHolder;

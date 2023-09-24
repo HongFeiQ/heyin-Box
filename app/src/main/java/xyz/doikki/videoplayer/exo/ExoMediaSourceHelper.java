@@ -29,13 +29,14 @@ import androidx.media3.extractor.ExtractorsFactory;
 import androidx.media3.extractor.ts.DefaultTsPayloadReaderFactory;
 import androidx.media3.extractor.ts.TsExtractor;
 
-import com.google.androidx.media3.exoplayer.ext.okhttp.OkHttpDataSource;
+
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
+import okhttp3.OkHttpDataSource;
 
 public final class ExoMediaSourceHelper {
 
