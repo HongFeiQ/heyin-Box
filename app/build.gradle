@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 static def getVersionName() {
-    def name = "2023.9.19"
+    def name = "2023.9.25"
     return name
 }
 

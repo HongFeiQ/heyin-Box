@@ -16,6 +16,13 @@
     }
 
 更新日志：
+30、修复由于xstream升级后导致xml源解析失败的问题，报错：ForbiddenClassException
+29、media3 update online
+28、clean code
+27、
+1、update code
+2、Delete app/schemas/com.github.tvbox.osc.data.AppDataBase directory
+3、Delete app/release directory
 26、
 fix 多仓不能remote push api_url已成功
 25、
