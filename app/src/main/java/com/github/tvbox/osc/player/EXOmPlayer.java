@@ -18,6 +18,7 @@ import com.github.tvbox.quickjs.JSUtils;
 
 import xyz.doikki.videoplayer.exo.ExoMediaPlayer;
 
+/** @noinspection deprecation*/
 public class EXOmPlayer extends ExoMediaPlayer {
     private String audioId = "";
     private String subtitleId = "";

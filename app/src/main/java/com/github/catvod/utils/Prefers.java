@@ -3,8 +3,6 @@ package com.github.catvod.utils;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-
-
 import com.github.catvod.Init;
 
 public class Prefers {

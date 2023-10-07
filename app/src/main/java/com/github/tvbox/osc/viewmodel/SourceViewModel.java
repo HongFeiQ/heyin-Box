@@ -1,5 +1,6 @@
 package com.github.tvbox.osc.viewmodel;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -650,7 +651,12 @@ public class SourceViewModel extends ViewModel {
                 @Override
                 public void run() {
                     Spider sp = ApiConfig.get().getCSP(sourceBean);
-                    String json = sp.playerContent(playFlag, url, ApiConfig.get().getVipParseFlags());
+                    String json = null;
+                    try {
+                        json = sp.playerContent(playFlag, url, ApiConfig.get().getVipParseFlags());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     try {
                         JSONObject result = new JSONObject(json);
                         result.put("key", url);
@@ -788,7 +794,6 @@ public class SourceViewModel extends ViewModel {
             xstream.autodetectAnnotations(true);
             xstream.processAnnotations(AbsSortXml.class);
             xstream.ignoreUnknownElements();
-            xstream.allowTypes(new Class[]{AbsSortXml.class});
             AbsSortXml data = (AbsSortXml) xstream.fromXML(xml);
             for (MovieSort.SortData sort : data.classes.sortList) {
                 if (sort.filters == null) {
@@ -856,7 +861,7 @@ public class SourceViewModel extends ViewModel {
                 }
                 if (hasThunder) {
                     thunderParse = true;
-                    Thunder.parse(App.getInstance(), video.urlBean, new Thunder.ThunderCallback() {
+                    Thunder.parse((Context) App.getInstance(), (List<String>) video.urlBean, new Thunder.ThunderCallback() {
                         @Override
                         public void status(int code, String info) {
                             if (code >= 0) {
@@ -865,6 +870,11 @@ public class SourceViewModel extends ViewModel {
                                 video.urlBean.infoList.get(0).beanList.get(0).name = info;
                                 detailResult.postValue(data);
                             }
+                        }
+
+                        @Override
+                        public void list(String playList) {
+
                         }
 
                         @Override
@@ -915,7 +925,6 @@ public class SourceViewModel extends ViewModel {
             xstream.autodetectAnnotations(true);
             xstream.processAnnotations(AbsXml.class);
             xstream.ignoreUnknownElements();
-            xstream.allowTypes(new Class[]{AbsXml.class});
             if (xml.contains("<year></year>")) {
                 xml = xml.replace("<year></year>", "<year>0</year>");
             }

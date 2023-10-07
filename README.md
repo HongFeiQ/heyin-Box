@@ -16,6 +16,12 @@
     }
 
 更新日志：
+31、
+1、感谢爱佬提供新quickjs引擎
+2、感谢watson提供建议
+3、适配升级到爱佬的新quickjs引擎
+4、修复已知bug
+5、优化清理code
 30、修复由于xstream升级后导致xml源解析失败的问题，报错：ForbiddenClassException
 29、media3 update online
 28、clean code

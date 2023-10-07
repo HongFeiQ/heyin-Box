@@ -12,26 +12,55 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf75d9e0-7211-4967-8db1-8455e1be07ff" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/okhttp3/OkHttpDataSource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/MyTsExtractor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/TsBinarySearchSeeker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/TsDurationReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegAudioDecoder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegAudioRenderer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegDecoderException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/ffmpeg/FfmpegLibrary.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/ext/okhttp/OkHttpDataSource.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/MyTsExtractor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsBinarySearchSeeker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/google/androidx/media3/exoplayer/extractor/ts/TsDurationReader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/okhttp3/OkHttpClientReplace.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/okhttp3/OkHttpClientReplace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/ExoMediaSourceHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/ExoMediaSourceHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/MyBundledHlsMediaChunkExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/MyBundledHlsMediaChunkExtractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/MyHlsExtractorFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/xyz/doikki/videoplayer/exo/MyHlsExtractorFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/js/lib/cheerio.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/js/lib/cheerio.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/js/lib/crypto-js.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/js/lib/crypto-js.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/bean/Doh.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/bean/Doh.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/JarLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/JarLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/JsLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/JsLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/Spider.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/Spider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/SpiderDebug.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/crawler/SpiderDebug.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/net/OkHttp.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/net/OkHttp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/utils/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/utils/Path.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/utils/Prefers.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/catvod/utils/Prefers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/api/ApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/api/ApiConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/base/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/base/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/player/EXOmPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/player/EXOmPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/activity/DetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/activity/DetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/activity/FastSearchActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/activity/FastSearchActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/activity/PlayActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/activity/PlayActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/activity/SearchActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/activity/SearchActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/adapter/SearchSubtitleAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/adapter/SearchSubtitleAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/dialog/SearchSubtitleDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/dialog/SearchSubtitleDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/fragment/PlayFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/ui/fragment/PlayFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/FileUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/HawkConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/HawkConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/LOG.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/LOG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/OkGoHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/OkGoHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/HtmlParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/HtmlParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/JSEngine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/JSThread.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/SpiderJS.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/UTF8BOMFighter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/UTF8BOMFighter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/jianpian.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/jianpian.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/local.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/js/local.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/thunder/Thunder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/util/thunder/Thunder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/viewmodel/SourceViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/github/tvbox/osc/viewmodel/SourceViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/p2p/P2PClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/p2p/P2PClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/version.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/version.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSCallFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSCallFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/JSUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/NativeCleaner.java" beforeDir="false" afterPath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/NativeCleaner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/QuickJSContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/QuickJSContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/QuickJSException.java" beforeDir="false" afterPath="$PROJECT_DIR$/quickjs/src/main/java/com/github/tvbox/quickjs/QuickJSException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickjs/src/main/jniLibs/armeabi-v7a/libquickjs.so" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +68,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Administrator\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -119,16 +148,18 @@
       <recent name="com.github.tvbox.osc.bean" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="J:\heyin\Box-main\app\src\main\java\com\github\catvod\crawler" />
       <recent name="J:\heyin\Box-main" />
       <recent name="J:\heyin\Box-main\app\src\main\java\xyz\doikki\videoplayer\exo" />
       <recent name="J:\heyin\Box-main\app\src\main\res\drawable" />
       <recent name="J:\heyin\Box-main\app" />
-      <recent name="J:\heyin\Box-main\app\src\main\res\layout" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.github.tvbox.osc.base" />
+      <recent name="com.github.tvbox.osc.bean" />
+      <recent name="com.github.catvod.crawler" />
       <recent name="com.github.tvbox.osc.util" />
       <recent name="com.github.tvbox.osc.util.js" />
-      <recent name="com.github.tvbox.osc.bean" />
     </key>
   </component>
   <component name="RunManager">
@@ -142,7 +173,6 @@
       <option name="ALL_USERS" value="false" />
       <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
       <option name="CLEAR_APP_STORAGE" value="false" />
-      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
       <option name="CLEAR_LOGCAT" value="false" />
@@ -158,6 +188,8 @@
         <option name="WORKING_DIR" value="" />
         <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
         <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
       </Auto>
       <Hybrid>
         <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
@@ -165,14 +197,21 @@
         <option name="WORKING_DIR" value="" />
         <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
         <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
       </Hybrid>
-      <Java />
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
       <Native>
         <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
         <option name="SHOW_STATIC_VARS" value="true" />
         <option name="WORKING_DIR" value="" />
         <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
         <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
       </Native>
       <Profilers>
         <option name="ADVANCED_PROFILING_ENABLED" value="false" />

@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.bean.Subtitle;
+import com.github.tvbox.osc.bean.SubtitleBean;
 import com.github.tvbox.osc.bean.SubtitleData;
 import com.github.tvbox.osc.ui.activity.HomeActivity;
 import com.github.tvbox.osc.ui.adapter.SearchSubtitleAdapter;
@@ -226,6 +227,8 @@ public class SearchSubtitleDialog extends BaseDialog {
     }
 
     public interface SubtitleLoader {
+        void loadSubtitle(SubtitleBean subtitle);
+
         void loadSubtitle(Subtitle subtitle);
     }
 

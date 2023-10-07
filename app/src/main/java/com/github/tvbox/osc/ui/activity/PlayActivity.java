@@ -58,6 +58,7 @@ import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.bean.SourceBean;
 import com.github.tvbox.osc.bean.Subtitle;
+import com.github.tvbox.osc.bean.SubtitleBean;
 import com.github.tvbox.osc.bean.VodInfo;
 import com.github.tvbox.osc.cache.CacheManager;
 import com.github.tvbox.osc.event.RefreshEvent;
@@ -355,6 +356,11 @@ public class PlayActivity extends BaseActivity {
             public void openSearchSubtitleDialog() {
                 SearchSubtitleDialog searchSubtitleDialog = new SearchSubtitleDialog(mContext);
                 searchSubtitleDialog.setSubtitleLoader(new SearchSubtitleDialog.SubtitleLoader() {
+                    @Override
+                    public void loadSubtitle(SubtitleBean subtitle) {
+
+                    }
+
                     @Override
                     public void loadSubtitle(Subtitle subtitle) {
                         runOnUiThread(new Runnable() {
@@ -1306,6 +1312,11 @@ public class PlayActivity extends BaseActivity {
             }
 
             @Override
+            public void list(String playList) {
+
+            }
+
+            @Override
             public void list(Map<Integer, String> urlMap) {
             }
 
@@ -1726,13 +1737,14 @@ public class PlayActivity extends BaseActivity {
     }
 
     boolean checkVideoFormat(String url) {
-        if (url.contains("url=http") || url.contains(".html")) {
-            return false;
-        }
-        if (sourceBean.getType() == 3) {
-            Spider sp = ApiConfig.get().getCSP(sourceBean);
-            if (sp != null && sp.manualVideoCheck())
-                return sp.isVideoFormat(url);
+        try {
+            if (sourceBean.getType() == 3) {
+                Spider sp = ApiConfig.get().getCSP(sourceBean);
+                if (sp != null && sp.manualVideoCheck())
+                    return sp.isVideoFormat(url);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return VideoParseRuler.checkIsVideoForParse(webUrl, url);
     }
@@ -1954,7 +1966,7 @@ public class PlayActivity extends BaseActivity {
             }
         }
 
-        WebResourceResponse checkIsVideo(String url, WebViewRequest request) {
+        WebResourceResponse checkIsVideo(String url, WebViewRequest request) throws Exception {
             if (url.endsWith("/favicon.ico")) {
                 if (url.startsWith("http://127.0.0.1")) {
                     return new WebResourceResponse("image/x-icon", "UTF-8", null);
@@ -2030,7 +2042,7 @@ public class PlayActivity extends BaseActivity {
                 okhttp3.Response response = clientBuilder.build().newCall(requestBuilder.build()).execute();
 
                 final String contentTypeValue = response.header("Content-Type");
-                String responsePhase = OkGoHelper.httpPhaseMap.get(response.code());
+                String responsePhase = OkGoHelper.httpPhaseMap.get(response.code()).toString();
                 if (responsePhase == null) responsePhase = "Internal Server Error";
                 if (contentTypeValue != null) {
                     if (contentTypeValue.indexOf("charset=") > 0) {
@@ -2085,7 +2097,11 @@ public class PlayActivity extends BaseActivity {
         public WebResourceResponse shouldInterceptRequest(WebView view, WebViewRequest request) {
             String url = request.getUrl();
             LOG.i("shouldInterceptRequest url:" + url);
-            return checkIsVideo(url, request);
+            try {
+                return checkIsVideo(url, request);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
@@ -2145,30 +2161,34 @@ public class PlayActivity extends BaseActivity {
                 ad = loadedUrls.get(url);
             }
             if (!ad) {
-                if (checkVideoFormat(url)) {
-                    HashMap<String, String> webHeaders = new HashMap<>();
-                    Map<String, String> hds = request.getRequestHeaders();
-                    if (hds != null && hds.keySet().size() > 0) {
-                        for (String k : hds.keySet()) {
-                            if (k.equalsIgnoreCase("user-agent")
-                                    || k.equalsIgnoreCase("referer")
-                                    || k.equalsIgnoreCase("origin")) {
-                                webHeaders.put(k, " " + hds.get(k));
+                try {
+                    if (checkVideoFormat(url)) {
+                        HashMap<String, String> webHeaders = new HashMap<>();
+                        Map<String, String> hds = request.getRequestHeaders();
+                        if (hds != null && hds.keySet().size() > 0) {
+                            for (String k : hds.keySet()) {
+                                if (k.equalsIgnoreCase("user-agent")
+                                        || k.equalsIgnoreCase("referer")
+                                        || k.equalsIgnoreCase("origin")) {
+                                    webHeaders.put(k, " " + hds.get(k));
+                                }
                             }
                         }
+                        loadFoundVideoUrls.add(url);
+                        loadFoundVideoUrlsHeader.put(url, webHeaders);
+                        LOG.i("loadFoundVideoUrl:" + url);
+                        if (loadFoundCount.incrementAndGet() == 1) {
+                            mHandler.removeMessages(100);
+                            url = loadFoundVideoUrls.poll();
+                            String cookie = CookieManager.getInstance().getCookie(url);
+                            if (!TextUtils.isEmpty(cookie))
+                                webHeaders.put("Cookie", " " + cookie);//携带cookie
+                            playUrl(url, webHeaders);
+                            stopLoadWebView(false);
+                        }
                     }
-                    loadFoundVideoUrls.add(url);
-                    loadFoundVideoUrlsHeader.put(url, webHeaders);
-                    LOG.i("loadFoundVideoUrl:" + url);
-                    if (loadFoundCount.incrementAndGet() == 1) {
-                        mHandler.removeMessages(100);
-                        url = loadFoundVideoUrls.poll();
-                        String cookie = CookieManager.getInstance().getCookie(url);
-                        if (!TextUtils.isEmpty(cookie))
-                            webHeaders.put("Cookie", " " + cookie);//携带cookie
-                        playUrl(url, webHeaders);
-                        stopLoadWebView(false);
-                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
             }
             return ad || loadFoundCount.get() > 0 ?

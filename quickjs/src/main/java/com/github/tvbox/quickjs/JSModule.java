@@ -86,4 +86,10 @@ public final class JSModule {
         return builder.toString();
     }
 
+    public static class ModuleLoader implements Loader {
+        @Override
+        public String getModuleScript(String moduleName) {
+            return null;
+        }
+    }
 }

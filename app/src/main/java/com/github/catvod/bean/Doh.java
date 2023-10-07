@@ -5,7 +5,6 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
-
 import com.github.tvbox.osc.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -90,5 +89,9 @@ public class Doh {
     @Override
     public String toString() {
         return new Gson().toJson(this);
+    }
+
+    public Boolean get(int code) {
+        return null;
     }
 }

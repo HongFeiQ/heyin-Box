@@ -2,27 +2,10 @@ package com.p2p;
 
 import java.io.File;
 
-
 public class P2PClass {
     private static final String TAG = "P2PClass";
-
     public static int port = 8087;
-
-    static {
-        System.loadLibrary("p2p");
-    }
-
-    public String path = null;
-
-    public P2PClass(String str) {
-        path = str + "/jpali";
-        File file = new File(path);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        port = doxstarthttpd("TEST3E63BAAECDAA79BEAA91853490A69F08".getBytes(), str.getBytes());
-        //Executors.newCachedThreadPool().execute(new init(str));
-    }
+    public String path;
 
     private final native void XGFilmCloseFile(long j);
 
@@ -62,7 +45,8 @@ public class P2PClass {
 
     private final native int doxstart(byte[] bArr);
 
-    private final native int doxstarthttpd(byte[] bArr, byte[] bArr2);
+    /* JADX INFO: Access modifiers changed from: private */
+    public final native int doxstarthttpd(byte[] bArr, byte[] bArr2);
 
     private final native int doxterminate();
 
@@ -75,6 +59,40 @@ public class P2PClass {
     private final native int getpercent();
 
     private final native long getspeed(int i);
+
+    /* loaded from: /Users/junior/Downloads/爱佬版_V1.1_C2841_纯jsoup带缓存/classes2.dex */
+    class init extends Thread {
+        final String CardPath;
+
+        init(String str) {
+            this.CardPath = str;
+        }
+
+        @Override // java.lang.Thread, java.lang.Runnable
+        public void run() {
+            P2PClass p2PClass = P2PClass.this;
+            p2PClass.path = this.CardPath + "/jpali";
+            File file = new File(P2PClass.this.path);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            P2PClass.port = P2PClass.this.doxstarthttpd("TEST3E63BAAECDAA79BEAA91853490A69F08".getBytes(), this.CardPath.getBytes());
+        }
+    }
+
+    static {
+        System.loadLibrary("p2p");
+    }
+
+    public P2PClass(String str) {
+        this.path = null;
+        this.path = str + "/jpali";
+        File file = new File(this.path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        port = doxstarthttpd("TEST3E63BAAECDAA79BEAA91853490A69F08".getBytes(), str.getBytes());
+    }
 
     public int P2Pdoxstart(byte[] bArr) {
         return doxstart(bArr);
@@ -172,30 +190,11 @@ public class P2PClass {
         doxSetP2PPauseUpdate(i);
     }
 
-    public String getTouPingUrl() {
+    public String getLocalAddress() {
         return doxgetlocalAddress();
     }
 
     public String P2Pdoxgettaskstat(int i) {
         return doxgettaskstat(i);
-    }
-
-    class init extends Thread {
-
-        final String CardPath;
-
-        init(String str) {
-            this.CardPath = str;
-        }
-
-        public void run() {
-            P2PClass p2PClass = P2PClass.this;
-            p2PClass.path = this.CardPath + "/jpali";
-            File file = new File(P2PClass.this.path);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-            P2PClass.port = P2PClass.this.doxstarthttpd("TEST3E63BAAECDAA79BEAA91853490A69F08".getBytes(), this.CardPath.getBytes());
-        }
     }
 }

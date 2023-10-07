@@ -1,5 +1,7 @@
 package com.github.tvbox.osc.ui.fragment;
 
+import static com.github.tvbox.osc.util.OkGoHelper.*;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -50,6 +52,7 @@ import com.github.tvbox.osc.base.BaseLazyFragment;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.bean.SourceBean;
 import com.github.tvbox.osc.bean.Subtitle;
+import com.github.tvbox.osc.bean.SubtitleBean;
 import com.github.tvbox.osc.bean.VodInfo;
 import com.github.tvbox.osc.cache.CacheManager;
 import com.github.tvbox.osc.event.RefreshEvent;
@@ -354,6 +357,11 @@ public class PlayFragment extends BaseLazyFragment {
             public void openSearchSubtitleDialog() {
                 SearchSubtitleDialog searchSubtitleDialog = new SearchSubtitleDialog(mContext);
                 searchSubtitleDialog.setSubtitleLoader(new SearchSubtitleDialog.SubtitleLoader() {
+                    @Override
+                    public void loadSubtitle(SubtitleBean subtitle) {
+
+                    }
+
                     @Override
                     public void loadSubtitle(Subtitle subtitle) {
                         if (!isAdded()) return;
@@ -1170,6 +1178,11 @@ public class PlayFragment extends BaseLazyFragment {
             }
 
             @Override
+            public void list(String playList) {
+
+            }
+
+            @Override
             public void list(Map<Integer, String> urlMap) {
             }
 
@@ -1599,19 +1612,15 @@ public class PlayFragment extends BaseLazyFragment {
 
     boolean checkVideoFormat(String url) {
         try {
-            if (url.contains("url=http") || url.contains(".html")) {
-                return false;
-            }
             if (sourceBean.getType() == 3) {
                 Spider sp = ApiConfig.get().getCSP(sourceBean);
-                if (sp != null && sp.manualVideoCheck()) {
+                if (sp != null && sp.manualVideoCheck())
                     return sp.isVideoFormat(url);
-                }
             }
-            return VideoParseRuler.checkIsVideoForParse(webUrl, url);
         } catch (Exception e) {
-            return false;
+            e.printStackTrace();
         }
+        return VideoParseRuler.checkIsVideoForParse(webUrl, url);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -1911,7 +1920,7 @@ public class PlayFragment extends BaseLazyFragment {
                 okhttp3.Response response = clientBuilder.build().newCall(requestBuilder.build()).execute();
 
                 final String contentTypeValue = response.header("Content-Type");
-                String responsePhase = OkGoHelper.httpPhaseMap.get(response.code());
+                String responsePhase = httpPhaseMap.get(response.code()).toString();
                 if (responsePhase == null) responsePhase = "Internal Server Error";
                 if (contentTypeValue != null) {
                     if (contentTypeValue.indexOf("charset=") > 0) {

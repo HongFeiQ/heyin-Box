@@ -219,8 +219,9 @@ public class DetailActivity extends BaseActivity {
                     if (vodInfo.seriesMap.get(vodInfo.playFlag).size() > vodInfo.playIndex) {
                         vodInfo.seriesMap.get(vodInfo.playFlag).get(vodInfo.playIndex).selected = true;
                     }
+                    refreshList();
                     insertVod(sourceKey, vodInfo);
-                    seriesAdapter.notifyDataSetChanged();
+                    //seriesAdapter.notifyDataSetChanged();
                 }
             }
         });
