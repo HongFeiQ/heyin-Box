@@ -14,11 +14,10 @@ import androidx.media3.exoplayer.source.TrackGroupArray;
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector;
 import androidx.media3.exoplayer.trackselection.MappingTrackSelector;
 
-import com.github.tvbox.quickjs.JSUtils;
+import com.whl.quickjs.wrapper.JSUtils;
 
 import xyz.doikki.videoplayer.exo.ExoMediaPlayer;
 
-/** @noinspection deprecation*/
 public class EXOmPlayer extends ExoMediaPlayer {
     private String audioId = "";
     private String subtitleId = "";

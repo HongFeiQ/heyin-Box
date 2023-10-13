@@ -21,14 +21,6 @@ public class Github {
     private final OkHttpClient client;
     private String proxy;
 
-    private static class Loader {
-        static volatile Github INSTANCE = new Github();
-    }
-
-    private static Github get() {
-        return Loader.INSTANCE;
-    }
-
     private Github() {
         client = OkHttp.client(TIMEOUT);
         check(A);
@@ -36,21 +28,8 @@ public class Github {
         check(C);
     }
 
-    private void check(String url) {
-        try {
-            if (getProxy().length() > 0) return;
-            Response response = OkHttp.newCall(client, url).execute();
-            if (response.code() == 200) setProxy(url);
-        } catch (IOException ignored) {
-        }
-    }
-
-    private void setProxy(String url) {
-        this.proxy = url.equals(C) ? url + A + M : url + M;
-    }
-
-    private String getProxy() {
-        return TextUtils.isEmpty(proxy) ? "" : proxy;
+    private static Github get() {
+        return Loader.INSTANCE;
     }
 
     private static String getUrl(String path, String name) {
@@ -74,5 +53,26 @@ public class Github {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    private void check(String url) {
+        try {
+            if (getProxy().length() > 0) return;
+            Response response = OkHttp.newCall(client, url).execute();
+            if (response.code() == 200) setProxy(url);
+        } catch (IOException ignored) {
+        }
+    }
+
+    private String getProxy() {
+        return TextUtils.isEmpty(proxy) ? "" : proxy;
+    }
+
+    private void setProxy(String url) {
+        this.proxy = url.equals(C) ? url + A + M : url + M;
+    }
+
+    private static class Loader {
+        static volatile Github INSTANCE = new Github();
     }
 }

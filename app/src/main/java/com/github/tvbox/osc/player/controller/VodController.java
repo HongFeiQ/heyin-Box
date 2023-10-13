@@ -334,7 +334,7 @@ public class VodController extends BaseController {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                   v.setVisibility(GONE);
+                    v.setVisibility(GONE);
                 }
 
                 @Override
@@ -881,7 +881,7 @@ public class VodController extends BaseController {
                     mTopRoot.setVisibility(GONE);
                     mBottomRoot.setVisibility(GONE);
                     mBack.setVisibility(GONE);
-                   mProgressTop.setVisibility(GONE);
+                    mProgressTop.setVisibility(GONE);
                     mHandler.removeCallbacks(mHideBottomRunnable);
                     ((DetailActivity) mActivity).toggleFullPreview();
                 } else {
@@ -1101,19 +1101,19 @@ public class VodController extends BaseController {
 
     boolean isBottomVisible() {
         return mBottomRoot.getVisibility() == VISIBLE;
-    }    Runnable mHideBottomRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hideBottom();
-        }
-    };
+    }
 
     void showBottom() {
         mHandler.removeMessages(1003);
         mHandler.sendEmptyMessage(1002);
         mHandler.post(mTimeRunnable);
         mHandler.postDelayed(mHideBottomRunnable, 8000);
-    }
+    }    Runnable mHideBottomRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideBottom();
+        }
+    };
 
     public void hideBottom() {
         mHandler.removeMessages(1002);
@@ -1334,7 +1334,7 @@ public class VodController extends BaseController {
         if (e.getAction() == MotionEvent.ACTION_UP) {
             if (fromLongPress) {
                 // Set back to Pause Icon
-               mProgressTop.setVisibility(GONE);
+                mProgressTop.setVisibility(GONE);
                 mPauseIcon.setImageResource(R.drawable.play_pause);
                 // Set back to current speed
                 mSpeed = currentSpeed;

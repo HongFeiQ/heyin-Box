@@ -1,4 +1,4 @@
 rootProject.name = "HE影"
 include ':app'
-include ':quickjs'
+include ':wrapper-android'
 include ':pyramid'

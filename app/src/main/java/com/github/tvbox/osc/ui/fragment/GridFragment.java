@@ -37,6 +37,7 @@ import java.util.Stack;
  * @author pj567
  * @date :2020/12/21
  * @description:
+ * @noinspection ALL
  */
 public class GridFragment extends BaseLazyFragment {
     Stack<GridInfo> mGrids = new Stack<GridInfo>(); //ui栈

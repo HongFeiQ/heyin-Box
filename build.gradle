@@ -2,6 +2,15 @@
 buildscript {
     ext.kotlin_version = "1.9.0"
     repositories {
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://maven.aliyun.com/repository/google" }
+        maven { url "https://maven.aliyun.com/repository/spring" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        maven { url 'https://maven.aliyun.com/repository/spring-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/grails-core' }
+        maven { url 'https://developer.huawei.com/repo/' }
         gradlePluginPortal()
         google()
         mavenCentral()
@@ -21,6 +30,15 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://maven.aliyun.com/repository/google" }
+        maven { url "https://maven.aliyun.com/repository/spring" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        maven { url 'https://maven.aliyun.com/repository/spring-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/grails-core' }
+        maven { url 'https://developer.huawei.com/repo/' }
         gradlePluginPortal()
         google()
         mavenCentral()
@@ -32,14 +50,15 @@ allprojects {
 }
 ext {
     compileSdkVersion = 33
-    minSdkVersion = 18
-    targetSdkVersion = 29
+    minSdkVersion = 21
+    targetSdkVersion = 31
     gsonVersion = '2.10.1'
     jsoupVersion = '1.15.3'
     media3Version = '1.1.1'
     okhttpVersion = '3.12.11'
     annotationVersion = '1.3.0'
 }
+//noinspection ConfigurationAvoidance
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

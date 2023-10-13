@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.aliyun.sdk.android:AliyunPlayer:5.5.1.0-full@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7a58dfc0a3222e2a4bd732cd0940a1e6/transformed/jetified-AliyunPlayer-5.5.1.0-full/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7a58dfc0a3222e2a4bd732cd0940a1e6/transformed/jetified-AliyunPlayer-5.5.1.0-full/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

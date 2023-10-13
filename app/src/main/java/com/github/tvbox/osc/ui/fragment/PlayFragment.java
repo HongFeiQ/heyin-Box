@@ -1,7 +1,5 @@
 package com.github.tvbox.osc.ui.fragment;
 
-import static com.github.tvbox.osc.util.OkGoHelper.*;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -52,7 +50,6 @@ import com.github.tvbox.osc.base.BaseLazyFragment;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.bean.SourceBean;
 import com.github.tvbox.osc.bean.Subtitle;
-import com.github.tvbox.osc.bean.SubtitleBean;
 import com.github.tvbox.osc.bean.VodInfo;
 import com.github.tvbox.osc.cache.CacheManager;
 import com.github.tvbox.osc.event.RefreshEvent;
@@ -82,13 +79,13 @@ import com.github.tvbox.osc.util.XWalkUtils;
 import com.github.tvbox.osc.util.js.jianpian;
 import com.github.tvbox.osc.util.thunder.Thunder;
 import com.github.tvbox.osc.viewmodel.SourceViewModel;
-import com.github.tvbox.quickjs.JSUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.Response;
 import com.obsez.android.lib.filechooser.ChooserDialog;
 import com.orhanobut.hawk.Hawk;
+import com.whl.quickjs.wrapper.JSUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
@@ -357,11 +354,6 @@ public class PlayFragment extends BaseLazyFragment {
             public void openSearchSubtitleDialog() {
                 SearchSubtitleDialog searchSubtitleDialog = new SearchSubtitleDialog(mContext);
                 searchSubtitleDialog.setSubtitleLoader(new SearchSubtitleDialog.SubtitleLoader() {
-                    @Override
-                    public void loadSubtitle(SubtitleBean subtitle) {
-
-                    }
-
                     @Override
                     public void loadSubtitle(Subtitle subtitle) {
                         if (!isAdded()) return;
@@ -1178,12 +1170,12 @@ public class PlayFragment extends BaseLazyFragment {
             }
 
             @Override
-            public void list(String playList) {
-
+            public void list(Map<Integer, String> urlMap) {
             }
 
             @Override
-            public void list(Map<Integer, String> urlMap) {
+            public void list(String playList) {
+
             }
 
             @Override
@@ -1612,15 +1604,19 @@ public class PlayFragment extends BaseLazyFragment {
 
     boolean checkVideoFormat(String url) {
         try {
+            if (url.contains("url=http") || url.contains(".html")) {
+                return false;
+            }
             if (sourceBean.getType() == 3) {
                 Spider sp = ApiConfig.get().getCSP(sourceBean);
-                if (sp != null && sp.manualVideoCheck())
+                if (sp != null && sp.manualVideoCheck()) {
                     return sp.isVideoFormat(url);
+                }
             }
+            return VideoParseRuler.checkIsVideoForParse(webUrl, url);
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
-        return VideoParseRuler.checkIsVideoForParse(webUrl, url);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -1920,7 +1916,7 @@ public class PlayFragment extends BaseLazyFragment {
                 okhttp3.Response response = clientBuilder.build().newCall(requestBuilder.build()).execute();
 
                 final String contentTypeValue = response.header("Content-Type");
-                String responsePhase = httpPhaseMap.get(response.code()).toString();
+                String responsePhase = OkGoHelper.httpPhaseMap.get(response.code());
                 if (responsePhase == null) responsePhase = "Internal Server Error";
                 if (contentTypeValue != null) {
                     if (contentTypeValue.indexOf("charset=") > 0) {

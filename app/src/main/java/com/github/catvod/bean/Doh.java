@@ -40,7 +40,8 @@ public class Doh {
     }
 
     public static List<Doh> arrayFrom(JsonElement element) {
-        Type listType = new TypeToken<List<Doh>>() {}.getType();
+        Type listType = new TypeToken<List<Doh>>() {
+        }.getType();
         List<Doh> items = new Gson().fromJson(element, listType);
         return items == null ? new ArrayList<>() : items;
     }
@@ -89,9 +90,5 @@ public class Doh {
     @Override
     public String toString() {
         return new Gson().toJson(this);
-    }
-
-    public Boolean get(int code) {
-        return null;
     }
 }

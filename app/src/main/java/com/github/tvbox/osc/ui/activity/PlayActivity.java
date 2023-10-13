@@ -58,7 +58,6 @@ import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.bean.SourceBean;
 import com.github.tvbox.osc.bean.Subtitle;
-import com.github.tvbox.osc.bean.SubtitleBean;
 import com.github.tvbox.osc.bean.VodInfo;
 import com.github.tvbox.osc.cache.CacheManager;
 import com.github.tvbox.osc.event.RefreshEvent;
@@ -88,7 +87,6 @@ import com.github.tvbox.osc.util.XWalkUtils;
 import com.github.tvbox.osc.util.js.jianpian;
 import com.github.tvbox.osc.util.thunder.Thunder;
 import com.github.tvbox.osc.viewmodel.SourceViewModel;
-import com.github.tvbox.quickjs.JSUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -98,6 +96,7 @@ import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.Response;
 import com.obsez.android.lib.filechooser.ChooserDialog;
 import com.orhanobut.hawk.Hawk;
+import com.whl.quickjs.wrapper.JSUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
@@ -356,11 +355,6 @@ public class PlayActivity extends BaseActivity {
             public void openSearchSubtitleDialog() {
                 SearchSubtitleDialog searchSubtitleDialog = new SearchSubtitleDialog(mContext);
                 searchSubtitleDialog.setSubtitleLoader(new SearchSubtitleDialog.SubtitleLoader() {
-                    @Override
-                    public void loadSubtitle(SubtitleBean subtitle) {
-
-                    }
-
                     @Override
                     public void loadSubtitle(Subtitle subtitle) {
                         runOnUiThread(new Runnable() {
@@ -1312,12 +1306,12 @@ public class PlayActivity extends BaseActivity {
             }
 
             @Override
-            public void list(String playList) {
-
+            public void list(Map<Integer, String> urlMap) {
             }
 
             @Override
-            public void list(Map<Integer, String> urlMap) {
+            public void list(String playList) {
+
             }
 
             @Override
@@ -1736,15 +1730,14 @@ public class PlayActivity extends BaseActivity {
         });
     }
 
-    boolean checkVideoFormat(String url) {
-        try {
-            if (sourceBean.getType() == 3) {
-                Spider sp = ApiConfig.get().getCSP(sourceBean);
-                if (sp != null && sp.manualVideoCheck())
-                    return sp.isVideoFormat(url);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    boolean checkVideoFormat(String url) throws Exception {
+        if (url.contains("url=http") || url.contains(".html")) {
+            return false;
+        }
+        if (sourceBean.getType() == 3) {
+            Spider sp = ApiConfig.get().getCSP(sourceBean);
+            if (sp != null && sp.manualVideoCheck())
+                return sp.isVideoFormat(url);
         }
         return VideoParseRuler.checkIsVideoForParse(webUrl, url);
     }
@@ -2042,7 +2035,7 @@ public class PlayActivity extends BaseActivity {
                 okhttp3.Response response = clientBuilder.build().newCall(requestBuilder.build()).execute();
 
                 final String contentTypeValue = response.header("Content-Type");
-                String responsePhase = OkGoHelper.httpPhaseMap.get(response.code()).toString();
+                String responsePhase = OkGoHelper.httpPhaseMap.get(response.code());
                 if (responsePhase == null) responsePhase = "Internal Server Error";
                 if (contentTypeValue != null) {
                     if (contentTypeValue.indexOf("charset=") > 0) {

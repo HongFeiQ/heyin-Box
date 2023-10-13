@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/shape_dialog_bg_main"
+    android:orientation="vertical"
+    android:padding="@dimen/vs_30">
+
+    <TextView
+        android:layout_width="@dimen/vs_800"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/ts_50"
+        android:lineSpacingMultiplier="0"
+        android:shadowColor="@color/color_000000_60"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="3"
+        android:text="本软件只提供聚合展示功能，所有资源来自网上, 软件不参与任何制作, 上传, 储存, 下载等内容. 软件仅供学习参考, 请于安装后24小时内删除。\n打包分发请保留出处\nhttps://github.com/CatVodTVOfficial/TVBoxOSC"
+        android:textColor="@color/color_FF90CA09"
+        android:textSize="@dimen/ts_24" />
+
+    <TextView
+        android:layout_width="@dimen/vs_800"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/ts_50"
+        android:lineSpacingMultiplier="0"
+        android:shadowColor="@color/color_000000_60"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="3"
+        android:text="更新日志\n1、居于居于https://github.com/takagen99/Box8月28日版本创建\n2、支持py源代码3、升级 exoplayer from 2.19.1 to media3 1.1.1\n4、支持websocket实时动态日志调试\n5、支持多仓，支持自动循环播放（最后一集跳到第一集）\n6、websocket动态实时日志使用说明：IP:PORT/log"
+        android:textColor="@color/color_CBF46A"
+        android:textSize="@dimen/ts_24" />
+
+</LinearLayout>

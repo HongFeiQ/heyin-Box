@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace 'com.whl.quickjs.wrapper'
+    compileSdk 33
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 31
+        externalNativeBuild {
+            cmake {
+                abiFilters 'armeabi-v7a', 'arm64-v8a'
+            }
+        }
+    }
+
+    buildTypes {
+        //noinspection ConfigurationAvoidance
+        all {
+            ndk {
+                abiFilters 'armeabi-v7a', 'arm64-v8a'
+            }
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    externalNativeBuild {
+        /*cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version "3.10.2"
+        }*/
+    }
+}
+
+dependencies {
+
+
+}

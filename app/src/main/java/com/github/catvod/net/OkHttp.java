@@ -1,6 +1,5 @@
 package com.github.catvod.net;
 
-import android.os.Build;
 import android.util.ArrayMap;
 
 import com.github.tvbox.osc.util.OkGoHelper;
@@ -17,7 +16,7 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.dnsoverhttps.DnsOverHttps;
+
 
 public class OkHttp {
 
@@ -25,10 +24,6 @@ public class OkHttp {
 
     private OkHttpClient client;
     private OkHttpClient noRedirect;
-
-    private static class Loader {
-        static volatile OkHttp INSTANCE = new OkHttp();
-    }
 
     public static OkHttp get() {
         return Loader.INSTANCE;
@@ -74,9 +69,12 @@ public class OkHttp {
 
     private static HttpUrl buildUrl(String url, ArrayMap<String, String> params) {
         HttpUrl.Builder builder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            for (Map.Entry<String, String> entry : params.entrySet()) builder.addQueryParameter(entry.getKey(), entry.getValue());
-        }
+        for (Map.Entry<String, String> entry : params.entrySet())
+            builder.addQueryParameter(entry.getKey(), entry.getValue());
         return builder.build();
+    }
+
+    private static class Loader {
+        static volatile OkHttp INSTANCE = new OkHttp();
     }
 }

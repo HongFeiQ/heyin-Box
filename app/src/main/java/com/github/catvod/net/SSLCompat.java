@@ -21,15 +21,31 @@ import javax.net.ssl.X509TrustManager;
 public class SSLCompat extends SSLSocketFactory {
 
     public static final HostnameVerifier VERIFIER = (hostname, session) -> true;
+    @SuppressLint({"TrustAllX509TrustManager", "CustomX509TrustManager"})
+    public static final X509TrustManager TM = new X509TrustManager() {
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) {
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) {
+        }
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[]{};
+        }
+    };
     private static String[] cipherSuites;
     private static String[] protocols;
-    private SSLSocketFactory factory;
 
     static {
         try {
             SSLSocket socket = (SSLSocket) SSLSocketFactory.getDefault().createSocket();
             List<String> protocols = new LinkedList<>();
-            for (String protocol : socket.getSupportedProtocols()) if (!protocol.toUpperCase().contains("SSL")) protocols.add(protocol);
+            for (String protocol : socket.getSupportedProtocols())
+                if (!protocol.toUpperCase().contains("SSL")) protocols.add(protocol);
             SSLCompat.protocols = protocols.toArray(new String[protocols.size()]);
             List<String> allowedCiphers = Arrays.asList("TLS_RSA_WITH_AES_256_GCM_SHA384", "TLS_RSA_WITH_AES_128_GCM_SHA256", "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256", "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256", "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256", "TLS_ECHDE_RSA_WITH_AES_128_GCM_SHA256", "TLS_RSA_WITH_3DES_EDE_CBC_SHA", "TLS_RSA_WITH_AES_128_CBC_SHA", "TLS_RSA_WITH_AES_256_CBC_SHA", "TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA", "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA", "TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA", "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA");
             List<String> availableCiphers = Arrays.asList(socket.getSupportedCipherSuites());
@@ -41,6 +57,8 @@ public class SSLCompat extends SSLSocketFactory {
             e.printStackTrace();
         }
     }
+
+    private SSLSocketFactory factory;
 
     public SSLCompat() {
         try {
@@ -101,21 +119,4 @@ public class SSLCompat extends SSLSocketFactory {
         if (protocols != null) ssl.setEnabledProtocols(protocols);
         if (cipherSuites != null) ssl.setEnabledCipherSuites(cipherSuites);
     }
-
-    @SuppressLint({"TrustAllX509TrustManager", "CustomX509TrustManager"})
-    public static final X509TrustManager TM = new X509TrustManager() {
-
-        @Override
-        public void checkClientTrusted(X509Certificate[] chain, String authType) {
-        }
-
-        @Override
-        public void checkServerTrusted(X509Certificate[] chain, String authType) {
-        }
-
-        @Override
-        public X509Certificate[] getAcceptedIssuers() {
-            return new X509Certificate[]{};
-        }
-    };
 }

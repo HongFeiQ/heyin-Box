@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/** @noinspection ALL*/
 public class AbsSortJson implements Serializable {
 
     @SerializedName(value = "class")

@@ -46,7 +46,8 @@ public class SSLSocketFactoryCompat extends SSLSocketFactory {
             SSLSocket socket = (SSLSocket) SSLSocketFactory.getDefault().createSocket();
             if (socket != null) {
                 List<String> protocols = new LinkedList<>();
-                for (String protocol : socket.getSupportedProtocols()) if (!protocol.toUpperCase().contains("SSL")) protocols.add(protocol);
+                for (String protocol : socket.getSupportedProtocols())
+                    if (!protocol.toUpperCase().contains("SSL")) protocols.add(protocol);
                 SSLSocketFactoryCompat.protocols = protocols.toArray(new String[protocols.size()]);
             }
         } catch (IOException e) {

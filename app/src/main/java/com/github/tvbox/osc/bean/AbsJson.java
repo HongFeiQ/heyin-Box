@@ -8,6 +8,7 @@ import java.util.List;
  * @author pj567
  * @date :2020/12/18
  * @description:
+ * @noinspection ALL
  */
 public class AbsJson implements Serializable {
 
@@ -31,11 +32,13 @@ public class AbsJson implements Serializable {
         }
         movie.recordcount = total;
         List<Movie.Video> videoList = new ArrayList<>();
-        for (AbsJsonVod vod : list) {
-            try {
-                videoList.add(vod.toXmlVideo());
-            } catch (Throwable th) {
-                movie.pagesize = 0;
+        if (list != null) {
+            for (AbsJsonVod vod : list) {
+                try {
+                    videoList.add(vod.toXmlVideo());
+                } catch (Throwable th) {
+                    movie.pagesize = 0;
+                }
             }
         }
         movie.videoList = videoList;

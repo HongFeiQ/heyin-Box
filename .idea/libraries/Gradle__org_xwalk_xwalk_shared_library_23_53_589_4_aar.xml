@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.xwalk:xwalk_shared_library:23.53.589.4@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6b88b7508b307e155ddb2ccbf6335c55/transformed/jetified-xwalk_shared_library-23.53.589.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6b88b7508b307e155ddb2ccbf6335c55/transformed/jetified-xwalk_shared_library-23.53.589.4/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6b88b7508b307e155ddb2ccbf6335c55/transformed/jetified-xwalk_shared_library-23.53.589.4/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

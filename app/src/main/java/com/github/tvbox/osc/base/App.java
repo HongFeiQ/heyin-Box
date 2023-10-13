@@ -9,6 +9,7 @@ import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.github.catvod.crawler.JsLoader;
+import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.callback.EmptyCallback;
 import com.github.tvbox.osc.callback.LoadingCallback;
 import com.github.tvbox.osc.data.AppDataManager;
@@ -21,14 +22,14 @@ import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.LocaleHelper;
 import com.github.tvbox.osc.util.OkGoHelper;
 import com.github.tvbox.osc.util.PlayerHelper;
-//import com.github.tvbox.osc.util.js.JSEngine;
+import com.github.tvbox.osc.util.js.JSEngine;
 import com.github.tvbox.osc.util.js.jianpian;
-import com.github.tvbox.quickjs.QuickJSLoader;
 import com.kingja.loadsir.core.LoadSir;
 import com.orhanobut.hawk.Hawk;
 import com.p2p.P2PClass;
+import com.simple.spiderman.SpiderMan;
 import com.undcover.freedom.pyramid.PythonLoader;
-
+import com.whl.quickjs.wrapper.QuickJSLoader;
 
 import org.conscrypt.Conscrypt;
 
@@ -70,9 +71,17 @@ public class App extends MultiDexApplication {
     }
 
     @Override
+    public void onTerminate() {
+        super.onTerminate();
+        JsLoader.load();
+        jianpian.finish();
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        SpiderMan.init(this).setTheme(R.style.SpiderManTheme_Dark);
         initParams();
         // takagen99 : Initialize Locale
         initLocale();
@@ -105,13 +114,11 @@ public class App extends MultiDexApplication {
 
         FileUtils.cleanPlayerCache();
 
-       /* // Add JS support
+        // Add JS support
         JSEngine.getInstance().create();
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
             Security.insertProviderAt(conscrypt, 1);
         }
-
-        */
 
     }
 
@@ -171,13 +178,6 @@ public class App extends MultiDexApplication {
         }
     }
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-       // JSEngine.getInstance().destroy();
-        JsLoader.stopAll();
-        jianpian.finish();
-    }
 
     @Override
     protected void attachBaseContext(Context base) {

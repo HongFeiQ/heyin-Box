@@ -3,12 +3,14 @@
 # 对于一些基本指令的添加
 #
 #############################################
--optimizationpasses 5
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--dontskipnonpubliclibraryclassmembers
--dontpreverify
--verbose
+-optimizationpasses 5                                       #指定代码压缩级别
+-dontusemixedcaseclassnames                                 #混淆时不会产生形形色色的类名
+-dontskipnonpubliclibraryclasses                            #指定不忽略非公共类库
+-dontpreverify                                              #不预校验，如果需要预校验，是-dontoptimize
+-ignorewarnings                                             #屏蔽警告
+-verbose                                                    #混淆时记录日志
+
+#-printmapping proguardMapping.txt
 -printmapping proguardMapping.txt
 -optimizations !code/simplification/cast,!field/*,!class/merging/*
 -keepattributes *Annotation*,InnerClasses
@@ -220,9 +222,12 @@
 -keep class com.xunlei.downloadlib.** {*;}
 
 # quickjs引擎
--keep class com.github.tvbox.quickjs.** {*;}
+-keep class com.whl.quickjs.wrapper.** {*;}
+-keep class com.quickjs.android.** {*;}
 # 支持影视的ali相关的jar
 -keep class com.google.gson.**{*;}
+# jsoup
+-keep class org.jsoup.** {*;}
 
 #阿里云播放器
 -keep class com.alivc.**{*;}

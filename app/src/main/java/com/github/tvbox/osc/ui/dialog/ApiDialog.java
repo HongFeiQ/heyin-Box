@@ -46,16 +46,6 @@ public class ApiDialog extends BaseDialog {
     private final EditText inputLive;
     private final EditText inputEPG;
     OnListener listener = null;
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onInputMsgEvent(InputMsgEvent inputMsgEvent) {
-        /*View vFocus = SearchActivity.this.getWindow().getDecorView().findFocus();
-        if (vFocus.getTag() == etSearch) {
-            ((EditText) vFocus).setText(inputMsgEvent.getText());
-        }*/
-        inputApi.setFocusableInTouchMode(true);
-        inputApi.requestFocus();
-        inputApi.setText(inputMsgEvent.getText());
-    }
 
     public ApiDialog(@NonNull @NotNull Context context) {
         super(context);
@@ -121,15 +111,15 @@ public class ApiDialog extends BaseDialog {
                         history.remove(20);
                     Hawk.put(HawkConfig.API_HISTORY, history);
                     listener.onchange(newApi);
-                    if(!map.containsValue(newApi)){
+                    if (!map.containsValue(newApi)) {
                         Hawk.put(HawkConfig.API_URL, newApi);
                         Hawk.put(HawkConfig.API_NAME, newApi);
-                        nameHistory.add(0,newApi);
+                        nameHistory.add(0, newApi);
                         map.put(newApi, newApi);
 
                         listener.onchange(newApi);
                     }
-                    if(map.size()>30){
+                    if (map.size() > 30) {
                         map.remove(nameHistory.get(30));
                         nameHistory.remove(30);
                     }
@@ -274,11 +264,24 @@ public class ApiDialog extends BaseDialog {
         });
         refreshQRCode();
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onInputMsgEvent(InputMsgEvent inputMsgEvent) {
+        /*View vFocus = SearchActivity.this.getWindow().getDecorView().findFocus();
+        if (vFocus.getTag() == etSearch) {
+            ((EditText) vFocus).setText(inputMsgEvent.getText());
+        }*/
+        inputApi.setFocusableInTouchMode(true);
+        inputApi.requestFocus();
+        inputApi.setText(inputMsgEvent.getText());
+    }
+
     private void refreshQRCode() {
         String address = ControlManager.get().getAddress(false);
         tvAddress.setText(String.format("手机/电脑扫描上方二维码或者直接浏览器访问地址\n%s", address));
         ivQRCode.setImageBitmap(QRCodeGen.generateBitmap(address, AutoSizeUtils.mm2px(getContext(), 300), AutoSizeUtils.mm2px(getContext(), 300)));
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refresh(RefreshEvent event) {
         if (event.type == RefreshEvent.TYPE_API_URL_CHANGE) {
@@ -291,7 +294,6 @@ public class ApiDialog extends BaseDialog {
             inputEPG.setText((String) event.obj);
         }
     }
-
 
 
     public void setOnListener(OnListener listener) {

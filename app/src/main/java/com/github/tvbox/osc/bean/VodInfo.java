@@ -1,11 +1,10 @@
 package com.github.tvbox.osc.bean;
 
-import com.github.tvbox.osc.api.ApiConfig;
+import android.text.TextUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
@@ -75,13 +74,17 @@ public class VodInfo implements Serializable {
                 if (urlInfo.beanList != null && urlInfo.beanList.size() > 0) {
                     List<VodSeries> seriesList = new ArrayList<>();
                     for (Movie.Video.UrlBean.UrlInfo.InfoBean infoBean : urlInfo.beanList) {
-                        seriesList.add(new VodSeries(infoBean.name, infoBean.url));
+                        if (!TextUtils.isEmpty(name)) {
+                            seriesList.add(new VodSeries(infoBean.name.replace(name, ""), infoBean.url));
+                        } else {
+                            seriesList.add(new VodSeries(infoBean.name, infoBean.url));
+                        }
                     }
                     tempSeriesMap.put(urlInfo.flag, seriesList);
                     seriesFlags.add(new VodSeriesFlag(urlInfo.flag));
                 }
             }
-            SourceBean sb = ApiConfig.get().getSource(video.sourceKey);
+            /*SourceBean sb = ApiConfig.get().getSource(video.sourceKey);
             if (sb != null) { // ssp 不排序
                 // 优先展示m3u8
                 Collections.sort(seriesFlags, new Comparator<VodSeriesFlag>() {
@@ -97,6 +100,7 @@ public class VodInfo implements Serializable {
                     }
                 });
             }
+             */
             seriesMap = new LinkedHashMap<>();
             for (VodSeriesFlag flag : seriesFlags) {
                 seriesMap.put(flag.name, tempSeriesMap.get(flag.name));

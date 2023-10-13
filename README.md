@@ -15,7 +15,218 @@
 
     }
 
+debug build
+////////////////////////////////////////////////////////////////
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+def static buildTime() {
+return new Date().format("yyyyMMdd_HHmm", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+android {
+compileSdk 33
+
+    defaultConfig {
+        applicationId 'com.github.tvbox.osc.hlhwan'
+        minSdkVersion 21
+        targetSdkVersion 31
+        versionCode 1
+        versionName "1.0.".concat(buildTime())
+        multiDexEnabled true
+        //设置room的Schema的位置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
+
+    buildTypes {
+        debug {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+        additionalParameters += '--multi-dex'
+        additionalParameters += '--set-max-idx-number=48000'
+        additionalParameters += '--minimal-main-dex'
+    }
+    buildFeatures {
+        dataBinding = true
+    }
+
+// splits {
+// abi {
+// enable true
+// reset()
+//
+// // Specifies a list of ABIs that Gradle should create APKs for.
+// include "x86", "x86_64", "armeabi-v7a", "arm64-v8a", "armeabi", "mips", "mips64"
+// universalApk true //generate an additional APK that contains all the ABIs
+// }
+// }
+
+}
+
+///////////////////////////////////////////////////////////////////
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+static def getVersionName() {
+def name = "2023.10.13"
+return name
+}
+
+def getVersionCode() {// 获取版本号
+def versionFile = file('version.properties')// 读取第一步新建的文件
+if (versionFile.canRead()) {// 判断文件读取异常
+Properties versionProps = new Properties()
+versionProps.load(new FileInputStream(versionFile))
+def versionCode = versionProps['VERSION_CODE'].toInteger()// 读取文件里面的版本号
+def runTasks = gradle.startParameter.taskNames
+if (':app:assembleRelease' in runTasks || ':app:packageRelease' in runTasks
+|| ':app:assembleProfessionalRelease' in runTasks
+|| ':app:assembleNormalRelease' in runTasks) {
+// 版本号自增之后再写入文件（此处是关键，版本号自增+1）
+versionProps['VERSION_CODE'] = (++versionCode).toString()
+versionProps.store(versionFile.newWriter(), null)
+}
+return versionCode // 返回自增之后的版本号
+}
+// else {
+// throw new GradleException("Could not find version.properties!")
+// }
+}
+
+def appName = "HE影"
+def versionCodeNew = getVersionCode()
+def versionNameNew = getVersionName()
+android {
+compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        applicationId 'com.hlhwan.heyin.drpy2'
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode versionCodeNew
+        versionName versionNameNew
+        multiDexEnabled true
+
+        //设置room的Schema的位置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
+        ndk {
+            //abiFilters 'arm64-v8a'
+            abiFilters "armeabi-v7a"
+        }
+
+    }
+
+
+    packagingOptions {
+        exclude 'META-INF/androidx.localbroadcastmanager_localbroadcastmanager.version'
+        exclude 'META-INF/androidx.customview_customview.version'
+        exclude 'META-INF/androidx.legacy_legacy-support-core-ui.version'
+        exclude 'META-INF/androidx.legacy_legacy-support-core-utils.version'
+        exclude 'META-INF/androidx.slidingpanelayout_slidingpanelayout.version'
+        exclude 'META-INF/androidx.*.version'
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/beans.xml'
+    }
+
+    signingConfigs {
+
+        release {
+            storePassword "000624"
+            keyAlias "bunny"
+            keyPassword "426000"
+            storeFile file('../tvbox.jks')
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+
+        debug {
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+
+        }
+        release {
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true   // 是否代码混淆
+            multiDexEnabled true // 防止方法数量超过65536导致错误
+            shrinkResources true // 删除无用资源
+            zipAlignEnabled true
+
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def type = variant.buildType.name
+            def fileName = appName + "_V" + versionNameNew + "_C" + versionCodeNew +
+                    "_" + type + ".apk"
+            outputFileName = fileName
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+    namespace 'com.github.tvbox.osc'
+
+}
+////////////////////////////////////////////////////////////////////////////////////
+
 更新日志：
+32、
+1、修复多处bug
+2、update混淆规则
+3、update AndroidManifest.xml
 31、
 1、感谢爱佬提供新quickjs引擎
 2、感谢watson提供建议
@@ -64,7 +275,7 @@ Fix crash during search subtitle on enter
 2、update readme
 3、remove unused resoucres
 4、reformat code
-5、optimize  imports
+5、optimize imports
 6、fix bug
 
 13、

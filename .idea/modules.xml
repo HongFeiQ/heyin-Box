@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HE影.iml" filepath="$PROJECT_DIR$/.idea/modules/HE影.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HE影.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HE影.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HE影.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HE影.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HE影.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HE影.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HE影.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HE影.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pyramid/HE影.pyramid.iml" filepath="$PROJECT_DIR$/.idea/modules/pyramid/HE影.pyramid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pyramid/HE影.pyramid.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/pyramid/HE影.pyramid.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pyramid/HE影.pyramid.main.iml" filepath="$PROJECT_DIR$/.idea/modules/pyramid/HE影.pyramid.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pyramid/HE影.pyramid.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/pyramid/HE影.pyramid.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wrapper-android/HE影.wrapper-android.iml" filepath="$PROJECT_DIR$/.idea/modules/wrapper-android/HE影.wrapper-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wrapper-android/HE影.wrapper-android.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/wrapper-android/HE影.wrapper-android.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wrapper-android/HE影.wrapper-android.main.iml" filepath="$PROJECT_DIR$/.idea/modules/wrapper-android/HE影.wrapper-android.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wrapper-android/HE影.wrapper-android.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/wrapper-android/HE影.wrapper-android.unitTest.iml" />
+    </modules>
+  </component>
+</project>

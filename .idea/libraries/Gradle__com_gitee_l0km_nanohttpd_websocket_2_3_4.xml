@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.gitee.l0km:nanohttpd-websocket:2.3.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.gitee.l0km/nanohttpd-websocket/2.3.4/e69dc43c56e43fe536f94052810ba5f47eb1f07a/nanohttpd-websocket-2.3.4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.gitee.l0km/nanohttpd-websocket/2.3.4/b44c73dd3f4bde4ce994b75f4c4ee52fe1cda38a/nanohttpd-websocket-2.3.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.gitee.l0km/nanohttpd-websocket/2.3.4/fcfa69f53acd95b9e911cfd476a98ff0b321fffe/nanohttpd-websocket-2.3.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

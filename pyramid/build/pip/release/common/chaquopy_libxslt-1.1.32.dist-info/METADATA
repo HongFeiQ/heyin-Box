@@ -1,0 +1,7 @@
+Metadata-Version: 1.2
+Name: chaquopy-libxslt
+Version: 1.1.32
+Summary: 
+Download-URL: 
+Requires-Dist: chaquopy-libxml2 (>=2.9.8)
+

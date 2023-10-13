@@ -6,11 +6,8 @@ import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.bean.Subtitle;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchSubtitleAdapter extends BaseQuickAdapter<Subtitle, BaseViewHolder> {
-
-
 
     public SearchSubtitleAdapter() {
         super(R.layout.item_search_subtitle_result, new ArrayList<>());
@@ -20,9 +17,5 @@ public class SearchSubtitleAdapter extends BaseQuickAdapter<Subtitle, BaseViewHo
     protected void convert(BaseViewHolder helper, Subtitle item) {
         helper.setText(R.id.subtitleName, item.getName());
         helper.setText(R.id.subtitleNameInfo, item.getIsZip() ? "压缩包" : "文件");
-    }
-
-
-    public void setNewData(List<Subtitle> zipSubtitles) {
     }
 }

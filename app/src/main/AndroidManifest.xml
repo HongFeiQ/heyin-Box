@@ -7,20 +7,51 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
     <uses-feature
+        android:name="android.hardware.faketouch"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.sensor"
+        android:required="false" />
+    <uses-feature
         android:name="android.software.leanback"
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"
+        tools:ignore="LeanbackUsesWifi" />
 
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /><!-- 电池优化权限-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /><!--apk安装权限-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -44,7 +75,9 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:ignore="ExtraText">
+        tools:targetApi="n">
 
         <activity
             android:name=".ui.activity.HomeActivity"
@@ -58,7 +91,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.PlayActivity"
+            android:name=".ui.activity.LivePlayActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:screenOrientation="sensorLandscape"
             android:supportsPictureInPicture="true" />
@@ -68,21 +101,12 @@
             android:screenOrientation="sensorLandscape"
             android:supportsPictureInPicture="true" />
         <activity
-            android:name=".ui.activity.HistoryActivity"
-            android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".ui.activity.LivePlayActivity"
+            android:name=".ui.activity.PlayActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:screenOrientation="sensorLandscape"
             android:supportsPictureInPicture="true" />
         <activity
-            android:name=".ui.activity.CollectActivity"
-            android:screenOrientation="sensorLandscape" />
-        <activity
             android:name=".ui.activity.PushActivity"
-            android:screenOrientation="sensorLandscape" />
-        <activity
-            android:name=".ui.activity.DriveActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.activity.SearchActivity"
@@ -93,10 +117,19 @@
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.activity.AppsActivity"
+            android:name=".ui.activity.DriveActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.activity.SettingActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".ui.activity.HistoryActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".ui.activity.CollectActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".ui.activity.AppsActivity"
             android:screenOrientation="sensorLandscape" />
 
         <receiver
@@ -107,19 +140,20 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".receiver.DetailReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.content.movie.detail.Action" />
-            </intent-filter>
-        </receiver>
-        <receiver
             android:name=".receiver.CustomWebReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.movie.custom.web.Action" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".receiver.DetailReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.movie.detail.Action" />
+            </intent-filter>
+        </receiver>
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -144,6 +178,7 @@
         <meta-data
             android:name="xwalk_verify"
             android:value="disable" />
+
     </application>
 
 </manifest>

@@ -1,7 +1,6 @@
 package com.github.catvod.utils;
 
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
@@ -146,14 +145,11 @@ public class Path {
             byte[] data = new byte[is.available()];
             is.read(data);
             is.close();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                return new String(data, StandardCharsets.UTF_8);
-            }
+            return new String(data, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return "";
         }
-        return null;
     }
 
     public static File write(File file, byte[] data) {

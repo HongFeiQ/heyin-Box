@@ -52,7 +52,8 @@ public class Json {
 
     public static JsonObject safeObject(JsonElement element) {
         try {
-            if (element.isJsonPrimitive()) element = JsonParser.parseString(element.getAsJsonPrimitive().getAsString());
+            if (element.isJsonPrimitive())
+                element = JsonParser.parseString(element.getAsJsonPrimitive().getAsString());
             return element.getAsJsonObject();
         } catch (Exception e) {
             return new JsonObject();

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.media3:media3-exoplayer-dash:1.1.1@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/da9d9eba99d69a3fc6403e30c01a37e9/transformed/jetified-media3-exoplayer-dash-1.1.1/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/da9d9eba99d69a3fc6403e30c01a37e9/transformed/jetified-media3-exoplayer-dash-1.1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/da9d9eba99d69a3fc6403e30c01a37e9/transformed/jetified-media3-exoplayer-dash-1.1.1/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.media3/media3-exoplayer-dash/1.1.1/b92a15432ef7ecafb7ef9da185cd3ad3f6e7b1f3/media3-exoplayer-dash-1.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

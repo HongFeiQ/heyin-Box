@@ -233,6 +233,11 @@ public class PythonSpider extends Spider {
         return rsp;
     }
 
+    @Override
+    public String searchContent(String key, boolean quick, String pg) throws Exception {
+        return null;
+    }
+
     /**
      * 播放信息
      *
@@ -265,5 +270,10 @@ public class PythonSpider extends Spider {
      */
     public boolean manualVideoCheck() {
         return false;
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }

@@ -87,6 +87,7 @@ public class SearchActivity extends BaseActivity {
     private SearchCheckboxDialog mSearchCheckboxDialog = null;
     private List<Runnable> pauseRunnable = null;
     private ExecutorService searchExecutorService = null;
+    private List<String> fenci;
 
     public static void setCheckedSourcesForSearch(HashMap<String, String> checkedSources) {
         mCheckSources = checkedSources;
@@ -108,10 +109,12 @@ public class SearchActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (pauseRunnable != null && pauseRunnable.size() > 0) {
-            searchExecutorService = Executors.newFixedThreadPool(5);
             allRunCount.set(pauseRunnable.size());
-            for (Runnable runnable : pauseRunnable) {
-                searchExecutorService.execute(runnable);
+            if (sourceViewModel != null) {
+                sourceViewModel.initExecutor();
+                for (Runnable runnable : pauseRunnable) {
+                    sourceViewModel.execute(runnable);
+                }
             }
             pauseRunnable.clear();
             pauseRunnable = null;
@@ -194,7 +197,6 @@ public class SearchActivity extends BaseActivity {
                         if (searchExecutorService != null) {
                             pauseRunnable = searchExecutorService.shutdownNow();
                             searchExecutorService = null;
-                           // JSEngine.getInstance().stopAll();
                             JsLoader.stopAll();
                         }
                     } catch (Throwable th) {
@@ -417,10 +419,10 @@ public class SearchActivity extends BaseActivity {
 
     private void searchResult() {
         try {
+            sourceViewModel.initExecutor();
             if (searchExecutorService != null) {
                 searchExecutorService.shutdownNow();
                 searchExecutorService = null;
-                //JSEngine.getInstance().stopAll();
                 JsLoader.stopAll();
             }
         } catch (Throwable th) {
@@ -435,7 +437,29 @@ public class SearchActivity extends BaseActivity {
         SourceBean home = ApiConfig.get().getHomeSourceBean();
         searchRequestList.remove(home);
         searchRequestList.add(0, home);
+        /*
+        List<SourceBean> searchRequestList = new ArrayList<>();
 
+        boolean equals = this.sKey.equals("filter__home");
+        if (equals) {
+            SourceBean home = ApiConfig.get().getHomeSourceBean();
+            if (home.isSearchable()) {
+                searchRequestList.add(home);
+            } else {
+                Toast.makeText(mContext, "当前源不支持搜索,自动切换到全局搜索", Toast.LENGTH_SHORT).show();
+                searchRequestList.addAll(ApiConfig.get().getSourceBeanList());
+            }
+        } else if (TextUtils.isEmpty(sKey) || ApiConfig.get().getSource(sKey) == null) {
+            searchRequestList.addAll(ApiConfig.get().getSourceBeanList());
+            SourceBean home = ApiConfig.get().getHomeSourceBean();
+            searchRequestList.remove(home);
+            searchRequestList.add(0, home);
+        } else {
+            searchRequestList.add(ApiConfig.get().getSource(sKey));
+        }
+
+
+         */
         ArrayList<String> siteKey = new ArrayList<>();
         for (SourceBean bean : searchRequestList) {
             if (!bean.isSearchable()) {
@@ -474,10 +498,13 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void searchData(AbsXml absXml) {
+
         if (absXml != null && absXml.movie != null && absXml.movie.videoList != null && absXml.movie.videoList.size() > 0) {
             List<Movie.Video> data = new ArrayList<>();
             for (Movie.Video video : absXml.movie.videoList) {
-                data.add(video);
+                if (SearchHelper.searchContains(video.name, fenci)) {
+                    data.add(video);
+                }
             }
             if (searchAdapter.getData().size() > 0) {
                 searchAdapter.addData(data);
@@ -509,8 +536,7 @@ public class SearchActivity extends BaseActivity {
             if (searchExecutorService != null) {
                 searchExecutorService.shutdownNow();
                 searchExecutorService = null;
-               // JSEngine.getInstance().stopAll();
-                JsLoader.stopAll();
+                JsLoader.load();
             }
         } catch (Throwable th) {
             th.printStackTrace();

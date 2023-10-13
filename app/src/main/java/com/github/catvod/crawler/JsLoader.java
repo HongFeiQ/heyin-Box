@@ -20,18 +20,21 @@ import okhttp3.Response;
 public class JsLoader {
     private static ConcurrentHashMap<String, Spider> spiders = new ConcurrentHashMap<>();
     private static ConcurrentHashMap<String, Class<?>> classs = new ConcurrentHashMap<>();
+    private volatile String recentJarKey = "";
 
     public static void load() {
-        stopAll();
-    }
-
-    public static void stopAll() {
-        for (Spider spider : spiders.values()){
-            spider.destroy();
+        for (Spider spider : spiders.values()) {
             spider.cancelByTag();
+            spider.destroy();
         }
         spiders.clear();
         classs.clear();
+    }
+
+    public static void stopAll() {
+        for (Spider spider : spiders.values()) {
+            spider.cancelByTag();
+        }
     }
 
     private boolean loadClassLoader(String jar, String key) {
@@ -103,8 +106,6 @@ public class JsLoader {
         }
         return null;
     }
-    private volatile String recentJarKey = "";
-
 
     public Spider getSpider(String key, String api, String ext, String jar) {
         Class<?> classLoader = null;
@@ -125,6 +126,7 @@ public class JsLoader {
             return sp;
         } catch (Throwable th) {
             th.printStackTrace();
+            LOG.e("QuJS", th);
         }
         return new SpiderNull();
     }

@@ -280,6 +280,12 @@ public abstract class BaseVideoController extends FrameLayout
     @Override
     public boolean isLocked() {
         return mIsLocked;
+    }
+
+    @Override
+    public void setLocked(boolean locked) {
+        mIsLocked = locked;
+        handleLockStateChanged(locked);
     }    /**
      * 隐藏播放视图Runnable
      */
@@ -289,12 +295,6 @@ public abstract class BaseVideoController extends FrameLayout
             hide();
         }
     };
-
-    @Override
-    public void setLocked(boolean locked) {
-        mIsLocked = locked;
-        handleLockStateChanged(locked);
-    }
 
     /**
      * 开始刷新进度，注意：需在STATE_PLAYING时调用才会开始刷新进度
@@ -558,8 +558,6 @@ public abstract class BaseVideoController extends FrameLayout
         onPlayStateChanged(playState);
     }
 
-    //------------------------ start handle event change ------------------------//
-
     /**
      * 子类重写此方法并在其中更新控制器在不同播放状态下的ui
      */
@@ -584,6 +582,8 @@ public abstract class BaseVideoController extends FrameLayout
                 break;
         }
     }
+
+    //------------------------ start handle event change ------------------------//
 
     private void handlePlayerStateChanged(int playerState) {
         for (Map.Entry<IControlComponent, Boolean> next

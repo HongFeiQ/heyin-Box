@@ -666,7 +666,7 @@ public class ApiConfig {
     public Spider getCSP(SourceBean sourceBean) {
 
         // Getting js api
-        if (sourceBean.getApi().toLowerCase().endsWith(".js")) {
+        if (sourceBean.getApi().endsWith(".js") || sourceBean.getApi().contains(".js?")) {
             return jsLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt(), sourceBean.getJar());
         }
         //pyramid-add-start

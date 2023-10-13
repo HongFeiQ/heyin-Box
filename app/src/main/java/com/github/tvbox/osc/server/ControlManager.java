@@ -74,7 +74,6 @@ public class ControlManager {
                 }
 
 
-
                 @Override
                 public void onMirrorReceived(String id, String sourceKey) {
                     if (!TextUtils.isEmpty(id) && !TextUtils.isEmpty(sourceKey)) {

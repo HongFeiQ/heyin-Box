@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brvah_load_end">No more data</string>
+    <string name="brvah_load_failed">load more failed</string>
+    <string name="brvah_loading">Loading...</string>
+    <string name="dkplayer_continue_play">Continue playing</string>
+    <string name="dkplayer_error_message">Something went wrong, please try again later</string>
+    <string name="dkplayer_lock_tip">Please unlock the screen first!</string>
+    <string name="dkplayer_locked">Locked</string>
+    <string name="dkplayer_replay">Replay</string>
+    <string name="dkplayer_retry">  Retry  </string>
+    <string name="dkplayer_unlocked">Unlocked</string>
+    <string name="dkplayer_wifi_tip">You are currently using the mobile network, and continuing to play will consume traffic</string>
+    <string name="simpleAllInfo">All Info: </string>
+    <string name="simpleAppName">SpiderMan</string>
+    <string name="simpleBrand">Brand: </string>
+    <string name="simpleClassName">Class Name: </string>
+    <string name="simpleCopied">Copy Success</string>
+    <string name="simpleCopyText">Copy Text</string>
+    <string name="simpleCpuAbi">CPU-ABI: </string>
+    <string name="simpleCrashInfo">Crash Info: </string>
+    <string name="simpleExceptionType">Exception Type: </string>
+    <string name="simpleFunName">Fun Name: </string>
+    <string name="simpleImageNotExist">Image file does not exist</string>
+    <string name="simpleLineNum">Line Num: </string>
+    <string name="simpleModel">Device: </string>
+    <string name="simpleNoSdCard">Please insert SD card</string>
+    <string name="simplePermissionSd">Please authorize sd card permissions</string>
+    <string name="simpleShare">Share</string>
+    <string name="simpleShareImage">Share Image</string>
+    <string name="simpleShareText">Share Text</string>
+    <string name="simpleShareTo">ShareTo: </string>
+    <string name="simpleTime">Time: </string>
+    <string name="simpleTitle">Crash Info Display</string>
+    <string name="simpleVersion">Version: </string>
+</resources>

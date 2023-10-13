@@ -73,12 +73,14 @@ public class Req {
     public String getCharset() {
         Map<String, String> header = getHeader();
         List<String> keys = Arrays.asList("Content-Type", "content-type");
-        for (String key : keys) if (header.containsKey(key)) return getCharset(Objects.requireNonNull(header.get(key)));
+        for (String key : keys)
+            if (header.containsKey(key)) return getCharset(Objects.requireNonNull(header.get(key)));
         return "UTF-8";
     }
 
     private String getCharset(String value) {
-        for (String text : value.split(";")) if (text.contains("charset=")) return text.split("=")[1];
+        for (String text : value.split(";"))
+            if (text.contains("charset=")) return text.split("=")[1];
         return "UTF-8";
     }
 }

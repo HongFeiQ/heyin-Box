@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.github.tvbox.osc.app-mergeReleaseResources-47:/values-ga/values-ga.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-3\\243e8b10e8cec3bf3f3c24be2dc7876b\\transformed\\jetified-android-file-chooser-v1.2.0-final\\res\\values-ga\\values-ga.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,112,175,266",
+                        "endColumns": "56,62,90,91",
+                        "endOffsets": "107,170,261,353"
+                    }
+                }
+            ]
+        }
+    ]
+}

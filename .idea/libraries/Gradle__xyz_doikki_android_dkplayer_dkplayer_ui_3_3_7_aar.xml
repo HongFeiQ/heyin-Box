@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: xyz.doikki.android.dkplayer:dkplayer-ui:3.3.7@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/0711f75e1c035a44f8747897b6bd079f/transformed/jetified-dkplayer-ui-3.3.7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0711f75e1c035a44f8747897b6bd079f/transformed/jetified-dkplayer-ui-3.3.7/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0711f75e1c035a44f8747897b6bd079f/transformed/jetified-dkplayer-ui-3.3.7/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/xyz.doikki.android.dkplayer/dkplayer-ui/3.3.7/afe003b265d26320c3a596dd9fd3a2cd1b1cb6b2/dkplayer-ui-3.3.7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

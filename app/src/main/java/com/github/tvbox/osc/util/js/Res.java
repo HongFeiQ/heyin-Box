@@ -51,12 +51,14 @@ public class Res {
     public String getContentType() {
         Map<String, String> header = getHeader();
         List<String> keys = Arrays.asList("Content-Type", "content-type");
-        for (String key : keys) if (header.containsKey(key)) return Objects.requireNonNull(header.get(key));
+        for (String key : keys)
+            if (header.containsKey(key)) return Objects.requireNonNull(header.get(key));
         return "application/octet-stream";
     }
 
     public ByteArrayInputStream getStream() {
-        if (getBuffer() == 2) return new ByteArrayInputStream(Base64.decode(getContent(), Base64.DEFAULT));
+        if (getBuffer() == 2)
+            return new ByteArrayInputStream(Base64.decode(getContent(), Base64.DEFAULT));
         return new ByteArrayInputStream(getContent().getBytes());
     }
 }
