@@ -90,6 +90,7 @@ import java.util.concurrent.Executors;
  * @description:
  */
 public class DetailActivity extends BaseActivity {
+    private static final int DETAIL_PLAYER_FRAME_ID = 9999999;
     public static final String BROADCAST_ACTION = "VOD_CONTROL";
     public static final int BROADCAST_ACTION_PREV = 0;
     public static final int BROADCAST_ACTION_PLAYPAUSE = 1;

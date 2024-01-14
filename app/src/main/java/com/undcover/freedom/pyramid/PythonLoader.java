@@ -1,29 +1,30 @@
 package com.undcover.freedom.pyramid;
 
 import android.app.Application;
-import android.util.Base64;
 
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 import com.github.catvod.crawler.Spider;
 import com.github.catvod.net.OkHttp;
-import com.github.tvbox.osc.util.TxtSubscribe;
+import com.github.tvbox.osc.util.LOG;
 
-import java.io.ByteArrayInputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PythonLoader {
     private static volatile PythonLoader sInstance;
-    private static ConcurrentHashMap<String, Spider> spiders = new ConcurrentHashMap<>();
     private Python pyInstance;
     private PyObject pyApp;
     private String cache;
     private int port = -1;
+    private static ConcurrentHashMap<String, Spider> spiders = new ConcurrentHashMap<>();
     private Application app;
 
-    public PythonLoader() {
+    public PythonLoader() {}
+
+    public void load() {
+        spiders.clear();
     }
 
     public static PythonLoader getInstance() {
@@ -35,10 +36,6 @@ public class PythonLoader {
             }
         }
         return sInstance;
-    }
-
-    public void load() {
-        spiders.clear();
     }
 
     public PythonLoader setApplication(Application app) {
@@ -56,12 +53,15 @@ public class PythonLoader {
         return this;
     }
 
+    private volatile String recentJarKey = "";
+
     public Spider getSpider(String key, String url, String ext) throws Exception {
         if (app == null) throw new Exception("set application first");
         if (spiders.containsKey(key)) {
             PyLog.d(key + " :缓存加载成功！");
             return spiders.get(key);
         }
+        recentJarKey = key;
         try {
             Spider sp = new PythonSpider(pyApp, key, cache, ext);
             sp.init(app, url);
@@ -74,33 +74,22 @@ public class PythonLoader {
         };
     }
 
-    public Object[] proxyLocal(String key, String url, Map<String, String> map) {
-        String what = map.get("do");
+    public Object[] proxyLocal(Map<String, String> map) {
         try {
-            if (what.equals("ck")) {
-                return new Object[]{200, "text/plain; charset=utf-8", new ByteArrayInputStream("ok".getBytes("UTF-8"))};
+            Spider proxyFun = spiders.get(recentJarKey);
+            if (proxyFun != null) {
+                return proxyFun.proxyLocal(map);
             }
-            if (what.equals("live")) {
-                String type = map.get("type");
-                if (type.equals("txt")) {
-                    String ext = map.get("ext");
-                    ext = new String(Base64.decode(ext, Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP), "UTF-8");
-                    return TxtSubscribe.load(ext);
-                }
-                return null;
-            }
-
-            PythonSpider spider = (PythonSpider) getSpider(key, url, "");
-            return spider.proxyLocal(map);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable th) {
+            LOG.e("proxyInvoke", th);
         }
+
         return new Object[]{};
     }
 
     public void getPort() {
         if (port <= 0) {
-            for (int i = 2691; i < 10000; i++) {
+            for (int i = 9978; i < 10000; i++) {
                 if (OkHttp.string("http://127.0.0.1:" + i + "/proxy?do=ck&api=python").equals("ok")) {
                     port = i;
                     return;

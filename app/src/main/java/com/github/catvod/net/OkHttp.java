@@ -64,8 +64,8 @@ public class OkHttp {
         return client().newCall(new Request.Builder().url(url).headers(headers).build());
     }
 
-    public static Call newCall(String url, ArrayMap<String, String> params) {
-        return client().newCall(new Request.Builder().url(buildUrl(url, params)).build());
+    public static Call newCall(String url, Map<String, String> params) {
+        return client().newCall(new Request.Builder().url(buildUrl(url, (ArrayMap<String, String>) params)).build());
     }
 
 
@@ -73,11 +73,17 @@ public class OkHttp {
         return client().newCall(new Request.Builder().url(buildUrl(url, (ArrayMap<String, String>) params)).headers(headers).build());
     }
 
-    private static HttpUrl buildUrl(String url, ArrayMap<String, String> params) {
+    private static HttpUrl buildUrl(String url, Map<String, String> params) {
         HttpUrl.Builder builder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
-        for (Map.Entry<String, String> entry : params.entrySet())
-            builder.addQueryParameter(entry.getKey(), entry.getValue());
+        for (Map.Entry<String, String> entry : params.entrySet()) builder.addQueryParameter(entry.getKey(), entry.getValue());
         return builder.build();
+    }
+    public static String string(String url, Map<String, String> headerMap) {
+        try {
+            return newCall(url, headerMap).execute().body().string();
+        } catch (IOException e) {
+            return "";
+        }
     }
 
     public static String string(String url) {

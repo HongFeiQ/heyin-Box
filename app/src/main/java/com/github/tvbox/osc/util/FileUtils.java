@@ -1,5 +1,6 @@
 package com.github.tvbox.osc.util;
 
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -361,6 +362,10 @@ public class FileUtils {
         int lastSlashIndex = Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\"));
         // 如果路径中有点号，并且点号在最后一个斜杠之后，认为有后缀
         return lastDotIndex > lastSlashIndex && lastDotIndex < path.length() - 1;
+    }
+
+    public static String getRootPath() {
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 }
 

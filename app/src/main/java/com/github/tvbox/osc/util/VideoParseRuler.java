@@ -1,6 +1,9 @@
 package com.github.tvbox.osc.util;
 
 import android.net.Uri;
+import android.text.TextUtils;
+
+import com.whl.quickjs.wrapper.QuickJSContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,9 +56,9 @@ public class VideoParseRuler {
             boolean isVideo = DefaultConfig.isVideoFormat(url);
             if (!HOSTS_RULE.isEmpty() && !isVideo && webUrl != null) {
                 Uri uri = Uri.parse(webUrl);
-                if (getHostRules(uri.getHost()) != null) {
+                if(getHostRules(uri.getHost()) != null){
                     isVideo = checkVideoForOneHostRules(uri.getHost(), url);
-                } else {
+                }else {
                     isVideo = checkVideoForOneHostRules("*", url);
                 }
             }
@@ -71,10 +74,10 @@ public class VideoParseRuler {
         ArrayList<ArrayList<String>> hostRules = getHostRules(host);
         if (hostRules != null && hostRules.size() > 0) {
             boolean isVideoRuleCheck = false;
-            for (int i = 0; i < hostRules.size(); i++) {
+            for(int i=0; i<hostRules.size(); i++) {
                 boolean checkIsVideo = true;
                 if (hostRules.get(i) != null && hostRules.get(i).size() > 0) {
-                    for (int j = 0; j < hostRules.get(i).size(); j++) {
+                    for(int j=0; j<hostRules.get(i).size(); j++) {
                         Pattern onePattern = Pattern.compile("" + hostRules.get(i).get(j));
                         if (!onePattern.matcher(url).find()) {
                             checkIsVideo = false;
@@ -102,7 +105,7 @@ public class VideoParseRuler {
             boolean isFilter = false;
             if (!HOSTS_FILTER.isEmpty() && webUrl != null) {
                 Uri uri = Uri.parse(webUrl);
-                if (getHostFilters(uri.getHost()) != null) {
+                if(getHostFilters(uri.getHost()) != null){
                     isFilter = checkIsFilterForOneHostRules(uri.getHost(), url);
                 }
             }
@@ -113,15 +116,37 @@ public class VideoParseRuler {
         return false;
     }
 
+    public static boolean IsVideoRules(String isVideo, String url) {
+        if(!TextUtils.isEmpty(isVideo)){
+            if(isVideo.startsWith("js:")){
+                isVideo = isVideo.substring(3);
+                try {
+                    QuickJSContext jSContext = QuickJSContext.create();
+                    //jSContext.getGlobalObject().set("input", url);
+                    return (boolean) jSContext.evaluate("var input = '" + url + "';\n" + isVideo);
+                } catch (Exception e) {
+                    LOG.e(e);
+                    return false;
+                }
+            }
+            if(isVideo.startsWith("reg:")){
+                isVideo = isVideo.substring(4);
+                Pattern onePattern = Pattern.compile(isVideo);
+                return onePattern.matcher(url).find();
+            }
+        }
+        return false;
+    }
+
     private static boolean checkIsFilterForOneHostRules(String host, String url) {
         boolean isFilter = false;
         ArrayList<ArrayList<String>> hostFilters = getHostFilters(host);
         if (hostFilters != null && hostFilters.size() > 0) {
             boolean isFilterRuleCheck = false;
-            for (int i = 0; i < hostFilters.size(); i++) {
+            for(int i=0; i<hostFilters.size(); i++) {
                 boolean checkIsFilter = true;
                 if (hostFilters.get(i) != null && hostFilters.get(i).size() > 0) {
-                    for (int j = 0; j < hostFilters.get(i).size(); j++) {
+                    for(int j=0; j<hostFilters.get(i).size(); j++) {
                         Pattern onePattern = Pattern.compile("" + hostFilters.get(i).get(j));
                         if (!onePattern.matcher(url).find()) {
                             checkIsFilter = false;
@@ -143,5 +168,7 @@ public class VideoParseRuler {
         }
         return isFilter;
     }
+
+
 
 }
