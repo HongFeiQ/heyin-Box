@@ -20,6 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import dalvik.system.DexClassLoader;
 import okhttp3.Response;
+import com.github.tvbox.osc.reflect.Reflect;
 
 public class JarLoader {
     private ConcurrentHashMap<String, DexClassLoader> classLoaders = new ConcurrentHashMap<>();
@@ -143,7 +144,8 @@ public class JarLoader {
         if (classLoader == null)
             return new SpiderNull();
         try {
-            Spider sp = (Spider) classLoader.loadClass("com.github.catvod.spider." + clsKey).newInstance();
+            //Spider sp = (Spider) classLoader.loadClass("com.github.catvod.spider." + clsKey).newInstance();
+            Spider sp = Reflect.onClass(classLoader.loadClass("com.github.catvod.spider." + clsKey)).create().get();
             sp.init(App.getInstance(), ext);
             if (!jar.isEmpty()) {
                 sp.homeContent(false); // 增加此行 应该可以解决部分写的有问题源的历史记录问题 但会增加这个源的首次加载时间 不需要可以已删掉
