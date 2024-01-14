@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/live_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,6 +14,24 @@
         android:id="@+id/mVideoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_selected_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="20dp"
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        android:focusable="false"
+        android:shadowColor="@color/color_000000_80"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="1"
+        android:textColor="@android:color/white"
+        android:textSize="96sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/tvLeftChannelListLayout"
@@ -124,7 +143,8 @@
             android:onClick="divLoadEpgR"
             android:orientation="vertical"
             android:paddingTop="@dimen/vs_15"
-            android:paddingBottom="@dimen/vs_15">
+            android:paddingBottom="@dimen/vs_15"
+            tools:ignore="TouchTargetSizeCheck">
 
             <TextView
                 android:layout_width="20dp"
@@ -139,7 +159,8 @@
                 android:text="节 目"
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/ts_18"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
 
             <ImageView
                 android:layout_width="20dp"
@@ -162,7 +183,8 @@
                 android:text="信 息"
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/ts_18"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="TextSizeCheck" />
         </LinearLayout>
 
         <LinearLayout
@@ -375,7 +397,8 @@
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_20"
                     android:textStyle="normal"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    tools:ignore="TextSizeCheck" />
 
                 <TextView
                     android:id="@+id/tv_channel_number"
@@ -397,7 +420,8 @@
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_20"
                     android:textStyle="bold"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    tools:ignore="TextSizeCheck" />
 
                 <com.github.tvbox.osc.ui.tv.widget.MarqueeTextView
                     android:id="@+id/tv_channel_name"
@@ -418,7 +442,8 @@
                     android:text="Channel 1"
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_20"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
 
                 <TextView
                     android:id="@+id/tv_size"
@@ -442,7 +467,8 @@
                     android:text="1920 x 1080"
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_15"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
 
                 <TextView
                     android:id="@+id/tv_source"
@@ -464,7 +490,8 @@
                     android:text="源 1/1"
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_15"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
 
             </LinearLayout>
 
@@ -494,7 +521,8 @@
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_20"
                     android:textStyle="normal"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    tools:ignore="TextSizeCheck" />
 
                 <com.github.tvbox.osc.ui.tv.widget.MarqueeTextView
                     android:id="@+id/tv_next_program_name"
@@ -516,7 +544,8 @@
                     android:text="No information"
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_20"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    tools:ignore="TextSizeCheck" />
             </LinearLayout>
 
             <LinearLayout
@@ -645,7 +674,8 @@
         android:clickable="true"
         android:focusable="false"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck">
 
         <ImageView
             android:layout_width="@dimen/vs_40"

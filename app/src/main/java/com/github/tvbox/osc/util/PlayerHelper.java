@@ -13,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
-import xyz.doikki.videoplayer.aliplayer.AliyunMediaPlayerFactory;
 import xyz.doikki.videoplayer.player.AndroidMediaPlayerFactory;
 import xyz.doikki.videoplayer.player.PlayerFactory;
 import xyz.doikki.videoplayer.player.VideoView;
@@ -22,6 +21,19 @@ import xyz.doikki.videoplayer.render.TextureRenderViewFactory;
 
 public class PlayerHelper {
     public static void updateCfg(VideoView videoView, JSONObject playerCfg) {
+        updateCfg(videoView, playerCfg, -1);
+    }
+
+    public static String getDisplaySpeed(long speed) {
+        if (speed > 1048576)
+            return (speed / 1048576) + "Mb/s";
+        else if (speed > 1024)
+            return (speed / 1024) + "Kb/s";
+        else
+            return speed > 0 ? speed + "B/s" : "";
+    }
+
+    public static void updateCfg(VideoView videoView, JSONObject playerCfg, int forcePlayerType) {
         int playerType = Hawk.get(HawkConfig.PLAY_TYPE, 0);
         int renderType = Hawk.get(HawkConfig.PLAY_RENDER, 0);
         String ijkCode = Hawk.get(HawkConfig.IJK_CODEC, "软解码");
@@ -34,6 +46,7 @@ public class PlayerHelper {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        if (forcePlayerType >= 0) playerType = forcePlayerType;
         IJKCode codec = ApiConfig.get().getIJKCodec(ijkCode);
         PlayerFactory playerFactory;
         if (playerType == 1) {
@@ -50,8 +63,7 @@ public class PlayerHelper {
                     return new EXOmPlayer(context);
                 }
             };
-        } else if (playerType == 3) {
-            playerFactory = AliyunMediaPlayerFactory.create();
+
         } else {
             playerFactory = AndroidMediaPlayerFactory.create();
         }
@@ -88,8 +100,7 @@ public class PlayerHelper {
                     return new EXOmPlayer(context);
                 }
             };
-        } else if (playType == 3) {
-            playerFactory = AliyunMediaPlayerFactory.create();
+
         } else {
             playerFactory = AndroidMediaPlayerFactory.create();
         }
@@ -117,14 +128,6 @@ public class PlayerHelper {
             return "IJK";
         } else if (playType == 2) {
             return "Exo";
-        } else if (playType == 3) {
-            return "阿里";
-        } else if (playType == 10) {
-            return "MX";
-        } else if (playType == 11) {
-            return "Reex";
-        } else if (playType == 12) {
-            return "Kodi";
         } else {
             return "系统";
         }
@@ -162,4 +165,6 @@ public class PlayerHelper {
         }
         return scaleText;
     }
+
+
 }

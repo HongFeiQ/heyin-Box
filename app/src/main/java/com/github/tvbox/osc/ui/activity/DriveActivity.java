@@ -32,6 +32,7 @@ import com.github.tvbox.osc.ui.dialog.WebdavDialog;
 import com.github.tvbox.osc.util.FastClickCheckUtil;
 import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.StorageDriveType;
+import com.github.tvbox.osc.util.StringUtils;
 import com.github.tvbox.osc.viewmodel.drive.AbstractDriveViewModel;
 import com.github.tvbox.osc.viewmodel.drive.AlistDriveViewModel;
 import com.github.tvbox.osc.viewmodel.drive.LocalDriveViewModel;
@@ -45,7 +46,6 @@ import com.obsez.android.lib.filechooser.ChooserDialog;
 import com.orhanobut.hawk.Hawk;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
-import com.whl.quickjs.wrapper.JSUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -473,7 +473,7 @@ public class DriveActivity extends BaseActivity {
                 });
             }
         });
-        if (JSUtils.isNotEmpty(path)) {
+        if (StringUtils.isNotEmpty(path)) {
             this.txtTitle.setText(path);
         }
     }

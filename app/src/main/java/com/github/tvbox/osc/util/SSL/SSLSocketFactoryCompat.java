@@ -5,7 +5,6 @@ import android.os.Build;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -26,25 +25,14 @@ import javax.net.ssl.X509TrustManager;
 public class SSLSocketFactoryCompat extends SSLSocketFactory {
     // 自定义一个信任所有证书的TrustManager，添加SSLSocketFactory的时候要用到
     public static final X509TrustManager trustAllCert = new X509TrustManager() {
-        // @Override
-        //  public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
-        //  }
         @Override
         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
         }
 
-        //  @Override
-        // public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
-        // }
         @Override
         public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
         }
 
-        // @Override
-        // public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-        //     return new java.security.cert.X509Certificate[]{};
-        // }
-        // };
         @Override
         public java.security.cert.X509Certificate[] getAcceptedIssuers() {
             return new java.security.cert.X509Certificate[]{};
@@ -53,7 +41,7 @@ public class SSLSocketFactoryCompat extends SSLSocketFactory {
     // Android 5.0+ (API level21) provides reasonable default settings
     // but it still allows SSLv3
     // https://developer.android.com/about/versions/android-5.0-changes.html#ssl
-    static String protocols[] = null, cipherSuites[] = null;
+    static String[] protocols = null, cipherSuites = null;
 
     static {
         try {
@@ -107,7 +95,7 @@ public class SSLSocketFactoryCompat extends SSLSocketFactory {
         }
     }
 
-    private SSLSocketFactory defaultFactory;
+    private final SSLSocketFactory defaultFactory;
 
     public SSLSocketFactoryCompat(X509TrustManager tm) {
         try {
@@ -150,7 +138,7 @@ public class SSLSocketFactoryCompat extends SSLSocketFactory {
     }
 
     @Override
-    public Socket createSocket(String host, int port) throws IOException, UnknownHostException {
+    public Socket createSocket(String host, int port) throws IOException {
         Socket ssl = defaultFactory.createSocket(host, port);
         if (ssl instanceof SSLSocket)
             upgradeTLS((SSLSocket) ssl);
@@ -158,7 +146,7 @@ public class SSLSocketFactoryCompat extends SSLSocketFactory {
     }
 
     @Override
-    public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException, UnknownHostException {
+    public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException {
         Socket ssl = defaultFactory.createSocket(host, port, localHost, localPort);
         if (ssl instanceof SSLSocket)
             upgradeTLS((SSLSocket) ssl);

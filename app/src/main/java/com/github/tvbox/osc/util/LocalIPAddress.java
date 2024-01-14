@@ -132,8 +132,8 @@ public class LocalIPAddress {
         boolean hasWifoCon = false;
         boolean hasMobileCon = false;
 
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
-        @SuppressLint("MissingPermission") NetworkInfo[] netInfos = cm.getAllNetworkInfo();
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfos = cm.getAllNetworkInfo();
         for (NetworkInfo net : netInfos) {
 
             String type = net.getTypeName();

@@ -2,7 +2,7 @@ package com.github.tvbox.osc.util;
 
 public class HistoryHelper {
 
-    private static Integer[] hisNumArray = {20, 40, 60, 80, 100};
+    private static final Integer[] hisNumArray = {20, 40, 60, 80, 100};
 
     public static final String getHomeRecName(int index) {
         Integer value = getHisNum(index);

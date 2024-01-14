@@ -45,6 +45,7 @@
     <string name="det_actor">Cast</string>
     <string name="det_dir">Director</string>
     <string name="det_des"></string>
+    <string name="det_desc">简介</string>
 
     // Settings Menu Page //
     <string name="mn_home_show">Show Source</string>
@@ -58,7 +59,7 @@
     <string name="mn_play_decode">Decode</string>
     <string name="mn_search">Search Display</string>
     <string name="mn_ratio">Screen Ratio</string>
-    <string name="mn_pip">PIP</string>
+    <string name="mn_bgplay">Bgplay</string>
     <string name="mn_preview">Preview Window</string>
     <string name="mn_webview">WebView</string>
     <string name="mn_render">Render</string>
@@ -67,7 +68,10 @@
     <string name="mn_locale">Language</string>
     <string name="mn_theme">Theme</string>
     <string name="mn_about">HE影声明</string>
-    <string name="mn_purify">Purify</string>
+    <string name="mn_purify">广告过滤</string>
+    <string name="mn_reset">重置到出厂</string>
+    <string name="mn_about_txt">本软件只提供聚合展示功能，所有资源来自网上, 软件不参与任何制作, 上传, 储存, 下载等内容. 软件仅供学习参考, 请于安装后24小时内删除。HE影于2023年12月\n</string>
+    <string name="mn_fastsearch">聚搜</string>
 
     // Settings Dialog Pop-Up //
     <string name="dia_source">Select Source</string>
@@ -88,6 +92,7 @@
     <string name="dia_locale">Select Language</string>
     <string name="dia_theme">Select Theme</string>
     <string name="dia_confirm">Confirm to Clear All ?</string>
+    <string name="dia_reset">确定重置将清除配置</string>
 
     // Settings Backup Restore Page //
     <string name="set_bkup_ok">Backup Success</string>
@@ -110,12 +115,15 @@
     <string name="act_drive">Drives</string>
     <string name="act_hist">History</string>
     <string name="act_hist_sel">Select to Remove</string>
+    <string name="act_live_play_empty_live_url">直播地址未配置，请前往设置界面配置哦</string>
+    <string name="act_live_play_empty_channel">频道列表为空</string>
     <string name="act_search">Search</string>
     <string name="act_search_clr">Clear</string>
     <string name="act_search_del">Backspace</string>
     <string name="act_search_rem">Remote</string>
     <string name="act_search_trend">Trending</string>
     <string name="act_search_txt">Enter Search Title</string>
+    <string name="act_live_play_network_error">直播地址网络请求失败</string>
 
     // Search Page //
     <string name="search_input">Input cannot be blank</string>
@@ -157,17 +165,5 @@
     <string name="exo_track_role_closed_captions">CC</string>
     <string name="exo_track_bitrate">%1$.2f Mbps</string>
     <string name="exo_item_list">%1$s，%2$s</string>
-    <string-array name="doh_name">
-        <item>System</item>
-        <item>Tencent</item>
-        <item>Alibaba</item>
-        <item>360</item>
-    </string-array>
 
-    <string-array name="doh_url">
-        <item />
-        <item>https://doh.pub/dns-query</item>
-        <item>https://dns.alidns.com/dns-query</item>
-        <item>https://doh.360.cn/dns-query</item>
-    </string-array>
 </resources>

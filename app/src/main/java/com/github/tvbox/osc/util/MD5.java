@@ -7,7 +7,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -23,7 +23,7 @@ import java.security.NoSuchAlgorithmException;
  * @version 1.0.0 <br/>
  */
 public class MD5 {
-    private static final char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    private static final char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'a', 'b', 'c', 'd', 'e', 'f'};
     /**
      * 消息摘要.
@@ -61,7 +61,7 @@ public class MD5 {
             sDigest.update(bytes);
             byte[] md = sDigest.digest();
             int j = md.length;
-            char str[] = new char[j * 2];
+            char[] str = new char[j * 2];
             int k = 0;
             for (byte byte0 : md) {
                 str[k++] = hexDigits[byte0 >>> 4 & 0xf];
@@ -75,7 +75,7 @@ public class MD5 {
     }
 
     public static String getFileMd5(File f) {
-        StringBuffer sb = new StringBuffer("");
+        StringBuffer sb = new StringBuffer();
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] buffer = new byte[4096];
@@ -85,7 +85,7 @@ public class MD5 {
                 md.update(buffer, 0, len);
             }
             fis.close();
-            byte b[] = md.digest();
+            byte[] b = md.digest();
             int d;
             for (int i = 0; i < b.length; i++) {
                 d = b[i];
@@ -146,16 +146,11 @@ public class MD5 {
             Log.e("MD5", "参数strSource不能为空");
             return null;
         }
-        try {
-            byte[] md5Bytes = sDigest.digest(strSource
-                    .getBytes("utf-8"));
-            byte[] encryptBytes = Base64.encode(md5Bytes, Base64.DEFAULT);
-            String strEncrypt = new String(encryptBytes, "utf-8");
-            return strEncrypt.substring(0, strEncrypt.length() - 1); // 截断Base64产生的换行符
-        } catch (UnsupportedEncodingException e) {
-            Log.e("MD5", "加密模块暂不支持此字符集合" + e);
-        }
-        return null;
+        byte[] md5Bytes = sDigest.digest(strSource
+                .getBytes(StandardCharsets.UTF_8));
+        byte[] encryptBytes = Base64.encode(md5Bytes, Base64.DEFAULT);
+        String strEncrypt = new String(encryptBytes, StandardCharsets.UTF_8);
+        return strEncrypt.substring(0, strEncrypt.length() - 1); // 截断Base64产生的换行符
     }
 
     public static String encrypt4login(final String strSource, String appSecert) {

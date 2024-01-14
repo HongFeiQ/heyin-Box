@@ -8,6 +8,7 @@ import com.github.tvbox.osc.subtitle.exception.FatalParsingException;
 import com.github.tvbox.osc.subtitle.format.FormatASS;
 import com.github.tvbox.osc.subtitle.format.FormatSRT;
 import com.github.tvbox.osc.subtitle.format.FormatSTL;
+import com.github.tvbox.osc.subtitle.format.TimedTextFileFormat;
 import com.github.tvbox.osc.subtitle.model.TimedTextObject;
 import com.github.tvbox.osc.subtitle.runtime.AppTaskExecutor;
 import com.github.tvbox.osc.util.FileUtils;
@@ -124,7 +125,7 @@ public class SubtitleLoader {
             referer = "https://secure.assrt.net/";
         }
         String ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36";
-        Response response = OkGo.<String>get(remoteSubtitlePath)
+        Response response = OkGo.<String>get(remoteSubtitlePath.split("#")[0])
                 .headers("Referer", referer)
                 .headers("User-Agent", ua)
                 .execute();
@@ -155,9 +156,13 @@ public class SubtitleLoader {
             Uri uri = Uri.parse(remoteSubtitlePath);
             filePath = uri.getPath();
         }
+        if (!filePath.contains(".") && remoteSubtitlePath.contains("#")) {
+            filePath = remoteSubtitlePath.split("#")[1];
+            filePath = URLDecoder.decode(filePath);
+        }
         SubtitleLoadSuccessResult subtitleLoadSuccessResult = new SubtitleLoadSuccessResult();
         subtitleLoadSuccessResult.timedTextObject = loadAndParse(is, filePath);
-        subtitleLoadSuccessResult.fileName = filename;
+        subtitleLoadSuccessResult.fileName = filePath;
         subtitleLoadSuccessResult.content = content;
         subtitleLoadSuccessResult.subtitlePath = remoteSubtitlePath;
         return subtitleLoadSuccessResult;
@@ -176,6 +181,7 @@ public class SubtitleLoader {
         detector.handleData(bytes, 0, bytes.length);
         detector.dataEnd();
         String encoding = detector.getDetectedCharset();
+        if (TextUtils.isEmpty(encoding)) encoding = "UTF-8";
         String content = new String(bytes, encoding);
         InputStream is = new ByteArrayInputStream(content.getBytes());
         String filePath = file.getPath();
@@ -190,7 +196,10 @@ public class SubtitleLoader {
     private static TimedTextObject loadAndParse(final InputStream is, final String filePath)
             throws IOException, FatalParsingException {
         String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-        String ext = fileName.substring(fileName.lastIndexOf("."));
+        String ext = "";
+        if (fileName.lastIndexOf(".") > 0) {
+            ext = fileName.substring(fileName.lastIndexOf("."));
+        }
         Log.d(TAG, "parse: name = " + fileName + ", ext = " + ext);
         Reader reader = new UnicodeReader(is); //处理有BOM头的utf8
         InputStream newInputStream = new ReaderInputStream(reader, Charset.defaultCharset());
@@ -203,7 +212,16 @@ public class SubtitleLoader {
         } else if (".ttml".equalsIgnoreCase(ext)) {
             return new FormatSTL().parseFile(fileName, newInputStream);
         }
-        return new FormatSRT().parseFile(fileName, newInputStream);
+        TimedTextFileFormat[] arr = {new FormatSRT(), new FormatASS(), new FormatSTL(), new FormatSTL()};
+        for (TimedTextFileFormat oneFormat : arr) {
+            try {
+                TimedTextObject obj = oneFormat.parseFile(fileName, newInputStream);
+                return obj;
+            } catch (Exception e) {
+                continue;
+            }
+        }
+        return null;
     }
 
     public SubtitleLoadSuccessResult loadSubtitle(String path) {

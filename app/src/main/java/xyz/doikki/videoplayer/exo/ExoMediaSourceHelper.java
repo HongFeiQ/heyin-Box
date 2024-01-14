@@ -17,6 +17,7 @@ import androidx.media3.datasource.cache.Cache;
 import androidx.media3.datasource.cache.CacheDataSource;
 import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor;
 import androidx.media3.datasource.cache.SimpleCache;
+import androidx.media3.datasource.okhttp.OkHttpDataSource;
 import androidx.media3.datasource.rtmp.RtmpDataSource;
 import androidx.media3.exoplayer.dash.DashMediaSource;
 import androidx.media3.exoplayer.hls.HlsMediaSource;
@@ -33,8 +34,8 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import okhttp3.Call;
 import okhttp3.OkHttpClient;
-import okhttp3.OkHttpDataSource;
 
 public final class ExoMediaSourceHelper {
 
@@ -138,9 +139,9 @@ public final class ExoMediaSourceHelper {
     @SuppressLint("UnsafeOptInUsageError")
     private int inferContentType(String fileName) {
         fileName = fileName.toLowerCase();
-        if (fileName.contains(".mpd")) {
+        if (fileName.contains(".mpd") || fileName.contains("type=mpd")) {
             return C.TYPE_DASH;
-        } else if (fileName.contains(".m3u8")) {
+        } else if (fileName.contains("m3u8")) {
             return C.TYPE_HLS;
         } else {
             return C.TYPE_OTHER;
@@ -183,7 +184,7 @@ public final class ExoMediaSourceHelper {
     @SuppressLint("UnsafeOptInUsageError")
     private DataSource.Factory getHttpDataSourceFactory() {
         if (mHttpDataSourceFactory == null) {
-            mHttpDataSourceFactory = new OkHttpDataSource.Factory(mOkClient)
+            mHttpDataSourceFactory = new OkHttpDataSource.Factory((Call.Factory) mOkClient)
                     .setUserAgent(mUserAgent)/*
                     .setAllowCrossProtocolRedirects(true)*/;
         }
@@ -218,5 +219,4 @@ public final class ExoMediaSourceHelper {
     public void setCache(Cache cache) {
         this.mCache = cache;
     }
-
 }

@@ -1,21 +1,3 @@
-/*
- * Copyright (C) 2006 Bilibili
- * Copyright (C) 2006 The Android Open Source Project
- * Copyright (C) 2013 Zhang Rui <bbcallen@gmail.com>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package tv.danmaku.ijk.media.player;
 
 import android.annotation.SuppressLint;
@@ -224,13 +206,19 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
                 if (libLoader == null)
                     libLoader = sLocalLibLoader;
 
-                try {
-                    libLoader.loadLibrary("ijkffmpeg");
-                    libLoader.loadLibrary("ijksdl");
-                } catch (Throwable throwable) {
-
-                }
+                //FF4
+                libLoader.loadLibrary("ijkffmpeg");
+                libLoader.loadLibrary("ijksdl");
                 libLoader.loadLibrary("ijkplayer");
+
+                //FF5
+               /* libLoader.loadLibrary("ffmpeg");
+                libLoader.loadLibrary("ijksdl");
+                libLoader.loadLibrary("ijkplayer");
+                libLoader.loadLibrary("exoffmpeg");
+                libLoader.loadLibrary("media3ffmpeg");
+
+                */
                 mIsLibLoaded = true;
 
             }
@@ -1281,23 +1269,8 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
                     if (msg.obj == null) {
                         player.notifyOnTimedText(null);
                     } else {
-//                        IjkTimedText text = new IjkTimedText(new Rect(0, 0, 1, 1), (String) msg.obj);
-//                        player.notifyOnTimedText(text);
-                        if (msg.arg1 == 0) {// normal
-                            IjkTimedText text = new IjkTimedText(new Rect(0, 0, 1, 1), (String) msg.obj);
-                            player.notifyOnTimedText(text);
-                        } else if (msg.arg1 == 1) { // ass
-                            IjkTimedText text = new IjkTimedText(new Rect(0, 0, 1, 1), (String) msg.obj);
-                            player.notifyOnTimedText(text);
-                        } else if (msg.arg1 == 2) { // bitmap
-                            if (msg.arg2 > 0 && msg.obj instanceof int[] && ((int[]) msg.obj).length == msg.arg2) {
-                                IjkTimedText text = new IjkTimedText((int[]) msg.obj);
-                                player.notifyOnTimedText(text);
-                            } else {
-                                IjkTimedText text = new IjkTimedText(null, "");
-                                player.notifyOnTimedText(text);
-                            }
-                        }
+                        IjkTimedText text = new IjkTimedText(new Rect(0, 0, 1, 1), (String) msg.obj);
+                        player.notifyOnTimedText(text);
                     }
                     return;
                 case MEDIA_NOP: // interface test message - ignore

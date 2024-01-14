@@ -18,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-/** @noinspection ALL*/
 public class SelectDialogAdapter<T> extends ListAdapter<T, SelectDialogAdapter.SelectViewHolder> {
 
     public static DiffUtil.ItemCallback<String> stringDiff = new DiffUtil.ItemCallback<String>() {

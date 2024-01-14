@@ -22,7 +22,6 @@ import com.github.tvbox.osc.util.AES;
 import com.github.tvbox.osc.util.AdBlocker;
 import com.github.tvbox.osc.util.DefaultConfig;
 import com.github.tvbox.osc.util.HawkConfig;
-import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.MD5;
 import com.github.tvbox.osc.util.VideoParseRuler;
 import com.google.gson.Gson;
@@ -34,7 +33,6 @@ import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.orhanobut.hawk.Hawk;
 import com.undcover.freedom.pyramid.PythonLoader;
-import com.undcover.freedom.pyramid.TxtSubscribe;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -73,6 +71,7 @@ public class ApiConfig {
     private List<String> vipParseFlags;
     private List<IJKCode> ijkCodes;
     private String spider = null;
+    private PythonLoader pyLoader = PythonLoader.getInstance();
 
     private ApiConfig() {
         sourceBeanList = new LinkedHashMap<>();
@@ -143,7 +142,7 @@ public class ApiConfig {
         // Embedded Source : Update in Strings.xml if required
         String apiUrl = Hawk.get(HawkConfig.API_URL, HomeActivity.getRes().getString(R.string.app_source));
         if (apiUrl.isEmpty()) {
-            callback.error("首次使用源地址为空：");
+            callback.error("源地址为空");
             return;
         }
         File cache = new File(App.getInstance().getFilesDir().getAbsolutePath() + "/" + MD5.encode(apiUrl));
@@ -283,6 +282,8 @@ public class ApiConfig {
                     @Override
                     public void onSuccess(Response<File> response) {
                         if (response.body().exists()) {
+                            jsLoader.load();
+                            pyLoader.load();
                             if (jarLoader.load(response.body().getAbsolutePath())) {
                                 callback.success();
                             } else {
@@ -315,7 +316,7 @@ public class ApiConfig {
 
     private void parseJson(String apiUrl, String jsonStr) {
         //pyramid-add-start
-        PythonLoader.getInstance().setConfig(jsonStr);
+        // PythonLoader.getInstance().setConfig(jsonStr);
         //pyramid-add-end
 
         JsonObject infoJson = new Gson().fromJson(jsonStr, JsonObject.class);
@@ -664,15 +665,22 @@ public class ApiConfig {
     }
 
     public Spider getCSP(SourceBean sourceBean) {
-
         // Getting js api
         if (sourceBean.getApi().endsWith(".js") || sourceBean.getApi().contains(".js?")) {
             return jsLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt(), sourceBean.getJar());
         }
         //pyramid-add-start
-        if (sourceBean.getApi().startsWith("py_")) {
+        // if (sourceBean.getApi().startsWith("py_")) {
+        //     try {
+        //         return PythonLoader.getInstance().getSpider(sourceBean.getKey(), sourceBean.getExt());
+        //     } catch (Exception e) {
+        //         e.printStackTrace();
+        //         return new SpiderNull();
+        //     }
+        // }
+        if (sourceBean.getApi().toLowerCase().endsWith(".py")) {
             try {
-                return PythonLoader.getInstance().getSpider(sourceBean.getKey(), sourceBean.getExt());
+                return pyLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt());
             } catch (Exception e) {
                 e.printStackTrace();
                 return new SpiderNull();
@@ -682,40 +690,40 @@ public class ApiConfig {
         return jarLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt(), sourceBean.getJar());
     }
 
-    public Object[] proxyLocal(Map param) {
+    public Object[] proxyLocal(Map<String, String> param) {
         //pyramid-add-start
+        // try {
+        //      if (param.containsKey("api")) {
+        //          String doStr = param.get("do").toString();
+        //           if (doStr.equals("ck"))
+        //               return PythonLoader.getInstance().proxyLocal("", "", param);
+        //            SourceBean sourceBean = ApiConfig.get().getSource(doStr);
+        //            return PythonLoader.getInstance().proxyLocal(sourceBean.getKey(), sourceBean.getExt(), param);
+        //         } else {
+        //             String doStr = param.get("do").toString();
+        //             if (doStr.equals("live"))
+        //                 return PythonLoader.getInstance().proxyLocal("", "", param);
+        //         }
+        //     } catch (Exception e) {
+        //         e.printStackTrace();
+        //    }
         try {
+            String doStr = (String) param.get("do");
+            if (doStr.equals("js")) {
+                return jsLoader.proxyInvoke(param);
+            }
             if (param.containsKey("api")) {
-                String doStr = param.get("do").toString();
                 if (doStr.equals("ck"))
-                    return PythonLoader.getInstance().proxyLocal("", "", param);
+                    return pyLoader.proxyLocal("", "", param);
                 SourceBean sourceBean = ApiConfig.get().getSource(doStr);
-                return PythonLoader.getInstance().proxyLocal(sourceBean.getKey(), sourceBean.getExt(), param);
+                return pyLoader.proxyLocal(sourceBean.getKey(), sourceBean.getExt(), param);
             } else {
-                String doStr = param.get("do").toString();
-                if (doStr.equals("live"))
-                    return PythonLoader.getInstance().proxyLocal("", "", param);
+                if (doStr.equals("live")) return pyLoader.proxyLocal("", "", param);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         //pyramid-add-end
-        try {
-            String doStr = (String) param.get("do");
-            if (doStr.equals("live")) {
-                String type = (String) param.get("type");
-                if (type.equals("txt")) {
-                    String ext = (String) param.get("ext");
-                    ext = new String(Base64.decode(ext, Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP), "UTF-8");
-                    return TxtSubscribe.load(ext);
-                }
-            }
-            if (doStr.equals("js")) {
-                return jsLoader.proxyInvoke(param);
-            }
-        } catch (Exception e) {
-            LOG.e("proxyLocal", e);
-        }
 
         return jarLoader.proxyInvoke(param);
     }

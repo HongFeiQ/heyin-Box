@@ -178,7 +178,12 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
                         jumpActivity(DetailActivity.class, bundle);
                     }
                 } else {
-                    Intent newIntent = new Intent(mContext, SearchActivity.class);
+                    Intent newIntent;
+                    if (Hawk.get(HawkConfig.FAST_SEARCH_MODE, false)) {
+                        newIntent = new Intent(mContext, FastSearchActivity.class);
+                    } else {
+                        newIntent = new Intent(mContext, SearchActivity.class);
+                    }
                     newIntent.putExtra("title", vod.name);
                     newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     mActivity.startActivity(newIntent);
@@ -214,7 +219,6 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
 
             @Override
             public void onItemSelected(TvRecyclerView parent, View itemView, int position) {
-                //itemView.animate().scaleX(1.05f).scaleY(1.05f).setDuration(300).setInterpolator(new BounceInterpolator()).start();
                 itemView.animate().scaleX(1.2f).scaleY(1.2f).setDuration(300).setInterpolator(new BounceInterpolator()).start();
             }
 
@@ -233,7 +237,6 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
 
             @Override
             public void onItemSelected(TvRecyclerView parent, View itemView, int position) {
-                //itemView.animate().scaleX(1.05f).scaleY(1.05f).setDuration(300).setInterpolator(new BounceInterpolator()).start();
                 itemView.animate().scaleX(1.2f).scaleY(1.2f).setDuration(300).setInterpolator(new BounceInterpolator()).start();
             }
 
@@ -317,6 +320,7 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
                 vod.name = obj.get("title").getAsString();
                 vod.note = obj.get("rate").getAsString();
                 vod.pic = obj.get("cover").getAsString() + "@Referer=https://movie.douban.com/@User-Agent=" + userAgent;
+                // vod.pic = obj.get("cover").getAsString();
                 result.add(vod);
             }
         } catch (Throwable th) {

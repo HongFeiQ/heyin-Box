@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: J (1)">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/thunder.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

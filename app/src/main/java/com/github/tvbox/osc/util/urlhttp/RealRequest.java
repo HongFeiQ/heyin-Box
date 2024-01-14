@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +60,7 @@ class RealRequest {
             }
             conn.connect();// 连接，以上所有的请求配置必须在这个API调用之前
             if (!TextUtils.isEmpty(body)) {
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), StandardCharsets.UTF_8));
                 writer.write(body);
                 writer.close();
             }
@@ -197,19 +198,18 @@ class RealRequest {
      * 上传文件时得到一定格式的拼接字符串
      */
     private String getFileParamsString(File file, String fileKey, String fileType) {
-        StringBuffer strBuf = new StringBuffer();
-        strBuf.append(LINE_END);
-        strBuf.append(TWO_HYPHENS);
-        strBuf.append(BOUNDARY);
-        strBuf.append(LINE_END);
-        strBuf.append("Content-Disposition: form-data; name=\"" + fileKey + "\"; filename=\"" + file.getName() + "\"");
-        strBuf.append(LINE_END);
-        strBuf.append("Content-Type: " + fileType);
-        strBuf.append(LINE_END);
-        strBuf.append("Content-Lenght: " + file.length());
-        strBuf.append(LINE_END);
-        strBuf.append(LINE_END);
-        return strBuf.toString();
+        String strBuf = LINE_END +
+                TWO_HYPHENS +
+                BOUNDARY +
+                LINE_END +
+                "Content-Disposition: form-data; name=\"" + fileKey + "\"; filename=\"" + file.getName() + "\"" +
+                LINE_END +
+                "Content-Type: " + fileType +
+                LINE_END +
+                "Content-Lenght: " + file.length() +
+                LINE_END +
+                LINE_END;
+        return strBuf;
     }
 
     /**

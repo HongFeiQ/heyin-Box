@@ -28,6 +28,7 @@ public class HawkConfig {
     public static final String HOME_LOCALE = "language";                 // 0 中文 1 英文
     public static final String HOME_SEARCH_POSITION = "search_position"; // true=Up, false=Down
     public static final String HOME_MENU_POSITION = "menu_position";     // true=Up, false=Down
+    public static final String HOME_DEFAULT_SHOW = "home_default_show";  //启动时直接进直播的开关
 
     // Player Settings
     public static final String SHOW_PREVIEW = "show_preview";
@@ -58,7 +59,6 @@ public class HawkConfig {
     public static final String LIVE_SHOW_NET_SPEED = "live_show_net_speed";
     public static final String LIVE_SHOW_TIME = "live_show_time";
     public static final String LIVE_SKIP_PASSWORD = "live_skip_password";
-
     public static final String API_MAP = "api_map";
     public static final String API_NAME_HISTORY = "api_name_history";
     public static final String API_NAME = "api_name";
@@ -66,7 +66,9 @@ public class HawkConfig {
     public static final String STORE_API_NAME = "store_api_name";
     public static final String STORE_API_NAME_HISTORY = "store_api_name_history";
     public static final String STORE_API_MAP = "store_api_map";
-
+    public static final String BACKGROUND_PLAY_TYPE = "background_play_type";
+    public static final String FAST_SEARCH_MODE = "fast_search_mode";
+    public static final String SCREEN_DISPLAY = "screen_display";
     public static boolean hotVodDelete;
 
     public static boolean isDebug() {

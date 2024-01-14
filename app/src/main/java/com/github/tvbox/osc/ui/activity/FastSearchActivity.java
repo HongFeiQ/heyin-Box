@@ -36,6 +36,7 @@ import com.lzy.okgo.model.Response;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
+import com.undcover.freedom.pyramid.PythonLoader;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -372,7 +373,6 @@ public class FastSearchActivity extends BaseActivity {
                 searchExecutorService.shutdownNow();
                 searchExecutorService = null;
                 JsLoader.stopAll();
-                searchExecutorService = null;
             }
         } catch (Throwable th) {
             th.printStackTrace();
@@ -492,6 +492,7 @@ public class FastSearchActivity extends BaseActivity {
                 searchExecutorService.shutdownNow();
                 searchExecutorService = null;
                 JsLoader.load();
+                PythonLoader.getInstance().load();
             }
         } catch (Throwable th) {
             th.printStackTrace();

@@ -3,14 +3,12 @@
 # 对于一些基本指令的添加
 #
 #############################################
--optimizationpasses 5                                       #指定代码压缩级别
--dontusemixedcaseclassnames                                 #混淆时不会产生形形色色的类名
--dontskipnonpubliclibraryclasses                            #指定不忽略非公共类库
--dontpreverify                                              #不预校验，如果需要预校验，是-dontoptimize
--ignorewarnings                                             #屏蔽警告
--verbose                                                    #混淆时记录日志
-
-#-printmapping proguardMapping.txt
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+-dontpreverify
+-verbose
 -printmapping proguardMapping.txt
 -optimizations !code/simplification/cast,!field/*,!class/merging/*
 -keepattributes *Annotation*,InnerClasses
@@ -20,6 +18,7 @@
 -keepattributes LineNumberTable
 -renamesourcefileattribute SourceFile
 
+#混淆字典
 -obfuscationdictionary dictoO0.txt #自定义混淆字符
 -classobfuscationdictionary dictoO0.txt
 -packageobfuscationdictionary dictoO0.txt
@@ -222,12 +221,12 @@
 -keep class com.xunlei.downloadlib.** {*;}
 
 # quickjs引擎
--keep class com.whl.quickjs.wrapper.** {*;}
--keep class com.quickjs.android.** {*;}
+-keep class com.whl.quickjs.** {*;}
+
 # 支持影视的ali相关的jar
 -keep class com.google.gson.**{*;}
-# jsoup
--keep class org.jsoup.** {*;}
+# 某些类会反射调用zxing导致生成阿里云二维码报错
+-keep class com.google.zxing.** {*;}
 
 #阿里云播放器
 -keep class com.alivc.**{*;}
@@ -236,7 +235,7 @@
 -dontwarn com.alivc.**
 -dontwarn com.aliyun.**
 -dontwarn com.cicada.**
-#add py支持
+
 -keep public class com.undcover.freedom.pyramid.** { *; }
 -dontwarn com.undcover.freedom.pyramid.**
 -keep public class com.chaquo.python.** { *; }

@@ -109,6 +109,7 @@ public class BaseVideoView<P extends AbstractPlayer> extends FrameLayout
      * 循环播放
      */
     protected boolean mIsLooping;
+    protected boolean mPlayFromZeroPosition = false;
 
     public BaseVideoView(@NonNull Context context) {
         this(context, null);
@@ -188,9 +189,14 @@ public class BaseVideoView<P extends AbstractPlayer> extends FrameLayout
         if (mEnableAudioFocus) {
             mAudioFocusHelper = new AudioFocusHelper(this);
         }
-        //读取播放进度
-        if (mProgressManager != null) {
-            mCurrentPosition = mProgressManager.getSavedProgress(mProgressKey == null ? mUrl : mProgressKey);
+        if (!mPlayFromZeroPosition) {
+            //读取播放进度
+            if (mProgressManager != null) {
+                mCurrentPosition = mProgressManager.getSavedProgress(mProgressKey == null ? mUrl : mProgressKey);
+            }
+        } else {
+            mCurrentPosition = 0;
+            mPlayFromZeroPosition = false;
         }
         initPlayer();
         addDisplay();
@@ -663,6 +669,10 @@ public class BaseVideoView<P extends AbstractPlayer> extends FrameLayout
         if (mMediaPlayer != null) {
             mMediaPlayer.setLooping(looping);
         }
+    }
+
+    public void setPlayFromZeroPositionOnce(boolean mPlayFromZeroPosition) {
+        this.mPlayFromZeroPosition = mPlayFromZeroPosition;
     }
 
     /**

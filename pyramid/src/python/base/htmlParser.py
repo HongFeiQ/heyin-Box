@@ -1,12 +1,23 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# File  : htmlParser.py
+# Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
+# Date  : 2022/8/25
+# upDate  : 2022/11/17 支持 -- 剔除元素 多个剔除
+
 import ujson
 from pyquery import PyQuery as pq
 from urllib.parse import urljoin
 import re
 from jsonpath import jsonpath
 
+
+
 PARSE_CACHE = True  # 解析缓存
 NOADD_INDEX = ':eq|:lt|:gt|:first|:last|^body$|^#'  # 不自动加eq下标索引
 URLJOIN_ATTR = '(url|src|href|-original|-src|-play|-url)$'  # 需要自动urljoin的属性
+
+
 
 
 class jsoup:
@@ -32,6 +43,8 @@ class jsoup:
     def contains(self, text: str, match: str):
         # return match in text
         return text.find(match) > -1
+
+
 
     def parseHikerToJq(self, parse, first=False):
         """
@@ -59,6 +72,7 @@ class jsoup:
                 parse = f'{parse}:eq(0)'
 
         return parse
+
 
     def getParseInfo(self, nparse):
         """

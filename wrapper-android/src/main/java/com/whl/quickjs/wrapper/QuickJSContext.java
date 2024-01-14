@@ -415,7 +415,15 @@ public class QuickJSContext {
         return evaluate(context, script, fileName, moduleExtName, true);
     }
 
+    /* public Object evaluateModule(String script, String fileName) {
+         return evaluate(context, script, fileName, "default", true);
+     }
+
+     */
     public Object evaluateModule(String script, String fileName) {
+        if (TextUtils.isEmpty(script) || TextUtils.isEmpty(fileName)) {
+            throw new IllegalArgumentException("Script or file name cannot be empty");
+        }
         return evaluate(context, script, fileName, "default", true);
     }
 

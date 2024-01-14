@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,6 +21,7 @@
         android:tag="top_container">
 
         <LinearLayout
+            android:id="@+id/tv_top_line1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/vs_40"
             android:layout_marginTop="@dimen/vs_10"
@@ -55,7 +57,7 @@
                 android:shadowRadius="3"
                 android:tag="tv_title_top"
                 android:text="TvTitle"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/ts_26"
                 android:textStyle="bold"
                 android:visibility="visible"
@@ -71,6 +73,7 @@
                 android:tag="tv_speed_top">
 
                 <TextView
+                    android:id="@+id/tv_play_speed_top"
                     android:layout_width="@dimen/vs_70"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
@@ -83,11 +86,12 @@
                     android:shadowRadius="3"
                     android:tag="play_speed_top"
                     android:text="Speed"
-                    android:textColor="@color/color_FFFFFF"
+                    android:textColor="@color/color_FF90CA09"
                     android:textSize="@dimen/ts_22"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_MPBS_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
@@ -99,13 +103,14 @@
                     android:shadowDy="0"
                     android:shadowRadius="3"
                     android:text="Mbps"
-                    android:textColor="@color/color_FFFFFF"
+                    android:textColor="@color/color_FF90CA09"
                     android:textSize="@dimen/ts_16"
                     android:textStyle="bold"
                     tools:ignore="TextSizeCheck" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/tv_spin_top"
                 android:layout_width="@dimen/vs_45"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
@@ -131,6 +136,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/tv_top_line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/vs_5"
@@ -159,12 +165,69 @@
                 android:shadowDy="0"
                 android:shadowRadius="3"
                 android:tag="tv_resolution"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/ts_20"
                 android:textStyle="bold"
                 android:visibility="visible" />
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tv_top_r_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/vs_8"
+        android:layout_marginRight="@dimen/vs_35"
+        android:orientation="horizontal"
+        android:tag="tv_top_container"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_play_load_net_speed_right_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="@dimen/vs_5"
+            android:paddingRight="@dimen/vs_10"
+            android:tag="vod_control_pause_time"
+            android:text="0Kb/s"
+            android:textColor="@color/color_FF90CA09"
+            android:textSize="@dimen/ts_22"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_seek_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="@dimen/vs_5"
+            android:paddingRight="@dimen/vs_10"
+            android:tag="vod_control_pause_time"
+            android:text="00:00 | 00:00"
+            android:textColor="@color/color_FF90CA09"
+            android:textSize="@dimen/ts_22"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_system_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="@dimen/vs_5"
+            android:paddingRight="@dimen/vs_10"
+            android:tag="vod_control_pause_time"
+            android:text="00:00:00"
+            android:textColor="@color/color_FF90CA09"
+            android:textSize="@dimen/ts_22" />
     </LinearLayout>
 
     <LinearLayout
@@ -181,12 +244,14 @@
         android:tag="top_container_hide">
 
         <LinearLayout
+            android:id="@+id/tv_top_line1_hide"
             android:layout_width="match_parent"
             android:layout_height="@dimen/vs_40"
             android:layout_marginTop="@dimen/vs_10"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_title_top_hide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|left"
@@ -200,7 +265,7 @@
                 android:shadowDy="0"
                 android:shadowRadius="3"
                 android:tag="tv_title_top_hide"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/ts_26"
                 android:textStyle="bold" />
 
@@ -214,6 +279,7 @@
                 android:tag="tv_speed_top">
 
                 <TextView
+                    android:id="@+id/tv_play_speed_top_hide"
                     android:layout_width="@dimen/vs_70"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -226,11 +292,12 @@
                     android:shadowRadius="3"
                     android:tag="play_speed_top_hide"
                     android:text="Speed"
-                    android:textColor="@color/color_FFFFFF"
+                    android:textColor="@color/color_FF90CA09"
                     android:textSize="@dimen/ts_22"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_MPBS_top_hide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
@@ -242,13 +309,14 @@
                     android:shadowDy="0"
                     android:shadowRadius="3"
                     android:text="Mbps"
-                    android:textColor="@color/color_FFFFFF"
+                    android:textColor="@color/color_FF90CA09"
                     android:textSize="@dimen/ts_16"
                     android:textStyle="bold"
                     tools:ignore="TextSizeCheck" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/tv_spin_top_hide"
                 android:layout_width="@dimen/vs_45"
                 android:layout_height="@dimen/vs_40"
                 android:layout_gravity="top"
@@ -284,6 +352,7 @@
         tools:visibility="visible">
 
         <LinearLayout
+            android:id="@+id/ll_pause"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/vs_70"
             android:layout_gravity="right|top"
@@ -306,6 +375,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_pause_progress_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -316,12 +386,13 @@
                     android:shadowDy="0"
                     android:shadowRadius="5"
                     android:tag="vod_control_pause_t"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/color_FF90CA09"
                     android:textSize="@dimen/ts_26"
                     android:textStyle="bold"
                     tools:text="100" />
 
                 <ProgressBar
+                    android:id="@+id/video_pausebar"
                     style="@style/video_horizontal_progressBar"
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
@@ -344,6 +415,22 @@
         </LinearLayout>
 
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/tv_lock"
+        android:layout_width="@dimen/vs_40"
+        android:layout_height="@dimen/vs_40"
+        android:layout_gravity="center|left"
+        android:layout_marginStart="@dimen/vs_50"
+        android:layout_marginLeft="@dimen/vs_50"
+        android:layout_marginEnd="@dimen/vs_50"
+        android:layout_marginRight="@dimen/vs_50"
+        android:background="@drawable/button_dialog_vod"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:src="@drawable/icon_unlock"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/tvBackButton"
@@ -369,6 +456,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/dialog_volume"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -380,6 +468,7 @@
         android:visibility="gone">
 
         <ProgressBar
+            android:id="@+id/volume_progressbar"
             style="@style/video_vertical_progressBar"
             android:layout_width="5dp"
             android:layout_height="90dp"
@@ -399,6 +488,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/dialog_bright"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
@@ -410,6 +500,7 @@
         android:visibility="gone">
 
         <ProgressBar
+            android:id="@+id/brightness_progressbar"
             style="@style/video_vertical_progressBar"
             android:layout_width="5dp"
             android:layout_height="90dp"
@@ -429,6 +520,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_slide_progress_text"
         android:layout_width="@dimen/vs_200"
         android:layout_height="@dimen/vs_100"
         android:layout_gravity="center"
@@ -442,7 +534,7 @@
         android:shadowRadius="5"
         android:tag="vod_control_slide_info"
         android:textAlignment="gravity"
-        android:textColor="@android:color/white"
+        android:textColor="@color/color_FF90CA09"
         android:textSize="@dimen/ts_26"
         android:textStyle="bold"
         android:visibility="gone"
@@ -484,12 +576,13 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="5"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/ts_26"
                 android:textStyle="bold"
                 tools:text="100" />
 
             <ProgressBar
+                android:id="@+id/video_progressbar"
                 style="@style/video_horizontal_progressBar"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
@@ -526,7 +619,7 @@
         android:shadowDy="2"
         android:shadowRadius="4"
         android:text=""
-        android:textColor="@color/color_FFFFFF"
+        android:textColor="@color/color_FF90CA09"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -544,6 +637,7 @@
         android:paddingBottom="@dimen/vs_20">
 
         <LinearLayout
+            android:id="@+id/ll_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -563,7 +657,7 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="3"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/vs_60"
                 android:textStyle="normal"
                 android:visibility="visible" />
@@ -582,13 +676,14 @@
                 android:shadowDy="0"
                 android:shadowRadius="3"
                 android:text="09:30 PM"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/vs_60"
                 android:textStyle="normal"
                 android:visibility="visible" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_time_end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -609,7 +704,7 @@
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="3"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/vs_20"
                 android:textStyle="normal"
                 android:visibility="visible" />
@@ -628,7 +723,7 @@
                 android:shadowDy="0"
                 android:shadowRadius="3"
                 android:text="Ends at 00:00 AM"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/vs_20"
                 android:textStyle="normal"
                 android:visibility="visible"
@@ -655,7 +750,7 @@
                 android:shadowDy="0"
                 android:shadowRadius="3"
                 android:text="00:00:00"
-                android:textColor="@color/color_FFFFFF"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/ts_20"
                 tools:ignore="TextSizeCheck" />
 
@@ -699,359 +794,425 @@
                 android:shadowDy="0"
                 android:shadowRadius="3"
                 android:text="00:00:00"
-                android:textColor="@color/color_FFFFFF"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/ts_20"
                 tools:ignore="TextSizeCheck" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/vs_10"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/vs_40"
-            android:paddingRight="@dimen/vs_40">
+            android:scrollbars="none">
 
             <LinearLayout
-                android:id="@+id/play_prev"
-                android:layout_width="@dimen/vs_60"
-                android:layout_height="@dimen/vs_60"
+                android:id="@+id/vod_control_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
                 android:gravity="center"
-                android:nextFocusLeft="@id/play_time_end"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/vs_60"
-                    android:layout_height="@dimen/vs_60"
-                    android:layout_gravity="center"
-                    android:src="@drawable/v_prev" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/play_pause"
-                android:layout_width="@dimen/vs_60"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/play_pauseImg"
-                    android:layout_width="@dimen/vs_50"
-                    android:layout_height="@dimen/vs_50"
-                    android:layout_gravity="center"
-                    android:src="@drawable/v_pause" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/play_next"
-                android:layout_width="@dimen/vs_60"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/vs_60"
-                    android:layout_height="@dimen/vs_60"
-                    android:layout_gravity="center"
-                    android:src="@drawable/v_next" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/play_speed"
-                android:layout_width="@dimen/vs_60"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:nextFocusUp="@id/play_speed"
-                android:nextFocusDown="@id/play_speed"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:paddingLeft="@dimen/vs_40"
+                android:paddingRight="@dimen/vs_40">
 
-                <ImageView
-                    android:id="@+id/play_speed_img"
+                <LinearLayout
+                    android:id="@+id/play_prev"
                     android:layout_width="@dimen/vs_60"
                     android:layout_height="@dimen/vs_60"
                     android:layout_gravity="center"
-                    android:src="@drawable/v_ffwd" />
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:nextFocusLeft="@id/play_time_end"
+                    android:orientation="horizontal">
 
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="@dimen/vs_60"
+                        android:layout_height="@dimen/vs_60"
+                        android:layout_gravity="center"
+                        android:src="@drawable/v_prev" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/play_speed_txt"
-                android:layout_width="@dimen/vs_40"
-                android:layout_height="@dimen/vs_20"
-                android:layout_gravity="center"
-                android:layout_marginStart="-20mm"
-                android:layout_marginLeft="-15mm"
-                android:layout_marginTop="8mm"
-                android:background="@drawable/shape_speed_hint"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:gravity="center"
-                android:text="x0.25"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/ts_12"
-                android:textStyle="bold"
-                tools:ignore="TextSizeCheck" />
-
-            <LinearLayout
-                android:id="@+id/play_retry"
-                android:layout_width="@dimen/vs_60"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/vs_40"
-                    android:layout_height="@dimen/vs_40"
-                    android:layout_gravity="center"
-                    android:src="@drawable/v_replay" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/play_scale"
-                android:layout_width="@dimen/vs_60"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/play_scale_img"
+                <LinearLayout
+                    android:id="@+id/play_pause"
                     android:layout_width="@dimen/vs_60"
-                    android:layout_height="@dimen/vs_40"
+                    android:layout_height="@dimen/vs_60"
                     android:layout_gravity="center"
-                    android:src="@drawable/v_aspect" />
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:id="@+id/play_pauseImg"
+                        android:layout_width="@dimen/vs_50"
+                        android:layout_height="@dimen/vs_50"
+                        android:layout_gravity="center"
+                        android:src="@drawable/v_pause" />
+                </LinearLayout>
 
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/play_scale_txt"
-                android:layout_width="@dimen/vs_40"
-                android:layout_height="@dimen/vs_20"
-                android:layout_gravity="center"
-                android:layout_marginStart="-20mm"
-                android:layout_marginLeft="-15mm"
-                android:layout_marginTop="8mm"
-                android:background="@drawable/shape_speed_hint"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:gravity="center"
-                android:text="16:9"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/ts_12"
-                android:textStyle="bold"
-                tools:ignore="TextSizeCheck" />
-
-            <LinearLayout
-                android:id="@+id/play_player"
-                android:layout_width="@dimen/vs_60"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/play_player_img"
-                    android:layout_width="@dimen/vs_40"
-                    android:layout_height="@dimen/vs_40"
+                <LinearLayout
+                    android:id="@+id/play_next"
+                    android:layout_width="@dimen/vs_60"
+                    android:layout_height="@dimen/vs_60"
                     android:layout_gravity="center"
-                    android:src="@drawable/v_type" />
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/vs_60"
+                        android:layout_height="@dimen/vs_60"
+                        android:layout_gravity="center"
+                        android:src="@drawable/v_next" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/play_speed"
+                    android:layout_width="@dimen/vs_60"
+                    android:layout_height="@dimen/vs_60"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:nextFocusUp="@id/play_speed"
+                    android:nextFocusDown="@id/play_speed"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/play_speed_img"
+                        android:layout_width="@dimen/vs_60"
+                        android:layout_height="@dimen/vs_60"
+                        android:layout_gravity="center"
+                        android:src="@drawable/v_ffwd" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/play_player_txt"
-                    android:layout_width="@dimen/vs_45"
-                    android:layout_height="match_parent"
+                    android:id="@+id/play_speed_txt"
+                    android:layout_width="@dimen/vs_40"
+                    android:layout_height="@dimen/vs_20"
                     android:layout_gravity="center"
+                    android:layout_marginStart="-20mm"
+                    android:layout_marginLeft="-15mm"
+                    android:layout_marginTop="8mm"
+                    android:background="@drawable/shape_speed_hint"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:gravity="center"
-                    android:text="系统"
-                    android:textColor="@color/color_FFFFFF"
+                    android:text="x0.25"
+                    android:textColor="@color/color_FF90CA09"
+                    android:textSize="@dimen/ts_12"
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
+
+                <LinearLayout
+                    android:id="@+id/play_retry"
+                    android:layout_width="@dimen/vs_60"
+                    android:layout_height="@dimen/vs_60"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/vs_40"
+                        android:layout_height="@dimen/vs_40"
+                        android:layout_gravity="center"
+                        android:src="@drawable/v_replay" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/play_scale"
+                    android:layout_width="@dimen/vs_60"
+                    android:layout_height="@dimen/vs_60"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/play_scale_img"
+                        android:layout_width="@dimen/vs_60"
+                        android:layout_height="@dimen/vs_40"
+                        android:layout_gravity="center"
+                        android:src="@drawable/v_aspect" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/play_scale_txt"
+                    android:layout_width="@dimen/vs_40"
+                    android:layout_height="@dimen/vs_20"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="-20mm"
+                    android:layout_marginLeft="-15mm"
+                    android:layout_marginTop="8mm"
+                    android:background="@drawable/shape_speed_hint"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:gravity="center"
+                    android:text="16:9"
+                    android:textColor="@color/color_FF90CA09"
+                    android:textSize="@dimen/ts_12"
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
+
+                <LinearLayout
+                    android:id="@+id/play_player"
+                    android:layout_width="@dimen/vs_60"
+                    android:layout_height="@dimen/vs_60"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/play_player_img"
+                        android:layout_width="@dimen/vs_40"
+                        android:layout_height="@dimen/vs_40"
+                        android:layout_gravity="center"
+                        android:src="@drawable/v_type" />
+
+                    <TextView
+                        android:id="@+id/play_player_txt"
+                        android:layout_width="@dimen/vs_45"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center"
+                        android:text="系统"
+                        android:textColor="@color/color_FF90CA09"
+                        android:textSize="@dimen/ts_14"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/play_ijk"
+                    android:layout_width="@dimen/vs_60"
+                    android:layout_height="@dimen/vs_60"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:drawablePadding="@dimen/vs_6"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:padding="@dimen/vs_8"
+                    android:text="硬解码"
+                    android:textColor="@color/color_FF90CA09"
                     android:textSize="@dimen/ts_14"
-                    android:visibility="gone" />
-            </LinearLayout>
+                    tools:ignore="TextSizeCheck" />
 
-            <TextView
-                android:id="@+id/play_ijk"
-                android:layout_width="@dimen/vs_60"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@drawable/button_dialog_vod"
-                android:drawablePadding="@dimen/vs_6"
-                android:focusable="true"
-                android:gravity="center"
-                android:padding="@dimen/vs_8"
-                android:text="硬解码"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_14"
-                tools:ignore="TextSizeCheck" />
-
-            <LinearLayout
-                android:id="@+id/play_subtitle"
-                android:layout_width="@dimen/vs_60"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/vs_40"
-                    android:layout_height="@dimen/vs_40"
+                <LinearLayout
+                    android:id="@+id/play_subtitle"
+                    android:layout_width="@dimen/vs_60"
+                    android:layout_height="@dimen/vs_60"
                     android:layout_gravity="center"
-                    android:src="@drawable/v_subtitle" />
-            </LinearLayout>
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/play_audio"
-                android:layout_width="@dimen/vs_60"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/vs_40"
+                        android:layout_height="@dimen/vs_40"
+                        android:layout_gravity="center"
+                        android:src="@drawable/v_subtitle" />
+                </LinearLayout>
 
-                <ImageView
-                    android:layout_width="@dimen/vs_40"
-                    android:layout_height="@dimen/vs_40"
+                <LinearLayout
+                    android:id="@+id/play_audio"
+                    android:layout_width="@dimen/vs_60"
+                    android:layout_height="@dimen/vs_60"
                     android:layout_gravity="center"
-                    android:src="@drawable/v_audio" />
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/vs_40"
+                        android:layout_height="@dimen/vs_40"
+                        android:layout_gravity="center"
+                        android:src="@drawable/v_audio" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/screen_display"
+                    android:layout_width="@dimen/vs_60"
+                    android:layout_height="@dimen/vs_60"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/vs_45"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_clock_digital" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@color/color_FFFFFF_50"
+                    android:gravity="center"
+                    android:padding="@dimen/vs_10"
+                    android:textColor="@color/color_FF90CA09"
+                    android:textSize="@dimen/ts_22" />
+
+                <TextView
+                    android:id="@+id/play_time_reset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/vs_45"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_2"
+                    android:layout_marginLeft="@dimen/vs_2"
+                    android:layout_marginEnd="@dimen/vs_2"
+                    android:layout_marginRight="@dimen/vs_2"
+                    android:background="@drawable/button_dialog_vod"
+                    android:drawableLeft="@drawable/vod_skip"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:padding="@dimen/vs_10"
+                    android:textColor="@color/color_FF90CA09"
+                    android:textSize="@dimen/ts_22" />
+
+                <TextView
+                    android:id="@+id/play_time_start"
+                    android:layout_width="@dimen/vs_70"
+                    android:layout_height="@dimen/vs_60"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_4"
+                    android:layout_marginRight="@dimen/vs_4"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:nextFocusUp="@id/play_time_start"
+                    android:nextFocusDown="@id/play_time_start"
+                    android:padding="@dimen/vs_8"
+                    android:text="01:00"
+                    android:textColor="@color/color_FF90CA09"
+                    android:textSize="@dimen/ts_16"
+                    tools:ignore="TextSizeCheck" />
+
+                <TextView
+                    android:id="@+id/play_time_end"
+                    android:layout_width="@dimen/vs_70"
+                    android:layout_height="@dimen/vs_60"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_4"
+                    android:layout_marginLeft="@dimen/vs_4"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:nextFocusRight="@id/play_prev"
+                    android:nextFocusUp="@id/play_time_end"
+                    android:nextFocusDown="@id/play_time_end"
+                    android:padding="@dimen/vs_8"
+                    android:text="01:00"
+                    android:textColor="@color/color_FF90CA09"
+                    android:textSize="@dimen/ts_16"
+                    tools:ignore="TextSizeCheck" />
+
+                <TextView
+                    android:id="@+id/play_time_step"
+                    android:layout_width="@dimen/vs_50"
+                    android:layout_height="@dimen/vs_45"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_2"
+                    android:layout_marginLeft="@dimen/vs_2"
+                    android:layout_marginEnd="@dimen/vs_2"
+                    android:layout_marginRight="@dimen/vs_2"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:padding="@dimen/vs_10"
+                    android:text="1S"
+                    android:textColor="@color/color_FF90CA09"
+                    android:textSize="@dimen/ts_16"
+                    android:visibility="gone"
+                    tools:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/landscape_portrait"
+                    android:layout_width="@dimen/vs_45"
+                    android:layout_height="@dimen/vs_45"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/vs_6"
+                    android:layout_marginLeft="@dimen/vs_6"
+                    android:layout_marginEnd="@dimen/vs_6"
+                    android:layout_marginRight="@dimen/vs_6"
+                    android:background="@drawable/button_dialog_vod"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/lv_portrait"
+                        android:layout_width="@dimen/vs_40"
+                        android:layout_height="@dimen/vs_40"
+                        android:layout_gravity="center"
+                        android:src="@drawable/htov" />
+                </LinearLayout>
             </LinearLayout>
-
-            <TextView
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_6"
-                android:layout_marginRight="@dimen/vs_6"
-                android:background="@color/color_FFFFFF_50"
-                android:gravity="center"
-                android:padding="@dimen/vs_10"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/ts_22" />
-
-            <TextView
-                android:id="@+id/play_time_start"
-                android:layout_width="@dimen/vs_70"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_6"
-                android:layout_marginLeft="@dimen/vs_6"
-                android:layout_marginEnd="@dimen/vs_4"
-                android:layout_marginRight="@dimen/vs_4"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:nextFocusUp="@id/play_time_start"
-                android:nextFocusDown="@id/play_time_start"
-                android:padding="@dimen/vs_8"
-                android:text="01:00"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_16"
-                tools:ignore="TextSizeCheck" />
-
-            <TextView
-                android:id="@+id/play_time_end"
-                android:layout_width="@dimen/vs_70"
-                android:layout_height="@dimen/vs_60"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_4"
-                android:layout_marginLeft="@dimen/vs_4"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:nextFocusRight="@id/play_prev"
-                android:nextFocusUp="@id/play_time_end"
-                android:nextFocusDown="@id/play_time_end"
-                android:padding="@dimen/vs_8"
-                android:text="01:00"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_16"
-                tools:ignore="TextSizeCheck" />
-
-            <TextView
-                android:id="@+id/play_time_step"
-                android:layout_width="@dimen/vs_50"
-                android:layout_height="@dimen/vs_45"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/vs_2"
-                android:layout_marginLeft="@dimen/vs_2"
-                android:layout_marginEnd="@dimen/vs_2"
-                android:layout_marginRight="@dimen/vs_2"
-                android:background="@drawable/button_dialog_vod"
-                android:focusable="true"
-                android:gravity="center"
-                android:padding="@dimen/vs_10"
-                android:text="1S"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_16"
-                android:visibility="gone"
-                tools:visibility="gone" />
-        </LinearLayout>
+        </HorizontalScrollView>
 
         <LinearLayout
             android:id="@+id/parse_root"
@@ -1075,7 +1236,7 @@
                 android:shadowDy="0"
                 android:shadowRadius="3"
                 android:text="解析"
-                android:textColor="@color/color_FFFFFF"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/ts_20"
                 android:textStyle="bold"
                 tools:ignore="TextSizeCheck" />
@@ -1104,7 +1265,7 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="1"
-                android:textColor="@color/color_FFFFFF"
+                android:textColor="@color/color_FF90CA09"
                 android:textSize="@dimen/ts_20"
                 android:textStyle="bold" />
         </LinearLayout>

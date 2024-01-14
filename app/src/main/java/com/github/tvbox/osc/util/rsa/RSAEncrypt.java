@@ -3,6 +3,7 @@ package com.github.tvbox.osc.util.rsa;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -131,7 +132,7 @@ public class RSAEncrypt {
 
     public static String encryptByPublicKey(String data, String pubKey, String config, int mlong, boolean block) {
         try {
-            byte[] bytes = data.getBytes("UTF-8");
+            byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
             // 创建 Cipher 对象
             Cipher cipher = Cipher.getInstance(config);
             // 初始化 Cipher 对象，加密模式
@@ -238,7 +239,7 @@ public class RSAEncrypt {
 
     public static String encryptByPrivateKey(String data, String prvKey, String config, int mlong, boolean block) {
         try {
-            byte[] bytes = data.getBytes("UTF-8");
+            byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
             // 创建 Cipher 对象
             Cipher cipher = Cipher.getInstance(config);
             // 初始化 Cipher 对象，加密模式

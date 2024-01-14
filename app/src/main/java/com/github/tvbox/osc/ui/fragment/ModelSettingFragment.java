@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
+import com.github.tvbox.osc.BuildConfig;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.api.StoreApiConfig;
@@ -24,6 +25,7 @@ import com.github.tvbox.osc.ui.dialog.ApiDialog;
 import com.github.tvbox.osc.ui.dialog.ApiHistoryDialog;
 import com.github.tvbox.osc.ui.dialog.BackupDialog;
 import com.github.tvbox.osc.ui.dialog.HomeIconDialog;
+import com.github.tvbox.osc.ui.dialog.ResetDialog;
 import com.github.tvbox.osc.ui.dialog.SelectDialog;
 import com.github.tvbox.osc.ui.dialog.StoreApiDialog;
 import com.github.tvbox.osc.ui.dialog.XWalkInitDialog;
@@ -53,12 +55,14 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * @author pj567
  * @date :2020/12/23
  * @description:
+ * @noinspection ALL
  */
 public class ModelSettingFragment extends BaseLazyFragment {
     private TextView tvDebugOpen;
     private TextView tvApi;
     // Home Section
     private TextView tvHomeApi;
+    private TextView tvHomeDefaultShow;
     private TextView tvHomeShow;
     private TextView tvHomeIcon;
     private TextView tvHomeRec;
@@ -67,7 +71,6 @@ public class ModelSettingFragment extends BaseLazyFragment {
     // Player Section
     private TextView tvShowPreviewText;
     private TextView tvScale;
-    private TextView tvPIP;
     private TextView tvPlay;
     private TextView tvMediaCodec;
     private TextView tvVideoPurifyText;
@@ -79,6 +82,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
     private TextView tvParseWebView;
     private TextView tvSearchView;
     private TextView tvDns;
+    private TextView tvFastSearchText;
 
     public static ModelSettingFragment newInstance() {
         return new ModelSettingFragment().setArguments();
@@ -95,6 +99,8 @@ public class ModelSettingFragment extends BaseLazyFragment {
 
     @Override
     protected void init() {
+        tvFastSearchText = findViewById(R.id.showFastSearchText);
+        tvFastSearchText.setText(Hawk.get(HawkConfig.FAST_SEARCH_MODE, false) ? "已开启" : "已关闭");
         tvDebugOpen = findViewById(R.id.tvDebugOpen);
         tvDebugOpen.setText(Hawk.get(HawkConfig.DEBUG_OPEN, false) ? "开启" : "关闭");
         tvApi = findViewById(R.id.tvApi);
@@ -114,8 +120,6 @@ public class ModelSettingFragment extends BaseLazyFragment {
         tvShowPreviewText.setText(Hawk.get(HawkConfig.SHOW_PREVIEW, true) ? "开启" : "关闭");
         tvScale = findViewById(R.id.tvScaleType);
         tvScale.setText(PlayerHelper.getScaleName(Hawk.get(HawkConfig.PLAY_SCALE, 0)));
-        tvPIP = findViewById(R.id.tvPIP);
-        tvPIP.setText(Hawk.get(HawkConfig.PIC_IN_PIC, false) ? "开启" : "关闭");
         tvPlay = findViewById(R.id.tvPlay);
         tvPlay.setText(PlayerHelper.getPlayerName(Hawk.get(HawkConfig.PLAY_TYPE, 0)));
         tvMediaCodec = findViewById(R.id.tvMediaCodec);
@@ -135,6 +139,8 @@ public class ModelSettingFragment extends BaseLazyFragment {
         tvSearchView.setText(getSearchView(Hawk.get(HawkConfig.SEARCH_VIEW, 0)));
         tvDns = findViewById(R.id.tvDns);
         tvDns.setText(OkGoHelper.dnsHttpsList.get(Hawk.get(HawkConfig.DOH_URL, 0)));
+        tvHomeDefaultShow = findViewById(R.id.tvHomeDefaultShow);
+        tvHomeDefaultShow.setText(Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, false) ? "开启" : "关闭");
 
         //takagen99 : Set HomeApi as default
         findViewById(R.id.llHomeApi).requestFocus();
@@ -147,112 +153,16 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 tvDebugOpen.setText(Hawk.get(HawkConfig.DEBUG_OPEN, false) ? "开启" : "关闭");
             }
         });
-        // Input Source URL ------------------------------------------------------------------------
-       /* findViewById(R.id.llApi).setOnClickListener(new View.OnClickListener() {
+
+        // resetApp
+        findViewById(R.id.llReset).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
-                ApiDialog dialog = new ApiDialog(mActivity);
-                EventBus.getDefault().register(dialog);
-                dialog.setOnListener(new ApiDialog.OnListener() {
-                    @Override
-                    public void onchange(String api) {
-                        Hawk.put(HawkConfig.API_URL, api);
-                        tvApi.setText(api);
-                    }
-                });
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        ((BaseActivity) mActivity).hideSystemUI(true);
-                        EventBus.getDefault().unregister(dialog);
-                    }
-                });
+                ResetDialog dialog = new ResetDialog(mActivity);
                 dialog.show();
             }
         });
-        findViewById(R.id.llApiHistory).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<String> history = Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
-                if (history.isEmpty())
-                    return;
-                String current = Hawk.get(HawkConfig.API_URL, "");
-                int idx = 0;
-                if (history.contains(current))
-                    idx = history.indexOf(current);
-                ApiHistoryDialog dialog = new ApiHistoryDialog(getContext());
-                dialog.setTip(getString(R.string.dia_history_list));
-                dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
-                    @Override
-                    public void click(String api) {
-                        Hawk.put(HawkConfig.API_URL, api);
-                        tvApi.setText(api);
-                        dialog.dismiss();
-                    }
-
-                    @Override
-                    public void del(String value, ArrayList<String> data) {
-                        Hawk.put(HawkConfig.API_HISTORY, data);
-                    }
-                }, history, idx);
-                dialog.show();
-            }
-        });
-        // 1. HOME Configuration ---------------------------------------------------------------- //
-        // Select Home Source ------------------------------------
-        findViewById(R.id.llHomeApi).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FastClickCheckUtil.check(v);
-                List<SourceBean> sites = new ArrayList<>();
-                for (SourceBean sb : ApiConfig.get().getSourceBeanList()) {
-                    if (sb.getHide() == 0) sites.add(sb);
-                }
-                if (sites.size() > 0) {
-                    SelectDialog<SourceBean> dialog = new SelectDialog<>(mActivity);
-
-                    // Multi Column Selection
-                    int spanCount = (int) Math.floor(sites.size() / 10);
-                    if (spanCount <= 1) spanCount = 1;
-                    if (spanCount >= 3) spanCount = 3;
-
-                    TvRecyclerView tvRecyclerView = dialog.findViewById(R.id.list);
-                    tvRecyclerView.setLayoutManager(new V7GridLayoutManager(dialog.getContext(), spanCount));
-                    LinearLayout cl_root = dialog.findViewById(R.id.cl_root);
-                    ViewGroup.LayoutParams clp = cl_root.getLayoutParams();
-                    if (spanCount != 1) {
-                        clp.width = AutoSizeUtils.mm2px(dialog.getContext(), 400 + 260 * (spanCount - 1));
-                    }
-
-                    dialog.setTip(getString(R.string.dia_source));
-                    dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<SourceBean>() {
-                        @Override
-                        public void click(SourceBean value, int pos) {
-                            ApiConfig.get().setSourceBean(value);
-                            tvHomeApi.setText(ApiConfig.get().getHomeSourceBean().getName());
-                        }
-
-                        @Override
-                        public String getDisplay(SourceBean val) {
-                            return val.getName();
-                        }
-                    }, new DiffUtil.ItemCallback<SourceBean>() {
-                        @Override
-                        public boolean areItemsTheSame(@NonNull @NotNull SourceBean oldItem, @NonNull @NotNull SourceBean newItem) {
-                            return oldItem == newItem;
-                        }
-
-                        @Override
-                        public boolean areContentsTheSame(@NonNull @NotNull SourceBean oldItem, @NonNull @NotNull SourceBean newItem) {
-                            return oldItem.getKey().equals(newItem.getKey());
-                        }
-                    }, sites, sites.indexOf(ApiConfig.get().getHomeSourceBean()));
-                    dialog.show();
-                }
-            }
-        });
-        */
         findViewById(R.id.llHomeApi).setOnClickListener(v -> {
             ArrayList<String> history = Hawk.get(HawkConfig.API_NAME_HISTORY, new ArrayList<>());
             HashMap<String, String> map = Hawk.get(HawkConfig.API_MAP, new HashMap<>());
@@ -530,14 +440,42 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 dialog.show();
             }
         });
-        // Switch to ON / OFF Picture-In-Picture -------------------------
-        findViewById(R.id.llPIP).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FastClickCheckUtil.check(v);
-                Hawk.put(HawkConfig.PIC_IN_PIC, !Hawk.get(HawkConfig.PIC_IN_PIC, false));
-                tvPIP.setText(Hawk.get(HawkConfig.PIC_IN_PIC, true) ? "开启" : "关闭");
-            }
+        //后台播放
+        View backgroundPlay = findViewById(R.id.llBackgroundPlay);
+        TextView tvBgPlayType = findViewById(R.id.tvBackgroundPlayType);
+        Integer defaultBgPlayTypePos = Hawk.get(HawkConfig.BACKGROUND_PLAY_TYPE, 0);
+        ArrayList<String> bgPlayTypes = new ArrayList<>();
+        bgPlayTypes.add("关闭");
+        bgPlayTypes.add("开启");
+        bgPlayTypes.add("画中画");
+        tvBgPlayType.setText(bgPlayTypes.get(defaultBgPlayTypePos));
+        backgroundPlay.setOnClickListener(view -> {
+            FastClickCheckUtil.check(view);
+            SelectDialog<String> dialog = new SelectDialog<>(mActivity);
+            dialog.setTip("请选择");
+            dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<String>() {
+                @Override
+                public void click(String value, int pos) {
+                    tvBgPlayType.setText(value);
+                    Hawk.put(HawkConfig.BACKGROUND_PLAY_TYPE, pos);
+                }
+
+                @Override
+                public String getDisplay(String val) {
+                    return val;
+                }
+            }, new DiffUtil.ItemCallback<String>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull @NotNull String oldItem, @NonNull @NotNull String newItem) {
+                    return oldItem.equals(newItem);
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull @NotNull String oldItem, @NonNull @NotNull String newItem) {
+                    return oldItem.equals(newItem);
+                }
+            }, bgPlayTypes, defaultBgPlayTypePos);
+            dialog.show();
         });
         // Select PLAYER Type --------------------------------------------
         findViewById(R.id.llPlay).setOnClickListener(new View.OnClickListener() {
@@ -550,9 +488,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 players.add(1);
                 players.add(2);
                 players.add(3);
-                players.add(10);
-                players.add(11);
-                players.add(12);
+
                 SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
                 dialog.setTip(getString(R.string.dia_player));
                 dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
@@ -808,6 +744,14 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 dialog.show();
             }
         });
+        findViewById(R.id.showFastSearch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FastClickCheckUtil.check(v);
+                Hawk.put(HawkConfig.FAST_SEARCH_MODE, !Hawk.get(HawkConfig.FAST_SEARCH_MODE, false));
+                tvFastSearchText.setText(Hawk.get(HawkConfig.FAST_SEARCH_MODE, false) ? "已开启" : "已关闭");
+            }
+        });
         // Select App Language ( English / Chinese ) -----------------
         findViewById(R.id.llLocale).setOnClickListener(new View.OnClickListener() {
             private final int chkLang = Hawk.get(HawkConfig.HOME_LOCALE, 0);
@@ -914,7 +858,16 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 dialog.show();
             }
         });
-
+        TextView ver = findViewById(R.id.ver);
+        ver.setText("v" + BuildConfig.VERSION_NAME);
+        findViewById(R.id.llHomeLive).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FastClickCheckUtil.check(v);
+                Hawk.put(HawkConfig.HOME_DEFAULT_SHOW, !Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, false));
+                tvHomeDefaultShow.setText(Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, true) ? "开启" : "关闭");
+            }
+        });
         SettingActivity.callback = new SettingActivity.DevModeCallback() {
             @Override
             public void onChange() {

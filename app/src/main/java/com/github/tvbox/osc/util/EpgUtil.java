@@ -11,12 +11,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class EpgUtil {
 
+    private static final HashMap<String, JsonObject> epgHashMap = new HashMap<>();
     private static JsonObject epgDoc = null;
-    private static HashMap<String, JsonObject> epgHashMap = new HashMap<>();
 
     public static void init() {
         if (epgDoc != null)
@@ -25,7 +26,7 @@ public class EpgUtil {
         //credit by 龍
         try {
             AssetManager assetManager = App.getInstance().getAssets(); //获得assets资源管理器（assets中的文件无法直接访问，可以使用AssetManager访问）
-            InputStreamReader inputStreamReader = new InputStreamReader(assetManager.open("epg_data.json"), "UTF-8"); //使用IO流读取json文件内容
+            InputStreamReader inputStreamReader = new InputStreamReader(assetManager.open("epg_data.json"), StandardCharsets.UTF_8); //使用IO流读取json文件内容
             BufferedReader br = new BufferedReader(inputStreamReader);//使用字符高效流
             String line;
             StringBuilder builder = new StringBuilder();

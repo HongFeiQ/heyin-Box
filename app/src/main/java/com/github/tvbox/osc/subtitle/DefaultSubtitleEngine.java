@@ -1,5 +1,7 @@
 package com.github.tvbox.osc.subtitle;
 
+import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
+
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -10,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.github.tvbox.osc.base.App;
 import com.github.tvbox.osc.cache.CacheManager;
+import com.github.tvbox.osc.player.EXOmPlayer;
 import com.github.tvbox.osc.subtitle.model.Subtitle;
 import com.github.tvbox.osc.subtitle.model.Time;
 import com.github.tvbox.osc.util.FileUtils;
@@ -134,6 +137,7 @@ public class DefaultSubtitleEngine implements SubtitleEngine {
         mSubtitles = thisSubtitles;
     }
 
+
     public String getPlaySubtitleCacheKey() {
         return playSubtitleCacheKey;
     }
@@ -200,6 +204,25 @@ public class DefaultSubtitleEngine implements SubtitleEngine {
             @Override
             public boolean handleMessage(final Message msg) {
                 try {
+                    if (mMediaPlayer != null && mMediaPlayer instanceof EXOmPlayer) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                long delay = REFRESH_INTERVAL;
+                                long position = mMediaPlayer.getCurrentPosition();
+                                Subtitle subtitle = SubtitleFinder.find(position, mSubtitles);
+                                notifyRefreshUI(subtitle);
+                                if (subtitle != null) {
+                                    delay = subtitle.end.mseconds - position;
+                                }
+
+                                if (mWorkHandler != null) {
+                                    mWorkHandler.sendEmptyMessageDelayed(MSG_REFRESH, delay);
+                                }
+                            }
+                        });
+                        return true;
+                    }
                     long delay = REFRESH_INTERVAL;
                     if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                         long position = mMediaPlayer.getCurrentPosition();

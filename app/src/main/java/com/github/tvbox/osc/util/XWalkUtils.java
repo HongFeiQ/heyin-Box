@@ -87,10 +87,10 @@ public class XWalkUtils {
         try {
             Class clazz = Class.forName("org.xwalk.core.XWalkCoreWrapper");
             if (clazz != null) {
-                Constructor constructor = clazz.getDeclaredConstructor(new Class[]{Context.class, int.class});
+                Constructor constructor = clazz.getDeclaredConstructor(Context.class, int.class);
                 constructor.setAccessible(true);
                 Object obj = constructor.newInstance(activity, -1);
-                Method fe = clazz.getDeclaredMethod("findEmbeddedCore", new Class[]{});
+                Method fe = clazz.getDeclaredMethod("findEmbeddedCore");
                 fe.setAccessible(true);
                 if (!(boolean) fe.invoke(obj)) {
                     return false;
@@ -119,7 +119,7 @@ public class XWalkUtils {
             if (ze2.isDirectory()) {
                 continue;
             } else {
-                String fileName = entryName.substring(entryName.lastIndexOf("/") + 1, entryName.length());
+                String fileName = entryName.substring(entryName.lastIndexOf("/") + 1);
                 if (fileName.equals("XWalkRuntimeLib.apk")) {
                     String tempFile = apkPath(context) + ".tmp";
                     String finalApk = apkPath(context);

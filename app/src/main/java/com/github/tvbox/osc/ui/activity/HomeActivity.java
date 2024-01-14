@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.IntEvaluator;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -140,6 +141,16 @@ public class HomeActivity extends BaseActivity {
         return res;
     }
 
+    public static boolean reHome(Context appContext) {
+        Intent intent = new Intent(appContext, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("useCache", true);
+        intent.putExtras(bundle);
+        appContext.startActivity(intent);
+        return true;
+    }
+
     @Override
     protected int getLayoutResID() {
         return R.layout.activity_home;
@@ -204,8 +215,18 @@ public class HomeActivity extends BaseActivity {
 //                    if (!sortAdapter.getItem(position).filters.isEmpty())
 //                        view.findViewById(R.id.tvFilter).setVisibility(View.VISIBLE);
 
+                    if (position == -1) {
+                        position = 0;
+                        HomeActivity.this.mGridView.setSelection(0);
+                    }
+                    if (position == -1) {
+                        position = 0;
+                        HomeActivity.this.mGridView.setSelection(0);
+                    }
+
                     MovieSort.SortData sortData = sortAdapter.getItem(position);
-                    if (!sortData.filters.isEmpty()) {
+                    if (null != sortData && !sortData.filters.isEmpty()) {
+                        // if (!sortData.filters.isEmpty()) {
                         showFilterIcon(sortData.filterSelectCount());
                     }
                     HomeActivity.this.sortFocusView = view;
@@ -397,6 +418,10 @@ public class HomeActivity extends BaseActivity {
             } else {
                 LOG.e("无");
             }
+            if (Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, false)) {
+                jumpActivity(LivePlayActivity.class);
+            }
+
             return;
         }
         showLoading();
@@ -409,8 +434,11 @@ public class HomeActivity extends BaseActivity {
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (!useCacheConfig)
-                                    Toast.makeText(HomeActivity.this, getString(R.string.hm_ok), Toast.LENGTH_SHORT).show();
+                                // if (!useCacheConfig)
+                                //   if (Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, false)) {
+                                //      jumpActivity(LivePlayActivity.class);
+                                //  }
+                                Toast.makeText(HomeActivity.this, getString(R.string.hm_ok), Toast.LENGTH_SHORT).show();
                                 initData();
                             }
                         }, 50);
@@ -557,6 +585,7 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
 

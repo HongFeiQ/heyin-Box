@@ -2,11 +2,19 @@ package com.github.catvod.crawler;
 
 import android.content.Context;
 
+import com.github.tvbox.osc.util.OkGoHelper;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Dns;
+
 public abstract class Spider {
+
+    public static Dns safeDns() {
+        return OkGoHelper.dnsOverHttps;
+    }
 
     public void init(Context context) throws Exception {
     }

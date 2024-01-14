@@ -1,6 +1,9 @@
 package com.github.tvbox.osc.util.js;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+
+import androidx.media3.common.util.UriUtil;
 
 import com.github.catvod.crawler.Spider;
 import com.github.tvbox.osc.util.FileUtils;
@@ -10,11 +13,9 @@ import com.whl.quickjs.wrapper.Function;
 import com.whl.quickjs.wrapper.JSArray;
 import com.whl.quickjs.wrapper.JSCallFunction;
 import com.whl.quickjs.wrapper.JSFunction;
-import com.whl.quickjs.wrapper.JSModule;
 import com.whl.quickjs.wrapper.JSObject;
 import com.whl.quickjs.wrapper.JSUtils;
 import com.whl.quickjs.wrapper.QuickJSContext;
-import com.whl.quickjs.wrapper.UriUtil;
 
 import org.json.JSONArray;
 
@@ -23,7 +24,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,120 +31,17 @@ import java.util.concurrent.Future;
 
 public class SpiderJS extends Spider {
 
-    private final String ext;
-    //////////////////////////////////////////////////////////
     private final String key;
+    private final String js;
     public QuickJSContext runtime;
     public ExecutorService executor;
-    private JSEngine.JSThread jsThread = null;
-    private String js;
     private JSObject jsObject;
-    public SpiderJS(String key, String js, String ext) {
-        this.key = key;
+
+    public SpiderJS(String key, String js, Class<?> cls) throws Exception {
         this.js = js;
-        this.ext = ext;
-    }
-    public SpiderJS(String key, String js, Class<?> cls, String ext) throws Exception {
-        this.js = js;
-        this.ext = ext;
         this.executor = Executors.newSingleThreadExecutor();
         this.key = "J" + MD5.encode(key);
         initjs(cls);
-    }
-
-    void checkLoaderJS() {
-        if (jsThread == null) {
-            jsThread = JSEngine.getInstance().getJSThread();
-        }
-        if (jsObject == null && jsThread != null) {
-            try {
-                jsThread.postVoid((ctx, globalThis) -> {
-                    String moduleKey = "__" + UUID.randomUUID().toString().replace("-", "") + "__";
-                    String jsContent = JSEngine.getInstance().loadModule(js);
-                    try {
-                        if (js.contains(".js?")) {
-                            int spIdx = js.indexOf(".js?");
-                            String[] query = js.substring(spIdx + 4).split("&|=");
-                            js = js.substring(0, spIdx);
-                            for (int i = 0; i < query.length; i += 2) {
-                                String key = query[i];
-                                String val = query[i + 1];
-                                String sub = JSModule.convertModuleName(js, val);
-                                String content = JSEngine.getInstance().loadModule(sub);
-                                jsContent = jsContent.replace("__" + key.toUpperCase() + "__", content);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    if (jsContent.contains("export default{")) {
-                        jsContent = jsContent.replace("export default{", "globalThis." + moduleKey + " ={");
-                    } else if (jsContent.contains("export default {")) {
-                        jsContent = jsContent.replace("export default {", "globalThis." + moduleKey + " ={");
-                    } else {
-                        jsContent = jsContent.replace("__JS_SPIDER__", "globalThis." + moduleKey);
-                    }
-                    ctx.evaluateModule(jsContent, js);
-                    jsObject = (JSObject) ctx.getProperty(globalThis, moduleKey);
-                    jsObject.getJSFunction("init").call(ext);
-                    return null;
-                });
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-        }
-    }
-
-    String postFunc(String func, Object... args) {
-        checkLoaderJS();
-        if (jsObject != null) {
-            try {
-                return jsThread.post((ctx, globalThis) -> (String) jsObject.getJSFunction(func).call(args));
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-        }
-        return "";
-    }
-
-    public Object[] proxyInvoke(Map<String, String> params) {
-        checkLoaderJS();
-        try {
-            return jsThread.post((ctx, globalThis) -> {
-                try {
-                    JSObject o = ctx.createNewJSObject();
-                    if (params != null) {
-                        for (String s : params.keySet()) {
-                            o.setProperty(s, params.get(s));
-                        }
-                    }
-                    JSONArray opt = new JSONArray(((JSArray) jsObject.getJSFunction("proxy").call(new Object[]{o})).stringify());
-                    Object[] result = new Object[3];
-                    result[0] = opt.opt(0);
-                    result[1] = opt.opt(1);
-                    Object obj = opt.opt(2);
-                    ByteArrayInputStream baos;
-                    if (obj instanceof JSONArray) {
-                        JSONArray json = (JSONArray) obj;
-                        byte[] b = new byte[json.length()];
-                        for (int i = 0; i < json.length(); i++) {
-                            b[i] = (byte) json.optInt(i);
-                        }
-                        baos = new ByteArrayInputStream(b);
-                    } else {
-                        baos = new ByteArrayInputStream(opt.opt(2).toString().getBytes());
-                    }
-                    result[2] = baos;
-                    return result;
-                } catch (Throwable throwable) {
-                    LOG.e(throwable);
-                    return new Object[0];
-                }
-            });
-        } catch (Throwable throwable) {
-            LOG.e(throwable);
-            return new Object[0];
-        }
     }
 
     public void destroy() {
@@ -175,6 +72,7 @@ public class SpiderJS extends Spider {
                     return FileUtils.loadModule(moduleName);
                 }
 
+                @SuppressLint("UnsafeOptInUsageError")
                 @Override
                 public String moduleNormalizeName(String moduleBaseName, String moduleName) {
                     return UriUtil.resolve(moduleBaseName, moduleName);
@@ -342,4 +240,3 @@ public class SpiderJS extends Spider {
         return (Boolean) call("isVideo", url);
     }
 }
-

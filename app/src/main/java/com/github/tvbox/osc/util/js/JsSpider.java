@@ -1,7 +1,11 @@
 package com.github.tvbox.osc.util.js;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Base64;
+
+import androidx.media3.common.util.UriUtil;
 
 import com.github.catvod.crawler.Spider;
 import com.github.tvbox.osc.util.FileUtils;
@@ -13,7 +17,6 @@ import com.whl.quickjs.wrapper.JSCallFunction;
 import com.whl.quickjs.wrapper.JSObject;
 import com.whl.quickjs.wrapper.JSUtils;
 import com.whl.quickjs.wrapper.QuickJSContext;
-import com.whl.quickjs.wrapper.UriUtil;
 
 import org.json.JSONArray;
 
@@ -87,7 +90,7 @@ public class JsSpider extends Spider {
         cfg.set("stype", 3);
         cfg.set("skey", key);
         if (Json.invalid(ext)) cfg.set("ext", ext);
-        else cfg.set("ext", (JSObject) ctx.parse(ext));
+        else cfg.set("ext", ctx.parse(ext));
         return cfg;
     }
 
@@ -164,23 +167,30 @@ public class JsSpider extends Spider {
             if (dex != null) createDex();
 
             String content = FileUtils.loadModule(api);
+            if (TextUtils.isEmpty(content)) {
+                return null;
+            }
+
             if (content.startsWith("//bb")) {
                 cat = true;
                 byte[] b = Base64.decode(content.replace("//bb", ""), 0);
-                //ctx.execute(byteFF(b), key + ".js");
-                //ctx.evaluateModule(String.format(SPIDER_STRING_CODE, key + ".js") + "globalThis." + key + " = __JS_SPIDER__;", "tv_box_root.js");
-                ctx.execute(byteFF(b), key + ".js", "__jsEvalReturn");
-                ctx.evaluate("globalThis." + key + " = __JS_SPIDER__;");
+                ctx.execute(byteFF(b), key + ".js");
+                ctx.evaluateModule(String.format(SPIDER_STRING_CODE, key + ".js") + "globalThis." + key + " = __JS_SPIDER__;", "tv_box_root.js");
+                //ctx.execute(byteFF(b), key + ".js","__jsEvalReturn");
+                //ctx.evaluate("globalThis." + key + " = __JS_SPIDER__;");
             } else {
+                if (content.contains("__JS_SPIDER__")) {
+                    content = content.replaceAll("__JS_SPIDER__\\s*=", "export default ");
+                }
                 String moduleExtName = "default";
                 if (content.contains("__jsEvalReturn") && !content.contains("export default")) {
                     moduleExtName = "__jsEvalReturn";
                     cat = true;
                 }
-                //ctx.evaluateModule(content, api);
-                //ctx.evaluateModule(String.format(SPIDER_STRING_CODE, api) + "globalThis." + key + " = __JS_SPIDER__;", "tv_box_root.js");
-                ctx.evaluateModule(content, api, moduleExtName);
-                ctx.evaluate("globalThis." + key + " = __JS_SPIDER__;");
+                ctx.evaluateModule(content, api);
+                ctx.evaluateModule(String.format(SPIDER_STRING_CODE, api) + "globalThis." + key + " = __JS_SPIDER__;", "tv_box_root.js");
+                //ctx.evaluateModule(content, api, moduleExtName);
+                //ctx.evaluate("globalThis." + key + " = __JS_SPIDER__;");
             }
             jsObject = (JSObject) ctx.get(ctx.getGlobalObject(), key);
             return null;
@@ -193,21 +203,25 @@ public class JsSpider extends Spider {
             @Override
             public byte[] getModuleBytecode(String moduleName) {
                 String ss = FileUtils.loadModule(moduleName);
+                if (TextUtils.isEmpty(ss)) {
+                    return null;
+                }
                 if (ss.startsWith("//DRPY")) {
                     return Base64.decode(ss.replace("//DRPY", ""), Base64.URL_SAFE);
                 } else if (ss.startsWith("//bb")) {
                     byte[] b = Base64.decode(ss.replace("//bb", ""), 0);
                     return byteFF(b);
                 } else {
-                    /*if (moduleName.contains("cheerio.min.js")) {
+                    if (moduleName.contains("cheerio.min.js")) {
                         FileUtils.setCacheByte("cheerio.min", ctx.compileModule(ss, "cheerio.min.js"));
                     } else if (moduleName.contains("crypto-js.js")) {
                         FileUtils.setCacheByte("crypto-js", ctx.compileModule(ss, "crypto-js.js"));
-                    }*/
+                    }
                     return ctx.compileModule(ss, moduleName);
                 }
             }
 
+            @SuppressLint("UnsafeOptInUsageError")
             @Override
             public String moduleNormalizeName(String moduleBaseName, String moduleName) {
                 return UriUtil.resolve(moduleBaseName, moduleName);
@@ -279,6 +293,9 @@ public class JsSpider extends Spider {
     private String getContent() {
         String global = "globalThis." + key;
         String content = FileUtils.loadModule(api);
+        if (TextUtils.isEmpty(content)) {
+            return null;
+        }
         if (content.contains("__jsEvalReturn")) {
             ctx.evaluate("req = http");
             return content.concat(global).concat(" = __jsEvalReturn()");
@@ -299,7 +316,28 @@ public class JsSpider extends Spider {
         return result;
     }
 
+
     private Object[] proxy2(Map<String, String> params) throws Exception {
+        String url = params.get("url");
+        String header = params.get("header");
+        JSArray array = submit(() -> new JSUtils<String>().toArray(ctx, Arrays.asList(url.split("/")))).get();
+        Object object = submit(() -> ctx.parse(header)).get();
+        String json = (String) call("proxy", array, object);
+        Res res = Res.objectFrom(json);
+        String contentType = res.getContentType();
+        if (TextUtils.isEmpty(contentType)) contentType = "application/octet-stream";
+        Object[] result = new Object[3];
+        result[0] = 200;
+        result[1] = contentType;
+        if (res.getBuffer() == 2) {
+            result[2] = new ByteArrayInputStream(Base64.decode(res.getContent(), Base64.DEFAULT));
+        } else {
+            result[2] = new ByteArrayInputStream(res.getContent().getBytes());
+        }
+        return result;
+    }
+
+   /* private Object[] proxy2(Map<String, String> params) throws Exception {
         String url = params.get("url");
         String header = params.get("header");
         JSArray array = submit(() -> new JSUtils<String>().toArray(ctx, Arrays.asList(url.split("/")))).get();
@@ -311,7 +349,7 @@ public class JsSpider extends Spider {
         result[1] = "application/octet-stream";
         result[2] = new ByteArrayInputStream(Base64.decode(res.getContent(), Base64.DEFAULT));
         return result;
-    }
+    }*/
 
     private ByteArrayInputStream getStream(Object o) {
         if (o instanceof JSONArray) {
@@ -324,4 +362,3 @@ public class JsSpider extends Spider {
         }
     }
 }
-

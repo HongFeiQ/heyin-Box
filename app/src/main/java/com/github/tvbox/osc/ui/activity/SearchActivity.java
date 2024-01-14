@@ -49,6 +49,7 @@ import com.orhanobut.hawk.Hawk;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
+import com.undcover.freedom.pyramid.PythonLoader;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -87,7 +88,6 @@ public class SearchActivity extends BaseActivity {
     private SearchCheckboxDialog mSearchCheckboxDialog = null;
     private List<Runnable> pauseRunnable = null;
     private ExecutorService searchExecutorService = null;
-    private List<String> fenci;
 
     public static void setCheckedSourcesForSearch(HashMap<String, String> checkedSources) {
         mCheckSources = checkedSources;
@@ -109,12 +109,10 @@ public class SearchActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (pauseRunnable != null && pauseRunnable.size() > 0) {
+            searchExecutorService = Executors.newFixedThreadPool(5);
             allRunCount.set(pauseRunnable.size());
-            if (sourceViewModel != null) {
-                sourceViewModel.initExecutor();
-                for (Runnable runnable : pauseRunnable) {
-                    sourceViewModel.execute(runnable);
-                }
+            for (Runnable runnable : pauseRunnable) {
+                searchExecutorService.execute(runnable);
             }
             pauseRunnable.clear();
             pauseRunnable = null;
@@ -175,7 +173,13 @@ public class SearchActivity extends BaseActivity {
         wordAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                search(wordAdapter.getItem(position));
+                if (Hawk.get(HawkConfig.FAST_SEARCH_MODE, false)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", wordAdapter.getItem(position));
+                    jumpActivity(FastSearchActivity.class, bundle);
+                } else {
+                    search(wordAdapter.getItem(position));
+                }
             }
         });
         mGridView.setHasFixedSize(true);
@@ -215,7 +219,13 @@ public class SearchActivity extends BaseActivity {
                 FastClickCheckUtil.check(v);
                 String wd = etSearch.getText().toString().trim();
                 if (!TextUtils.isEmpty(wd)) {
-                    search(wd);
+                    if (Hawk.get(HawkConfig.FAST_SEARCH_MODE, false)) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("title", wd);
+                        jumpActivity(FastSearchActivity.class, bundle);
+                    } else {
+                        search(wd);
+                    }
                 } else {
                     Toast.makeText(mContext, getString(R.string.search_input), Toast.LENGTH_SHORT).show();
                 }
@@ -332,7 +342,13 @@ public class SearchActivity extends BaseActivity {
         if (intent != null && intent.hasExtra("title")) {
             String title = intent.getStringExtra("title");
             showLoading();
-            search(title);
+            if (Hawk.get(HawkConfig.FAST_SEARCH_MODE, false)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("title", title);
+                jumpActivity(FastSearchActivity.class, bundle);
+            } else {
+                search(title);
+            }
         }
         // 加载热词
         loadHotSearch();
@@ -388,7 +404,13 @@ public class SearchActivity extends BaseActivity {
         if (event.type == ServerEvent.SERVER_SEARCH) {
             String title = (String) event.obj;
             showLoading();
-            search(title);
+            if (Hawk.get(HawkConfig.FAST_SEARCH_MODE, false)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("title", title);
+                jumpActivity(FastSearchActivity.class, bundle);
+            } else {
+                search(title);
+            }
         }
     }
 
@@ -419,7 +441,6 @@ public class SearchActivity extends BaseActivity {
 
     private void searchResult() {
         try {
-            sourceViewModel.initExecutor();
             if (searchExecutorService != null) {
                 searchExecutorService.shutdownNow();
                 searchExecutorService = null;
@@ -437,29 +458,7 @@ public class SearchActivity extends BaseActivity {
         SourceBean home = ApiConfig.get().getHomeSourceBean();
         searchRequestList.remove(home);
         searchRequestList.add(0, home);
-        /*
-        List<SourceBean> searchRequestList = new ArrayList<>();
 
-        boolean equals = this.sKey.equals("filter__home");
-        if (equals) {
-            SourceBean home = ApiConfig.get().getHomeSourceBean();
-            if (home.isSearchable()) {
-                searchRequestList.add(home);
-            } else {
-                Toast.makeText(mContext, "当前源不支持搜索,自动切换到全局搜索", Toast.LENGTH_SHORT).show();
-                searchRequestList.addAll(ApiConfig.get().getSourceBeanList());
-            }
-        } else if (TextUtils.isEmpty(sKey) || ApiConfig.get().getSource(sKey) == null) {
-            searchRequestList.addAll(ApiConfig.get().getSourceBeanList());
-            SourceBean home = ApiConfig.get().getHomeSourceBean();
-            searchRequestList.remove(home);
-            searchRequestList.add(0, home);
-        } else {
-            searchRequestList.add(ApiConfig.get().getSource(sKey));
-        }
-
-
-         */
         ArrayList<String> siteKey = new ArrayList<>();
         for (SourceBean bean : searchRequestList) {
             if (!bean.isSearchable()) {
@@ -498,13 +497,10 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void searchData(AbsXml absXml) {
-
         if (absXml != null && absXml.movie != null && absXml.movie.videoList != null && absXml.movie.videoList.size() > 0) {
             List<Movie.Video> data = new ArrayList<>();
             for (Movie.Video video : absXml.movie.videoList) {
-                if (SearchHelper.searchContains(video.name, fenci)) {
-                    data.add(video);
-                }
+                data.add(video);
             }
             if (searchAdapter.getData().size() > 0) {
                 searchAdapter.addData(data);
@@ -537,6 +533,7 @@ public class SearchActivity extends BaseActivity {
                 searchExecutorService.shutdownNow();
                 searchExecutorService = null;
                 JsLoader.load();
+                PythonLoader.getInstance().load();
             }
         } catch (Throwable th) {
             th.printStackTrace();

@@ -2,15 +2,16 @@ package com.undcover.freedom.pyramid;
 
 import android.util.Log;
 
+import com.github.tvbox.osc.util.LOG;
+
 /**
  * Created by UndCover on 16/12/15.
  */
 
 public class PyLog {
-    public final static int LEVEL_V = 5;
+
     public final static int LEVEL_D = 4;
     public final static int LEVEL_I = 3;
-    public final static int LEVEL_W = 2;
     public final static int LEVEL_E = 1;
     public final static int LEVEL_RELEASE = 0;
     /**
@@ -29,58 +30,35 @@ public class PyLog {
      * 用于FrameWork内置log
      */
     public final static int FILTER_FW = 0x08;
+    private static final int segmentSize = 3 * 1024;
     private static int logLevel = LEVEL_RELEASE;
     private static PyLog mLog;
     private static boolean isLifeCycleEnable = false;
     private static boolean isNetWorkEnable = false;
     private static boolean isFrameWorkEnable = false;
     private static boolean isAtyManagerEnable = false;
-    private static int segmentSize = 3 * 1024;
 
     public synchronized static PyLog getInstance() {
         mLog = new PyLog();
         return mLog;
     }
 
-    public static void V(String tag, String msg) {
-        if (logLevel < LEVEL_V)
-            return;
-        Log.v(tag, msg);
-    }
-
     public static void D(String tag, String msg) {
         if (logLevel < LEVEL_D)
             return;
-        Log.d(tag, msg);
+        LOG.e(tag, msg);
     }
 
     public static void I(String tag, String msg) {
         if (logLevel < LEVEL_I)
             return;
-        Log.i(tag, msg);
-    }
-
-    public static void W(String tag, String msg) {
-        if (logLevel < LEVEL_W)
-            return;
-        Log.w(tag, msg);
+        LOG.i(tag, msg);
     }
 
     public static void E(String tag, String msg) {
         if (logLevel < LEVEL_E)
             return;
-        Log.e(tag, msg);
-    }
-
-    private static void longV(String tag, String msg) {
-        if (logLevel < LEVEL_V)
-            return;
-        while (msg.length() > segmentSize) {// 循环分段打印日志
-            String logContent = msg.substring(0, segmentSize);
-            msg = msg.replace(logContent, "\t\t");
-            Log.v(tag, logContent);
-        }
-        Log.v(tag, msg);// 打印剩余日志
+        LOG.e(tag, msg);
     }
 
     private static void longD(String tag, String msg) {
@@ -89,9 +67,9 @@ public class PyLog {
         while (msg.length() > segmentSize) {// 循环分段打印日志
             String logContent = msg.substring(0, segmentSize);
             msg = msg.replace(logContent, "\t\t");
-            Log.d(tag, logContent);
+            LOG.e(tag, logContent);
         }
-        Log.d(tag, msg);// 打印剩余日志
+        LOG.e(tag, msg);// 打印剩余日志
     }
 
     private static void longI(String tag, String msg) {
@@ -100,21 +78,9 @@ public class PyLog {
         while (msg.length() > segmentSize) {// 循环分段打印日志
             String logContent = msg.substring(0, segmentSize);
             msg = msg.replace(logContent, "\t\t");
-            Log.i(tag, logContent);
+            LOG.i(tag, logContent);
         }
-        Log.i(tag, msg);// 打印剩余日志
-    }
-
-    private static void longW(String tag, String msg) {
-        if (logLevel < LEVEL_W)
-            return;
-
-        while (msg.length() > segmentSize) {// 循环分段打印日志
-            String logContent = msg.substring(0, segmentSize);
-            msg = msg.replace(logContent, "\t\t");
-            Log.w(tag, logContent);
-        }
-        Log.w(tag, msg);// 打印剩余日志
+        LOG.i(tag, msg);// 打印剩余日志
     }
 
     private static void longE(String tag, String msg) {
@@ -124,35 +90,9 @@ public class PyLog {
         while (msg.length() > segmentSize) {// 循环分段打印日志
             String logContent = msg.substring(0, segmentSize);
             msg = msg.replace(logContent, "\t\t");
-            Log.e(tag, logContent);
+            LOG.e(tag, logContent);
         }
-        Log.e(tag, msg);// 打印剩余日志
-
-//        if (tag == null || tag.length() == 0
-//                || msg == null || msg.length() == 0)
-//            return;
-
-//        int segmentSize = 3 * 1024;
-//        long length = msg.length();
-//        if (length <= segmentSize) {// 长度小于等于限制直接打印
-//            Log.e(tag, msg);
-//        } else {
-//            while (msg.length() > segmentSize) {// 循环分段打印日志
-//                String logContent = msg.substring(0, segmentSize);
-//                msg = msg.replace(logContent, "");
-//                Log.e(tag, logContent);
-//            }
-//            Log.e(tag, msg);// 打印剩余日志
-//        }
-    }
-
-    /**
-     * 默认Tag
-     *
-     * @param msg
-     */
-    public static void v(String msg) {
-        v(TagConstant.TAG_DEF, msg);
+        LOG.e(tag, msg);// 打印剩余日志
     }
 
     /**
@@ -178,32 +118,8 @@ public class PyLog {
      *
      * @param msg
      */
-    public static void w(String msg) {
-        w(TagConstant.TAG_DEF, msg);
-    }
-
-    /**
-     * 默认Tag
-     *
-     * @param msg
-     */
     public static void e(String msg) {
         e(TagConstant.TAG_DEF, msg);
-    }
-
-    /**
-     * 添加AppTag
-     *
-     * @param tag
-     * @param msg
-     */
-    public static void v(String tag, String msg) {
-        String msgStr = tag + " " + msg;
-        if (msgStr.length() > segmentSize) {
-            longV(TagConstant.TAG_APP, msgStr);
-        } else {
-            V(TagConstant.TAG_APP, msgStr);
-        }
     }
 
     /**
@@ -242,21 +158,6 @@ public class PyLog {
      * @param tag
      * @param msg
      */
-    public static void w(String tag, String msg) {
-        String msgStr = tag + " " + msg;
-        if (msgStr.length() > segmentSize) {
-            longW(TagConstant.TAG_APP, msgStr);
-        } else {
-            W(TagConstant.TAG_APP, msgStr);
-        }
-    }
-
-    /**
-     * 添加AppTag
-     *
-     * @param tag
-     * @param msg
-     */
     public static void e(String tag, String msg) {
         String msgStr = tag + " " + msg;
         if (msgStr.length() > segmentSize) {
@@ -264,16 +165,6 @@ public class PyLog {
         } else {
             E(TagConstant.TAG_APP, msgStr);
         }
-    }
-
-    /**
-     * 多参数,使用默认Tag
-     *
-     * @param args
-     */
-    public static void v(String... args) {
-        String msg = getArgsStr(args);
-        v(TagConstant.TAG_DEF, msg);
     }
 
     /**
@@ -294,16 +185,6 @@ public class PyLog {
     public static void i(String... args) {
         String msg = getArgsStr(args);
         i(msg);
-    }
-
-    /**
-     * 多参数,使用默认Tag
-     *
-     * @param args
-     */
-    public static void w(String... args) {
-        String msg = getArgsStr(args);
-        w(msg);
     }
 
     /**
@@ -379,13 +260,13 @@ public class PyLog {
     }
 
     private static String getArgsStr(String... args) {
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         if (args != null && args.length > 0) {
             for (String str : args) {
-                ret += str + " ";
+                ret.append(str).append(" ");
             }
         }
-        return ret;
+        return ret.toString();
     }
 
     private static void checkInit() throws Exception {
@@ -420,10 +301,10 @@ public class PyLog {
         } catch (Exception e) {
             return mLog;
         }
-        isLifeCycleEnable = (filter & FILTER_LC) / FILTER_LC == 1 ? true : false;
-        isNetWorkEnable = (filter & FILTER_NW) / FILTER_NW == 1 ? true : false;
-        isFrameWorkEnable = (filter & FILTER_FW) / FILTER_FW == 1 ? true : false;
-        isAtyManagerEnable = (filter & FILTER_AM) / FILTER_AM == 1 ? true : false;
+        isLifeCycleEnable = (filter & FILTER_LC) / FILTER_LC == 1;
+        isNetWorkEnable = (filter & FILTER_NW) / FILTER_NW == 1;
+        isFrameWorkEnable = (filter & FILTER_FW) / FILTER_FW == 1;
+        isAtyManagerEnable = (filter & FILTER_AM) / FILTER_AM == 1;
         return mLog;
     }
 

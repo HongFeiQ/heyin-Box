@@ -1,6 +1,5 @@
 package com.acsbendi.requestinspectorwebview
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
@@ -287,7 +286,6 @@ window.navigator.sendBeacon = function (url, arguments) {
 }
         """
 
-        @SuppressLint("NewApi")
         fun enabledRequestInspection(webView: WebView, extraJavaScriptToInject: String) {
             webView.evaluateJavascript(
                 "javascript: $JAVASCRIPT_INTERCEPTION_CODE\n$extraJavaScriptToInject",

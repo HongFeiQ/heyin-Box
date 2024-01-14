@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by fighting on 2017/4/7.
@@ -36,7 +37,7 @@ public abstract class CallBackUtil<T> {
     private static String getRetString(InputStream is) {
         String buf;
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             StringBuilder sb = new StringBuilder();
             String line = "";
             while ((line = reader.readLine()) != null) {
@@ -123,8 +124,6 @@ public abstract class CallBackUtil<T> {
 
         public CallBackBitmap() {
         }
-
-        ;
 
         public CallBackBitmap(int targetWidth, int targetHeight) {
             mTargetWidth = targetWidth;

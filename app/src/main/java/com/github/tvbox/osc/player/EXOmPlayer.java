@@ -14,7 +14,7 @@ import androidx.media3.exoplayer.source.TrackGroupArray;
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector;
 import androidx.media3.exoplayer.trackselection.MappingTrackSelector;
 
-import com.whl.quickjs.wrapper.JSUtils;
+import com.github.tvbox.osc.util.StringUtils;
 
 import xyz.doikki.videoplayer.exo.ExoMediaPlayer;
 
@@ -45,7 +45,7 @@ public class EXOmPlayer extends ExoMediaPlayer {
                             t.name = trackName;
                             t.language = "";
                             t.trackId = formatIndex;
-                            t.selected = !JSUtils.isEmpty(audioId) && audioId.equals(format.id);
+                            t.selected = !StringUtils.isEmpty(audioId) && audioId.equals(format.id);
                             t.trackGroupId = groupIndex;
                             t.renderId = groupArrayIndex;
                             data.addAudio(t);
@@ -55,7 +55,7 @@ public class EXOmPlayer extends ExoMediaPlayer {
                             t.name = trackName;
                             t.language = "";
                             t.trackId = formatIndex;
-                            t.selected = !JSUtils.isEmpty(subtitleId) && subtitleId.equals(format.id);
+                            t.selected = !StringUtils.isEmpty(subtitleId) && subtitleId.equals(format.id);
                             t.trackGroupId = groupIndex;
                             t.renderId = groupArrayIndex;
                             data.addSubtitle(t);
@@ -72,7 +72,9 @@ public class EXOmPlayer extends ExoMediaPlayer {
         audioId = "";
         subtitleId = "";
         for (Tracks.Group group : mMediaPlayer.getCurrentTracks().getGroups()) {
+            if (!group.isSelected()) continue;
             for (int trackIndex = 0; trackIndex < group.length; trackIndex++) {
+                if (!group.isTrackSelected(trackIndex)) continue;
                 Format format = group.getTrackFormat(trackIndex);
                 if (MimeTypes.isAudio(format.sampleMimeType)) {
                     audioId = format.id;

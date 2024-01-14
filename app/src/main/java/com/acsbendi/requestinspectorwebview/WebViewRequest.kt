@@ -1,6 +1,5 @@
 package com.acsbendi.requestinspectorwebview
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.webkit.CookieManager
 import android.webkit.WebResourceRequest
@@ -44,7 +43,6 @@ data class WebViewRequest(
     }
 
     companion object {
-        @SuppressLint("NewApi")
         internal fun create(
             webResourceRequest: WebResourceRequest,
             recordedRequest: RequestInspectorJavaScriptInterface.RecordedRequest?

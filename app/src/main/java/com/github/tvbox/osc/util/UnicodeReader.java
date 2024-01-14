@@ -2,7 +2,6 @@ package com.github.tvbox.osc.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,17 +14,17 @@ public class UnicodeReader extends Reader {
     private String encoding;
 
     public UnicodeReader(String file)
-            throws IOException, FileNotFoundException, SecurityException {
+            throws IOException, SecurityException {
         this(new File(file));
     }
 
     public UnicodeReader(File file)
-            throws IOException, FileNotFoundException, SecurityException {
+            throws IOException, SecurityException {
         this(new FileInputStream(file));
     }
 
     public UnicodeReader(File file, String defaultEncoding)
-            throws IOException, FileNotFoundException, SecurityException {
+            throws IOException, SecurityException {
         this(new FileInputStream(file), defaultEncoding);
     }
 
