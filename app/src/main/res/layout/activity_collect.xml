@@ -67,7 +67,7 @@
             android:focusableInTouchMode="false"
             android:gravity="center"
             android:padding="@dimen/vs_5"
-            android:src="@drawable/icon_delete" />
+            app:srcCompat="@drawable/icon_delete" />
 
         <ImageView
             android:id="@+id/tvClear"
@@ -80,7 +80,7 @@
             android:focusableInTouchMode="false"
             android:gravity="center"
             android:padding="@dimen/vs_5"
-            android:src="@drawable/icon_clear" />
+            app:srcCompat="@drawable/icon_clear" />
 
     </LinearLayout>
 

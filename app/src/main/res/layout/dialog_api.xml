@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -98,7 +99,7 @@
                                 android:layout_width="@dimen/vs_30"
                                 android:layout_height="@dimen/vs_30"
                                 android:focusable="true"
-                                android:src="@drawable/hm_history" />
+                                app:srcCompat="@drawable/hm_history" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -148,7 +149,7 @@
                                 android:layout_width="@dimen/vs_30"
                                 android:layout_height="@dimen/vs_30"
                                 android:focusable="true"
-                                android:src="@drawable/hm_history" />
+                                app:srcCompat="@drawable/hm_history" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -198,7 +199,7 @@
                                 android:layout_width="@dimen/vs_30"
                                 android:layout_height="@dimen/vs_30"
                                 android:focusable="true"
-                                android:src="@drawable/hm_history" />
+                                app:srcCompat="@drawable/hm_history" />
                         </LinearLayout>
 
                     </LinearLayout>

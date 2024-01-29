@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -31,7 +32,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp"
             android:alpha="0.9"
-            android:src="@drawable/play_volume" />
+            app:srcCompat="@drawable/play_volume" />
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +62,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp"
             android:alpha="0.9"
-            android:src="@drawable/play_brightness" />
+            app:srcCompat="@drawable/play_brightness" />
     </LinearLayout>
 
     <LinearLayout
@@ -324,6 +325,21 @@
             </LinearLayout>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/tv_play_load_net_speed_right_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="right"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="@dimen/vs_5"
+            android:paddingRight="@dimen/vs_2"
+            android:tag="play_speed_topr"
+            android:text="Speed"
+            android:textColor="?attr/color_theme"
+            android:textStyle="bold"
+            android:textSize="@dimen/ts_22" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -382,7 +398,7 @@
                 android:layout_marginRight="@dimen/vs_30"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:src="@drawable/play_pause" />
+                app:srcCompat="@drawable/play_pause" />
 
         </LinearLayout>
 

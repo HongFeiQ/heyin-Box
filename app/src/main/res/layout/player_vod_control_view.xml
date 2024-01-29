@@ -21,7 +21,6 @@
         android:tag="top_container">
 
         <LinearLayout
-            android:id="@+id/tv_top_line1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/vs_40"
             android:layout_marginTop="@dimen/vs_10"
@@ -73,7 +72,6 @@
                 android:tag="tv_speed_top">
 
                 <TextView
-                    android:id="@+id/tv_play_speed_top"
                     android:layout_width="@dimen/vs_70"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
@@ -91,7 +89,6 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_MPBS_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
@@ -110,7 +107,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/tv_spin_top"
                 android:layout_width="@dimen/vs_45"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
@@ -136,7 +132,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/tv_top_line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/vs_5"
@@ -177,13 +172,13 @@
         android:id="@+id/tv_top_r_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="@dimen/vs_8"
-        android:layout_marginRight="@dimen/vs_35"
-        android:orientation="horizontal"
         android:tag="tv_top_container"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="visible"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/vs_35"
+        android:layout_marginTop="@dimen/vs_8"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_play_load_net_speed_right_top"
@@ -197,8 +192,8 @@
             android:tag="vod_control_pause_time"
             android:text="0Kb/s"
             android:textColor="@color/color_FF90CA09"
-            android:textSize="@dimen/ts_22"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="@dimen/ts_22" />
 
         <TextView
             android:id="@+id/tv_seek_time"
@@ -212,8 +207,8 @@
             android:tag="vod_control_pause_time"
             android:text="00:00 | 00:00"
             android:textColor="@color/color_FF90CA09"
-            android:textSize="@dimen/ts_22"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="@dimen/ts_22" />
 
         <TextView
             android:id="@+id/tv_system_time"
@@ -244,14 +239,12 @@
         android:tag="top_container_hide">
 
         <LinearLayout
-            android:id="@+id/tv_top_line1_hide"
             android:layout_width="match_parent"
             android:layout_height="@dimen/vs_40"
             android:layout_marginTop="@dimen/vs_10"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_title_top_hide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|left"
@@ -279,7 +272,6 @@
                 android:tag="tv_speed_top">
 
                 <TextView
-                    android:id="@+id/tv_play_speed_top_hide"
                     android:layout_width="@dimen/vs_70"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -297,7 +289,6 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_MPBS_top_hide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
@@ -316,7 +307,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/tv_spin_top_hide"
                 android:layout_width="@dimen/vs_45"
                 android:layout_height="@dimen/vs_40"
                 android:layout_gravity="top"
@@ -352,7 +342,6 @@
         tools:visibility="visible">
 
         <LinearLayout
-            android:id="@+id/ll_pause"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/vs_70"
             android:layout_gravity="right|top"
@@ -375,7 +364,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_pause_progress_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -392,7 +380,6 @@
                     tools:text="100" />
 
                 <ProgressBar
-                    android:id="@+id/video_pausebar"
                     style="@style/video_horizontal_progressBar"
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
@@ -411,7 +398,7 @@
                 android:layout_marginRight="@dimen/vs_30"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:src="@drawable/play_pause" />
+                app:srcCompat="@drawable/play_pause" />
         </LinearLayout>
 
     </FrameLayout>
@@ -429,7 +416,7 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:src="@drawable/icon_unlock"
+        app:srcCompat="@drawable/icon_unlock"
         android:visibility="invisible" />
 
     <LinearLayout
@@ -452,11 +439,10 @@
             android:layout_width="@dimen/vs_40"
             android:layout_height="@dimen/vs_40"
             android:layout_gravity="center"
-            android:src="@drawable/v_back" />
+            app:srcCompat="@drawable/v_back" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/dialog_volume"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -468,7 +454,6 @@
         android:visibility="gone">
 
         <ProgressBar
-            android:id="@+id/volume_progressbar"
             style="@style/video_vertical_progressBar"
             android:layout_width="5dp"
             android:layout_height="90dp"
@@ -484,11 +469,10 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp"
             android:alpha="0.9"
-            android:src="@drawable/play_volume" />
+            app:srcCompat="@drawable/play_volume" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/dialog_bright"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
@@ -500,7 +484,6 @@
         android:visibility="gone">
 
         <ProgressBar
-            android:id="@+id/brightness_progressbar"
             style="@style/video_vertical_progressBar"
             android:layout_width="5dp"
             android:layout_height="90dp"
@@ -516,11 +499,10 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp"
             android:alpha="0.9"
-            android:src="@drawable/play_brightness" />
+            app:srcCompat="@drawable/play_brightness" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_slide_progress_text"
         android:layout_width="@dimen/vs_200"
         android:layout_height="@dimen/vs_100"
         android:layout_gravity="center"
@@ -582,12 +564,11 @@
                 tools:text="100" />
 
             <ProgressBar
-                android:id="@+id/video_progressbar"
                 style="@style/video_horizontal_progressBar"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:layout_gravity="center|top"
                 android:layout_marginTop="5dp"
+                android:layout_gravity="center|top"
                 android:max="100"
                 android:tag="progressbar_video" />
         </LinearLayout>
@@ -637,7 +618,6 @@
         android:paddingBottom="@dimen/vs_20">
 
         <LinearLayout
-            android:id="@+id/ll_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -683,7 +663,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_time_end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -806,7 +785,6 @@
             android:scrollbars="none">
 
             <LinearLayout
-                android:id="@+id/vod_control_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -832,7 +810,7 @@
                         android:layout_width="@dimen/vs_60"
                         android:layout_height="@dimen/vs_60"
                         android:layout_gravity="center"
-                        android:src="@drawable/v_prev" />
+                        app:srcCompat="@drawable/v_prev" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -854,7 +832,7 @@
                         android:layout_width="@dimen/vs_50"
                         android:layout_height="@dimen/vs_50"
                         android:layout_gravity="center"
-                        android:src="@drawable/v_pause" />
+                        app:srcCompat="@drawable/v_pause" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -875,7 +853,7 @@
                         android:layout_width="@dimen/vs_60"
                         android:layout_height="@dimen/vs_60"
                         android:layout_gravity="center"
-                        android:src="@drawable/v_next" />
+                        app:srcCompat="@drawable/v_next" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -900,7 +878,7 @@
                         android:layout_width="@dimen/vs_60"
                         android:layout_height="@dimen/vs_60"
                         android:layout_gravity="center"
-                        android:src="@drawable/v_ffwd" />
+                        app:srcCompat="@drawable/v_ffwd" />
 
                 </LinearLayout>
 
@@ -940,7 +918,7 @@
                         android:layout_width="@dimen/vs_40"
                         android:layout_height="@dimen/vs_40"
                         android:layout_gravity="center"
-                        android:src="@drawable/v_replay" />
+                        app:srcCompat="@drawable/v_replay" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -962,7 +940,7 @@
                         android:layout_width="@dimen/vs_60"
                         android:layout_height="@dimen/vs_40"
                         android:layout_gravity="center"
-                        android:src="@drawable/v_aspect" />
+                        app:srcCompat="@drawable/v_aspect" />
                 </LinearLayout>
 
                 <TextView
@@ -1002,7 +980,7 @@
                         android:layout_width="@dimen/vs_40"
                         android:layout_height="@dimen/vs_40"
                         android:layout_gravity="center"
-                        android:src="@drawable/v_type" />
+                        app:srcCompat="@drawable/v_type" />
 
                     <TextView
                         android:id="@+id/play_player_txt"
@@ -1055,7 +1033,7 @@
                         android:layout_width="@dimen/vs_40"
                         android:layout_height="@dimen/vs_40"
                         android:layout_gravity="center"
-                        android:src="@drawable/v_subtitle" />
+                        app:srcCompat="@drawable/v_subtitle" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1076,7 +1054,7 @@
                         android:layout_width="@dimen/vs_40"
                         android:layout_height="@dimen/vs_40"
                         android:layout_gravity="center"
-                        android:src="@drawable/v_audio" />
+                        app:srcCompat="@drawable/v_audio" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -1097,7 +1075,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/vs_45"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_clock_digital" />
+                        app:srcCompat="@drawable/ic_clock_digital" />
                 </LinearLayout>
 
                 <TextView
@@ -1209,7 +1187,7 @@
                         android:layout_width="@dimen/vs_40"
                         android:layout_height="@dimen/vs_40"
                         android:layout_gravity="center"
-                        android:src="@drawable/htov" />
+                        app:srcCompat="@drawable/htov" />
                 </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>
@@ -1278,7 +1256,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/shape_player_tap"
         android:orientation="horizontal"
-        android:visibility="invisible">
+        android:visibility="invisible" >
 
     </LinearLayout>
 

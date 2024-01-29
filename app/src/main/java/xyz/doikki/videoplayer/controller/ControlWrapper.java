@@ -1,10 +1,10 @@
 package xyz.doikki.videoplayer.controller;
 
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 此类的目的是为了在ControlComponent中既能调用VideoView的api又能调用BaseVideoController的api，
@@ -154,7 +154,7 @@ public class ControlWrapper implements MediaPlayerControl, IVideoController {
     /**
      * 横竖屏切换，会旋转屏幕
      */
-    public void toggleFullScreen(Activity activity) {
+    public void toggleFullScreen(AppCompatActivity activity) {
         if (activity == null || activity.isFinishing())
             return;
         if (isFullScreen()) {
@@ -180,7 +180,7 @@ public class ControlWrapper implements MediaPlayerControl, IVideoController {
     /**
      * 横竖屏切换，根据适配宽高决定是否旋转屏幕
      */
-    public void toggleFullScreenByVideoSize(Activity activity) {
+    public void toggleFullScreenByVideoSize(AppCompatActivity activity) {
         if (activity == null || activity.isFinishing())
             return;
         int[] size = getVideoSize();

@@ -1,6 +1,7 @@
 package com.undcover.freedom.pyramid;
 
 import android.app.Application;
+import android.util.Base64;
 
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
@@ -8,7 +9,9 @@ import com.chaquo.python.android.AndroidPlatform;
 import com.github.catvod.crawler.Spider;
 import com.github.catvod.net.OkHttp;
 import com.github.tvbox.osc.util.LOG;
+import com.github.tvbox.osc.util.TxtSubscribe;
 
+import java.io.ByteArrayInputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -52,9 +55,7 @@ public class PythonLoader {
         }
         return this;
     }
-
     private volatile String recentJarKey = "";
-
     public Spider getSpider(String key, String url, String ext) throws Exception {
         if (app == null) throw new Exception("set application first");
         if (spiders.containsKey(key)) {
@@ -89,7 +90,7 @@ public class PythonLoader {
 
     public void getPort() {
         if (port <= 0) {
-            for (int i = 9978; i < 10000; i++) {
+            for (int i = 2691; i < 10000; i++) {
                 if (OkHttp.string("http://127.0.0.1:" + i + "/proxy?do=ck&api=python").equals("ok")) {
                     port = i;
                     return;
@@ -102,5 +103,6 @@ public class PythonLoader {
         getPort();
         return "http://127.0.0.1:" + port + "/proxy";
     }
+
 
 }

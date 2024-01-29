@@ -1,12 +1,12 @@
 package com.github.tvbox.osc.util;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.orhanobut.hawk.Hawk;
 
 public class SubtitleHelper {
 
-    public static int getSubtitleTextAutoSize(Activity activity) {
+    public static int getSubtitleTextAutoSize(AppCompatActivity activity) {
         double screenSqrt = ScreenUtils.getSqrt(activity);
         int subtitleTextSize = 20;
         if (screenSqrt > 7.0 && screenSqrt <= 13.0) {
@@ -19,7 +19,7 @@ public class SubtitleHelper {
         return subtitleTextSize;
     }
 
-    public static int getTextSize(Activity activity) {
+    public static int getTextSize(AppCompatActivity activity) {
         int autoSize = getSubtitleTextAutoSize(activity);
         int subtitleConfigSize = Hawk.get(HawkConfig.SUBTITLE_TEXT_SIZE, autoSize);
         return subtitleConfigSize;

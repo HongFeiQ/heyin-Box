@@ -12,6 +12,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Map;
 
@@ -240,7 +241,7 @@ public abstract class GestureVideoController extends BaseVideoController impleme
     }
 
     protected void slideToChangeBrightness(float deltaY) {
-        Activity activity = PlayerUtils.scanForActivity(getContext());
+        AppCompatActivity activity = PlayerUtils.scanForActivity(getContext());
         if (activity == null) return;
         Window window = activity.getWindow();
         WindowManager.LayoutParams attributes = window.getAttributes();

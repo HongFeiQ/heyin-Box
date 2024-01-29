@@ -3,6 +3,7 @@ package com.github.catvod.crawler;
 import android.content.Context;
 
 import com.github.tvbox.osc.base.App;
+import com.github.tvbox.osc.reflect.Reflect;
 import com.github.tvbox.osc.util.MD5;
 import com.lzy.okgo.OkGo;
 
@@ -20,7 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import dalvik.system.DexClassLoader;
 import okhttp3.Response;
-import com.github.tvbox.osc.reflect.Reflect;
 
 public class JarLoader {
     private ConcurrentHashMap<String, DexClassLoader> classLoaders = new ConcurrentHashMap<>();
@@ -144,7 +144,6 @@ public class JarLoader {
         if (classLoader == null)
             return new SpiderNull();
         try {
-            //Spider sp = (Spider) classLoader.loadClass("com.github.catvod.spider." + clsKey).newInstance();
             Spider sp = Reflect.onClass(classLoader.loadClass("com.github.catvod.spider." + clsKey)).create().get();
             sp.init(App.getInstance(), ext);
             if (!jar.isEmpty()) {

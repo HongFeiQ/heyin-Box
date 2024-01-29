@@ -25,6 +25,7 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 
 import com.github.tvbox.osc.base.App;
+import com.github.tvbox.osc.util.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -236,7 +237,7 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
     }
 
     public static String xml2ffconcat(String str) {
-        String str2 = App.getInstance().getExternalCacheDir().getPath() + "/" + System.currentTimeMillis() + ".ffconcat";
+        String str2 = FileUtils.getExternalCachePath() + "/" + System.currentTimeMillis() + ".ffconcat";
         try {
             File file = new File(str2);
             if (!file.exists()) {

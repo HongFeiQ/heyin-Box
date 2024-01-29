@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: J">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/dec-0.1.2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

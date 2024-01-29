@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Map;
 
@@ -373,7 +374,7 @@ public abstract class BaseController extends BaseVideoController implements Gest
     }
 
     protected void slideToChangeBrightness(float deltaY) {
-        Activity activity = PlayerUtils.scanForActivity(getContext());
+        AppCompatActivity activity = PlayerUtils.scanForActivity(getContext());
         if (activity == null) return;
         Window window = activity.getWindow();
         WindowManager.LayoutParams attributes = window.getAttributes();

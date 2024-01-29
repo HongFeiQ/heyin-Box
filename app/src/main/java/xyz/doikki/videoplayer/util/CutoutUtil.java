@@ -1,7 +1,6 @@
 package xyz.doikki.videoplayer.util;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Rect;
@@ -10,6 +9,8 @@ import android.view.DisplayCutout;
 import android.view.Window;
 import android.view.WindowInsets;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -25,7 +26,7 @@ public final class CutoutUtil {
     /**
      * 是否为允许全屏界面显示内容到刘海区域的刘海屏机型（与AndroidManifest中配置对应）
      */
-    public static boolean allowDisplayToCutout(Activity activity) {
+    public static boolean allowDisplayToCutout(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             // 9.0系统全屏界面默认会保留黑边，不允许显示内容到刘海区域
             Window window = activity.getWindow();
@@ -51,7 +52,7 @@ public final class CutoutUtil {
      * 是否是华为刘海屏机型
      */
     @SuppressWarnings("unchecked")
-    private static boolean hasCutoutHuawei(Activity activity) {
+    private static boolean hasCutoutHuawei(AppCompatActivity activity) {
         if (!Build.MANUFACTURER.equalsIgnoreCase("HUAWEI")) {
             return false;
         }
@@ -71,7 +72,7 @@ public final class CutoutUtil {
     /**
      * 是否是oppo刘海屏机型
      */
-    private static boolean hasCutoutOPPO(Activity activity) {
+    private static boolean hasCutoutOPPO(AppCompatActivity activity) {
         if (!Build.MANUFACTURER.equalsIgnoreCase("oppo")) {
             return false;
         }
@@ -83,7 +84,7 @@ public final class CutoutUtil {
      */
     @SuppressWarnings("unchecked")
     @SuppressLint("PrivateApi")
-    private static boolean hasCutoutVIVO(Activity activity) {
+    private static boolean hasCutoutVIVO(AppCompatActivity activity) {
         if (!Build.MANUFACTURER.equalsIgnoreCase("vivo")) {
             return false;
         }
@@ -105,7 +106,7 @@ public final class CutoutUtil {
      */
     @SuppressWarnings("unchecked")
     @SuppressLint("PrivateApi")
-    private static boolean hasCutoutXIAOMI(Activity activity) {
+    private static boolean hasCutoutXIAOMI(AppCompatActivity activity) {
         if (!Build.MANUFACTURER.equalsIgnoreCase("xiaomi")) {
             return false;
         }
@@ -131,7 +132,7 @@ public final class CutoutUtil {
      * 适配刘海屏，针对Android P以上系统
      */
     public static void adaptCutoutAboveAndroidP(Context context, boolean isAdapt) {
-        Activity activity = PlayerUtils.scanForActivity(context);
+        AppCompatActivity activity = PlayerUtils.scanForActivity(context);
         if (activity == null) return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             WindowManager.LayoutParams lp = activity.getWindow().getAttributes();

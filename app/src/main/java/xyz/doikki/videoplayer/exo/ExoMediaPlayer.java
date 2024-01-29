@@ -56,7 +56,7 @@ public class ExoMediaPlayer extends AbstractPlayer implements Player.Listener {
         mMediaSourceHelper = ExoMediaSourceHelper.getInstance(context);
     }
 
-    @SuppressLint("UnsafeOptInUsageError")
+
     @Override
     public void initPlayer() {
         if (mRenderersFactory == null) {
@@ -127,7 +127,7 @@ public class ExoMediaPlayer extends AbstractPlayer implements Player.Listener {
         mMediaPlayer.stop();
     }
 
-    @SuppressLint("UnsafeOptInUsageError")
+
     @Override
     public void prepareAsync() {
         if (mMediaPlayer == null)

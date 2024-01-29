@@ -36,7 +36,7 @@ public class FileUtils {
     private static final Pattern URLJOIN = Pattern.compile("^http.*\\.(js|txt|json|m3u)$", Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
 
     public static File open(String str) {
-        return new File(App.getInstance().getExternalCacheDir().getAbsolutePath() + "/qjscache_" + str + ".js");
+        return new File(getExternalCachePath() + "/qjscache_" + str + ".js");
     }
 
     public static boolean writeSimple(byte[] data, File dst) {

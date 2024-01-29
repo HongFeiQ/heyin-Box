@@ -36,7 +36,7 @@ import okhttp3.ConnectionSpec;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.TlsVersion;
-import xyz.doikki.videoplayer.exo.DnsOverHttps;
+import xyz.doikki.videoplayer.utils.DnsOverHttps;
 import xyz.doikki.videoplayer.exo.ExoMediaSourceHelper;
 
 /**

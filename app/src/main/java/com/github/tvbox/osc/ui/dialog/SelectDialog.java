@@ -42,20 +42,22 @@ public class SelectDialog<T> extends BaseDialog {
         ((TextView) findViewById(R.id.title)).setText(tip);
     }
 
-    public void setAdapter(SelectDialogAdapter.SelectDialogInterface<T> sourceBeanSelectDialogInterface, DiffUtil.ItemCallback<T> sourceBeanItemCallback, List<T> data, int select) {
-        if (select >= data.size() || select < 0)
-            select = 0;//if source update, data item count maybe smaller than before
+    public void setAdapter(TvRecyclerView tvRecyclerView, SelectDialogAdapter.SelectDialogInterface<T> sourceBeanSelectDialogInterface, DiffUtil.ItemCallback<T> sourceBeanItemCallback, List<T> data, int select) {
+        SelectDialogAdapter<T> adapter = new SelectDialogAdapter<>(sourceBeanSelectDialogInterface, sourceBeanItemCallback, muteCheck);
+        if (select >= data.size() || select < 0) select = 0;
         final int selectIdx = select;
-        SelectDialogAdapter<T> adapter = new SelectDialogAdapter(sourceBeanSelectDialogInterface, sourceBeanItemCallback, muteCheck);
         adapter.setData(data, select);
-        TvRecyclerView tvRecyclerView = ((TvRecyclerView) findViewById(R.id.list));
+        if(tvRecyclerView == null){
+            tvRecyclerView = findViewById(R.id.list);
+        }
         tvRecyclerView.setAdapter(adapter);
         tvRecyclerView.setSelectedPosition(select);
+        TvRecyclerView finalTvRecyclerView = tvRecyclerView;
         tvRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                tvRecyclerView.scrollToPosition(selectIdx);
-                tvRecyclerView.setSelectionWithSmooth(selectIdx);
+                finalTvRecyclerView.smoothScrollToPosition(selectIdx);
+                finalTvRecyclerView.setSelectionWithSmooth(selectIdx);
             }
         });
     }

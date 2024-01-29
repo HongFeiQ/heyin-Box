@@ -71,6 +71,7 @@ public class App extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
         initParams();
         // takagen99 : Initialize Locale
         initLocale();
@@ -95,7 +96,7 @@ public class App extends MultiDexApplication {
                 .setSupportSubunits(Subunits.MM);
         PlayerHelper.init();
         //pyramid-add-start
-        PythonLoader.getInstance().setApplication(this);
+         PythonLoader.getInstance().setApplication(this);
         //pyramid-add-end
 
         // Delete Cache
@@ -120,7 +121,7 @@ public class App extends MultiDexApplication {
 
 
         String defaultApiName = "默认-自备份线路";
-        String defaultApi = "";
+        String defaultApi = "http://192.168.1.100:2691/txt/hy.png";
 
         HashMap<String, String> defaultApiMap = Hawk.get(HawkConfig.API_MAP, new HashMap<>());
         defaultApiMap.put(defaultApiName, defaultApi);
@@ -143,8 +144,8 @@ public class App extends MultiDexApplication {
         // 播放器选项
         putDefault(HawkConfig.SHOW_PREVIEW, true);           //窗口预览: true=开启, false=关闭
         putDefault(HawkConfig.PLAY_SCALE, 0);                //画面缩放: 0=默认, 1=16:9, 2=4:3, 3=填充, 4=原始, 5=裁剪
-        putDefault(HawkConfig.BACKGROUND_PLAY_TYPE, 1);      //后台：0=关闭, 1=开启, 2=画中画
-        putDefault(HawkConfig.PLAY_TYPE, 1);                 //播放器: 0=系统, 1=IJK, 2=Exo, 3=MX, 4=Reex, 5=Kodi
+        putDefault(HawkConfig.BACKGROUND_PLAY_TYPE, 1);      //关闭=0 开启=1 画中画:=2
+        putDefault(HawkConfig.PLAY_TYPE, 2);                 //播放器: 0=系统, 1=IJK, 2=Exo, 3=MX, 4=Reex, 5=Kodi
         putDefault(HawkConfig.IJK_CODEC, "硬解码");           //IJK解码: 软解码, 硬解码
         // 系统选项
         putDefault(HawkConfig.HOME_LOCALE, 0);               //语言: 0=中文, 1=英文
@@ -173,6 +174,7 @@ public class App extends MultiDexApplication {
     public void onTerminate() {
         super.onTerminate();
         JsLoader.load();
+        PythonLoader.getInstance().load();
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * 直播控制器
+ * @noinspection ALL
  */
 
 public class LiveController extends BaseController {

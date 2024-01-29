@@ -22,7 +22,7 @@ open class RequestInspectorWebViewClient @JvmOverloads constructor(
         webSettings.domStorageEnabled = true
     }
 
-    final override fun shouldInterceptRequest(
+    open override fun shouldInterceptRequest(
         view: WebView,
         request: WebResourceRequest
     ): WebResourceResponse? {

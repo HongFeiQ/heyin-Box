@@ -7,13 +7,13 @@ import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TxtSubscribe {
     private static final Pattern NAME_PATTERN = Pattern.compile(".*,(.+?)$");
     private static final Pattern GROUP_PATTERN = Pattern.compile("group-title=\"(.*?)\"");
-
     public static void parse(LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> linkedHashMap, String str) {
         if (str.startsWith("#EXTM3U")) {
             parseM3u(linkedHashMap, str);

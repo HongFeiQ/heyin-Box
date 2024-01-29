@@ -5,6 +5,7 @@ import static org.nanohttpd.protocols.http.response.Response.newChunkedResponse;
 import static org.nanohttpd.protocols.http.response.Response.newFixedLengthResponse;
 import com.chaquo.python.PyObject;
 
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.wifi.WifiManager;
@@ -21,12 +22,11 @@ import com.github.tvbox.osc.event.LogEvent;
 import com.github.tvbox.osc.event.ServerEvent;
 import com.github.tvbox.osc.util.FileUtils;
 import com.github.tvbox.osc.util.OkGoHelper;
-import com.github.tvbox.osc.util.StringUtils;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -220,7 +220,6 @@ public class RemoteServer extends NanoHTTPD {
     }
 
     private Response responseCORS(IHTTPSession session) {
-       // Response resp = wrapResponse(session, newFixedLengthResponse(""));
         Response resp = wrapResponse(session, newFixedLengthResponse(""));
         Map<String, String> headers = session.getHeaders();
         resp.addHeader("Access-Control-Allow-Methods",
@@ -251,7 +250,7 @@ public class RemoteServer extends NanoHTTPD {
     @Override
     public Response serve(final IHTTPSession session) {
         if (isWebsocketRequested(session)) {
-            if(isPreflightRequest(session)){
+            if (isPreflightRequest(session)) {
                 return responseCORS(session);
             }
             Map<String, String> headers = session.getHeaders();
@@ -280,10 +279,10 @@ public class RemoteServer extends NanoHTTPD {
             return handshakeResponse;
         } else {
             EventBus.getDefault().post(new ServerEvent(ServerEvent.SERVER_CONNECTION));
-            if(isPreflightRequest(session)){
+            if (isPreflightRequest(session)) {
                 return responseCORS(session);
             }
-            if (!StringUtils.isEmpty(session.getUri())) {
+            if (!session.getUri().isEmpty()) {
                 String fileName = session.getUri().trim();
                 if (fileName.indexOf('?') >= 0) {
                     fileName = fileName.substring(0, fileName.indexOf('?'));
@@ -294,6 +293,37 @@ public class RemoteServer extends NanoHTTPD {
                             return process.doResponse(session, fileName, session.getParms(), null);
                         }
                     }
+                    /*
+                    if (fileName.equals("/proxy")) {
+                        Map < String, String > params = session.getParms();
+                        params.putAll(session.getHeaders());
+                        params.put("request-headers", new Gson().toJson(session.getHeaders()));
+                        if (params.containsKey("do")) {
+                            Object[] rs = ApiConfig.get().proxyLocal(params);
+                            //if (rs[0] instanceof Response) {
+                            //    return (Response) rs[0];
+                            //}
+                            int code = (int) rs[0];
+                            String mime = (String) rs[1];
+                            InputStream stream = rs[2] != null ? (InputStream) rs[2] : null;
+                            Response response = newChunkedResponse(
+                                    Status.lookup(code),
+                                    mime,
+                                    stream);
+                            if (rs.length > 3) {
+                                try {
+                                    HashMap < String, String > headers = (HashMap < String, String > ) rs[3];
+                                    for (String key: headers.keySet()) {
+                                        response.addHeader(key, headers.get(key));
+                                    }
+                                } catch (Throwable th) {
+                                    th.printStackTrace();
+                                }
+                            }
+                            return response;
+                        }
+
+                     */
                     if (fileName.equals("/proxy")) {
                         Map<String, String> params = session.getParms();
                         if (params.containsKey("do")) {
@@ -304,10 +334,7 @@ public class RemoteServer extends NanoHTTPD {
                                 String mime = (String) rs[1];
                                 InputStream stream = rs[2] != null ? (InputStream) rs[2] : null;
 
-                                Response r = Response.newChunkedResponse(
-                                        Status.lookup(code),
-                                        mime,
-                                        stream);
+                                Response r = Response.newChunkedResponse(Status.lookup(code), mime, stream);
                                 Map<PyObject, PyObject> headers;
                                 if(rs.length > 3 && rs[3] != null){
                                     headers = (Map) rs[3];
@@ -348,9 +375,20 @@ public class RemoteServer extends NanoHTTPD {
                             rs = new byte[0];
                         }
                         return newFixedLengthResponse(Status.OK, "application/dns-message", new ByteArrayInputStream(rs), rs.length);
+                    } else if (fileName.equals("/m3u8")) {
+                        return newFixedLengthResponse(Status.OK, NanoHTTPD.MIME_PLAINTEXT, m3u8Content);
+                    } else if (fileName.startsWith("/dash/")) {
+                        String dashData = App.getInstance().getDashData();
+                        try {
+                            String data = new String(Base64.decode(dashData, Base64.DEFAULT | Base64.NO_WRAP), "UTF-8");
+                            return newFixedLengthResponse(Status.OK, "application/dash+xml", data);
+                        } catch (Throwable th) {
+                            return newFixedLengthResponse(Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, dashData);
+                        }
                     }
                 } else if (session.getMethod() == Method.POST) {
-                    Map<String, String> files = new HashMap<String, String>();
+                   // Map<String, String> files = new HashMap<String, String>();
+                    Map < String, String > files = new HashMap < String, String > ();
                     try {
                         if (session.getHeaders().containsKey("content-type")) {
                             String hd = session.getHeaders().get("content-type");

@@ -179,9 +179,9 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
                     }
                 } else {
                     Intent newIntent;
-                    if (Hawk.get(HawkConfig.FAST_SEARCH_MODE, false)) {
+                    if(Hawk.get(HawkConfig.FAST_SEARCH_MODE, false)){
                         newIntent = new Intent(mContext, FastSearchActivity.class);
-                    } else {
+                    }else {
                         newIntent = new Intent(mContext, SearchActivity.class);
                     }
                     newIntent.putExtra("title", vod.name);

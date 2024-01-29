@@ -1,7 +1,5 @@
 package com.github.tvbox.osc.subtitle;
 
-import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
-
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -12,7 +10,6 @@ import androidx.annotation.Nullable;
 
 import com.github.tvbox.osc.base.App;
 import com.github.tvbox.osc.cache.CacheManager;
-import com.github.tvbox.osc.player.EXOmPlayer;
 import com.github.tvbox.osc.subtitle.model.Subtitle;
 import com.github.tvbox.osc.subtitle.model.Time;
 import com.github.tvbox.osc.util.FileUtils;
@@ -25,6 +22,9 @@ import java.util.List;
 import java.util.TreeMap;
 
 import xyz.doikki.videoplayer.player.AbstractPlayer;
+import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
+
+import com.github.tvbox.osc.player.EXOmPlayer;
 
 /**
  * @author AveryZhong.
@@ -136,6 +136,7 @@ public class DefaultSubtitleEngine implements SubtitleEngine {
         }
         mSubtitles = thisSubtitles;
     }
+
 
 
     public String getPlaySubtitleCacheKey() {

@@ -1,12 +1,12 @@
 package com.github.tvbox.osc.ui.dialog;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.github.tvbox.osc.R;
@@ -34,8 +34,8 @@ public class SearchCheckboxDialog extends BaseDialog {
 
     public SearchCheckboxDialog(@NonNull @NotNull Context context, List<SourceBean> sourceList, HashMap<String, String> checkedSources) {
         super(context);
-        if (context instanceof Activity) {
-            setOwnerActivity((Activity) context);
+        if (context instanceof AppCompatActivity) {
+            setOwnerActivity((AppCompatActivity) context);
         }
         setCanceledOnTouchOutside(true);
         setCancelable(true);

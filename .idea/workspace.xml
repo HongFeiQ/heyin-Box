@@ -1,52 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
   <component name="AndroidLayouts">
     <shared>
-      <config>
-        <device id="tv_4k" />
-      </config>
+      <config />
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
+        <config>
+          <theme>@style/AppTheme.NoActionBar</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2af06ae-eba2-4f77-a4fd-c4834808124d" name="Changes" comment="" />
+    <list default="true" id="b1e35c08-198f-49ca-82c2-55ca70a65170" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[q4fiaqdizta6eiea]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
-  </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="HE影" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-        <option value="valueResourceFile" />
-      </list>
-    </option>
   </component>
   <component name="GenerateSignedApkSettings">
     <option name="KEY_STORE_PATH" value="D:\Android app\hshekey.jks" />
@@ -60,7 +46,7 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectId" id="2XHHOotjpUX5pEvgIXltRiJ92OH" />
+  <component name="ProjectId" id="2bZgornh950N22MHIuXsp9cqggt" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -68,19 +54,27 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ApkExportedModule": "HE影.app",
-    "ExportApk.ApkPathForHE影.app": "D:\\Android app\\20240110\\Box-main\\app",
+    "ExportApk.ApkPathForHE影.app": "D:\\Android app\\ceshi\\Box-main\\app",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
-    "android-custom-viewD:/Android app/20231124/Box-main/app/src/main/java/com/github/tvbox/osc/subtitle/widget/SimpleSubtitleView.java_SELECTED": "SimpleSubtitleView",
-    "android-custom-viewD:/Android app/20240102/Box-main/app/src/main/java/com/github/tvbox/osc/player/render/SurfaceRenderView.java_SELECTED": "SurfaceRenderView",
-    "android-custom-viewD:/Android app/20240102/Box-main/app/src/main/java/com/github/tvbox/osc/ui/widget/ClearEditText.java_SELECTED": "ClearEditText",
+    "android-custom-viewD:/Android app/ceshi/Box-main/app/src/main/java/com/github/tvbox/osc/player/controller/BaseController.java_SELECTED": "BaseController",
+    "android-custom-viewD:/Android app/ceshi/Box-main/app/src/main/java/com/github/tvbox/osc/ui/tv/widget/CustomEditText.java_SELECTED": "CustomEditText",
+    "android-custom-viewD:/Android app/ceshi/Box-main/app/src/main/java/com/github/tvbox/osc/ui/tv/widget/SearchKeyboard.java_SELECTED": "SearchKeyboard",
+    "android-custom-viewD:/Android app/ceshi/Box-main/app/src/main/java/xyz/doikki/videoplayer/controller/BaseVideoController.java_SELECTED": "BaseVideoController",
+    "android-custom-viewD:/Android app/ceshi/Box-main/app/src/main/java/xyz/doikki/videoplayer/controller/GestureVideoController.java_SELECTED": "GestureVideoController",
+    "android-custom-viewD:/Android app/ceshi/Box-main/app/src/main/java/xyz/doikki/videoplayer/player/BaseVideoView.java_SELECTED": "BaseVideoView",
+    "android-custom-viewD:/Android app/ceshi/Box-main/app/src/main/java/xyz/doikki/videoplayer/player/VideoView.java_SELECTED": "VideoView",
+    "android-custom-viewD:/Android app/ceshi/Box-main/app/src/main/java/xyz/doikki/videoplayer/render/RenderSdkSurfaceView.java_SELECTED": "RenderSdkSurfaceView",
+    "android-custom-viewD:/Android app/ceshi/Box-main/app/src/main/java/xyz/doikki/videoplayer/render/SurfaceRenderView.java_SELECTED": "SurfaceRenderView",
+    "android-custom-viewD:/Android app/ceshi/Box-main/app/src/main/java/xyz/doikki/videoplayer/render/VideoSurfaceView.java_SELECTED": "VideoSurfaceView",
+    "android-custom-viewD:/Android/sdk/sources/android-34/android/view/View.java_SELECTED": "View",
+    "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "D:/Android app/20240110/Box-main/pyramid/src",
-    "project.structure.last.edited": "SDK Location",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "last_opened_file_path": "D:/Android app/ceshi/Box-main/app/src/main/java/com/github/tvbox/osc/data",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "memory.settings"
   },
   "keyToStringList": {
     "ExportApk.BuildVariants": [
@@ -89,26 +83,20 @@
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.github.tvbox.osc.ui.activity" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Android app\20240110\Box-main\pyramid\src" />
-      <recent name="D:\Android app\20240110\Box-main\app\src\main\java\com\undcover\freedom\pyramid" />
-      <recent name="D:\Android app\20240110\Box-main\app\src\main\java\com\github\tvbox\osc" />
-      <recent name="D:\Android app\20240110\Box-main\app\src\main\res\layout" />
-      <recent name="D:\Android app\20240110\Box-main\app\src\main\java\com\github\tvbox\osc\ui\dialog" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Android app\20231124\Box-main" />
+      <recent name="D:\Android app\ceshi\Box-main\app\src\main\java\com\github\tvbox\osc\data" />
+      <recent name="D:\Android app\ceshi\Box-main\app\src\main\java\com\github\tvbox\osc\cache" />
+      <recent name="D:\Android app\ceshi\Box-main\media\libraries" />
+      <recent name="D:\Android app\ceshi\Box-main\20240120相关" />
+      <recent name="D:\Android app\ceshi\Box-main\app\src\main\java\xyz\doikki\videoplayer\render" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.github.tvbox.osc.ui.tv.widget" />
       <recent name="com.github.tvbox.osc.util" />
-      <recent name="com.undcover.freedom.pyramid" />
-      <recent name="com.github.tvbox.osc.ui.activity" />
+      <recent name="com.github.tvbox.osc.bean" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Android App.app">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="HE影.app.main" />
       <option name="DEPLOY" value="true" />
@@ -119,6 +107,74 @@
       <option name="ALL_USERS" value="false" />
       <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
       <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="media-test-session-current" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="HE影.media-test-session-current.main" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
       <option name="CLEAR_LOGCAT" value="false" />
@@ -176,31 +232,60 @@
       </method>
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
-      <module name="Box-main" />
+      <module name="HE影.app" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Box-main" />
+      <module name="HE影.app" />
       <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="HE影.app" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="HE影.app" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d2af06ae-eba2-4f77-a4fd-c4834808124d" name="Changes" comment="" />
-      <created>1698279065425</created>
+      <changelist id="b1e35c08-198f-49ca-82c2-55ca70a65170" name="Changes" comment="" />
+      <created>1706428194978</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1698279065425</updated>
+      <updated>1706428194978</updated>
     </task>
     <servers />
-  </component>
-  <component name="UnknownFeatures">
-    <option featureType="com.intellij.fileTypeFactory" implementationName="*.py" />
   </component>
 </project>

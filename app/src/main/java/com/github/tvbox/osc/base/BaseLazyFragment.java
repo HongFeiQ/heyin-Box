@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -52,14 +53,14 @@ public abstract class BaseLazyFragment extends Fragment implements CustomAdapt {
      */
     protected boolean mIsFirstVisible = true;
     protected Context mContext;
-    protected Activity mActivity;
+    protected AppCompatActivity mActivity;
     private LoadService mLoadService;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
-        mActivity = (Activity) context;
+        mActivity = (AppCompatActivity) context;
     }
 
     @Nullable

@@ -1,9 +1,10 @@
 package com.github.tvbox.osc.api;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Base64;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.catvod.crawler.JarLoader;
 import com.github.catvod.crawler.JsLoader;
@@ -11,11 +12,13 @@ import com.github.catvod.crawler.Spider;
 import com.github.catvod.crawler.SpiderNull;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.base.App;
+import com.github.tvbox.osc.bean.DriveFolderFile;
 import com.github.tvbox.osc.bean.IJKCode;
 import com.github.tvbox.osc.bean.LiveChannelGroup;
 import com.github.tvbox.osc.bean.LiveChannelItem;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.bean.SourceBean;
+import com.github.tvbox.osc.cache.StorageDrive;
 import com.github.tvbox.osc.server.ControlManager;
 import com.github.tvbox.osc.ui.activity.HomeActivity;
 import com.github.tvbox.osc.util.AES;
@@ -72,13 +75,15 @@ public class ApiConfig {
     private List<String> vipParseFlags;
     private List<IJKCode> ijkCodes;
     private String spider = null;
-    private PythonLoader pyLoader = PythonLoader.getInstance();
+    public List<DriveFolderFile> drives;
 
     private ApiConfig() {
         sourceBeanList = new LinkedHashMap<>();
         liveChannelGroupList = new ArrayList<>();
         parseBeanList = new ArrayList<>();
     }
+
+    private PythonLoader pyLoader = PythonLoader.getInstance();
 
     public static ApiConfig get() {
         if (instance == null) {
@@ -139,7 +144,7 @@ public class ApiConfig {
         }
     }
 
-    public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
+    public void loadConfig(boolean useCache, LoadConfigCallback callback, AppCompatActivity activity) {
         // Embedded Source : Update in Strings.xml if required
         String apiUrl = Hawk.get(HawkConfig.API_URL, HomeActivity.getRes().getString(R.string.app_source));
         if (apiUrl.isEmpty()) {
@@ -360,6 +365,26 @@ public class ApiConfig {
                 setSourceBean(firstSite);
             else
                 setSourceBean(sh);
+        }
+        if (infoJson.has("drives")) {
+            JsonArray asJsonArray = infoJson.get("drives").getAsJsonArray();
+            this.drives = new ArrayList<>();
+            try {
+                for (JsonElement jsonElement : asJsonArray) {
+                    JsonObject jsonObject2 = (JsonObject) jsonElement;
+                    StorageDrive storageDrive = new StorageDrive();
+                    JsonObject config = new JsonObject();
+                    config.addProperty("url", jsonObject2.get("server").getAsString());
+                    config.addProperty("password", "");
+                    config.addProperty("initPath", "/");
+                    storageDrive.name = jsonObject2.get("name").getAsString();
+                    storageDrive.configJson = config.toString();
+                    storageDrive.type = jsonObject2.get("type").getAsString().equals("alist")?2:1;
+                    this.drives.add(new DriveFolderFile(storageDrive));
+                }
+            } catch (Exception e4) {
+                e4.printStackTrace();
+            }
         }
         // 需要使用vip解析的flag
         vipParseFlags = DefaultConfig.safeJsonStringList(infoJson, "flags");
@@ -667,7 +692,8 @@ public class ApiConfig {
 
     public Spider getCSP(SourceBean sourceBean) {
         // Getting js api
-        if (sourceBean.getApi().toLowerCase().endsWith(".js") || sourceBean.getApi().toLowerCase().contains(".js?")) {
+        if (sourceBean.getApi().toLowerCase().contains(".js")) {
+        //if (sourceBean.getApi().endsWith(".js") || sourceBean.getApi().contains(".js?")) {
             return jsLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt(), sourceBean.getJar());
         }
         //pyramid-add-start
@@ -680,6 +706,7 @@ public class ApiConfig {
         //     }
         // }
         if (sourceBean.getApi().toLowerCase().contains(".py")) {
+        //if (sourceBean.getApi().toLowerCase().endsWith(".py")) {
             try {
                 return pyLoader.getSpider(sourceBean.getKey(), sourceBean.getApi(), sourceBean.getExt());
             } catch (Exception e) {

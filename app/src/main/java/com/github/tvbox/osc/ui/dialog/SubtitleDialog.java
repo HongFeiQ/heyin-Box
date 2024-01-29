@@ -1,6 +1,5 @@
 package com.github.tvbox.osc.ui.dialog;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.ui.activity.HomeActivity;
@@ -37,8 +37,8 @@ public class SubtitleDialog extends BaseDialog {
 
     public SubtitleDialog(@NonNull @NotNull Context context) {
         super(context);
-        if (context instanceof Activity) {
-            setOwnerActivity((Activity) context);
+        if (context instanceof AppCompatActivity) {
+            setOwnerActivity((AppCompatActivity) context);
         }
         setContentView(R.layout.dialog_subtitle);
         initView(context);
@@ -94,7 +94,7 @@ public class SubtitleDialog extends BaseDialog {
             }
         });
 
-        int size = SubtitleHelper.getTextSize(getOwnerActivity());
+        int size = SubtitleHelper.getTextSize((AppCompatActivity) getOwnerActivity());
         subtitleSizeText.setText(Integer.toString(size));
 
         subtitleSizeMinus.setOnClickListener(new View.OnClickListener() {

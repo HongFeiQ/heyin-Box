@@ -67,7 +67,7 @@
             android:focusable="true"
             android:nextFocusLeft="@id/tvName"
             android:padding="@dimen/vs_5"
-            android:src="@drawable/hm_wifi_no"
+            app:srcCompat="@drawable/hm_wifi_no"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <ImageView
@@ -82,7 +82,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/vs_5"
-            android:src="@drawable/hm_search"
+            app:srcCompat="@drawable/hm_search"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <ImageView
@@ -97,7 +97,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/vs_10"
-            android:src="@drawable/hm_left_right"
+            app:srcCompat="@drawable/hm_left_right"
             android:visibility="gone" />
 
         <ImageView
@@ -112,7 +112,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/vs_5"
-            android:src="@drawable/hm_drawer"
+            app:srcCompat="@drawable/hm_drawer"
             android:visibility="gone" />
 
         <ImageView
@@ -128,7 +128,7 @@
             android:focusable="true"
             android:nextFocusDown="@id/tvDrive"
             android:padding="@dimen/vs_5"
-            android:src="@drawable/hm_settings"
+            app:srcCompat="@drawable/hm_settings"
             android:visibility="gone" />
 
 

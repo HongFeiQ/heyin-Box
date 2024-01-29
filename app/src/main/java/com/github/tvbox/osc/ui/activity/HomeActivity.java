@@ -141,16 +141,6 @@ public class HomeActivity extends BaseActivity {
         return res;
     }
 
-    public static boolean reHome(Context appContext) {
-        Intent intent = new Intent(appContext, HomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("useCache", true);
-        intent.putExtras(bundle);
-        appContext.startActivity(intent);
-        return true;
-    }
-
     @Override
     protected int getLayoutResID() {
         return R.layout.activity_home;
@@ -218,15 +208,14 @@ public class HomeActivity extends BaseActivity {
                     if (position == -1) {
                         position = 0;
                         HomeActivity.this.mGridView.setSelection(0);
-                    }
-                    if (position == -1) {
+                    }if (position == -1) {
                         position = 0;
                         HomeActivity.this.mGridView.setSelection(0);
                     }
 
                     MovieSort.SortData sortData = sortAdapter.getItem(position);
                     if (null != sortData && !sortData.filters.isEmpty()) {
-                        // if (!sortData.filters.isEmpty()) {
+                   // if (!sortData.filters.isEmpty()) {
                         showFilterIcon(sortData.filterSelectCount());
                     }
                     HomeActivity.this.sortFocusView = view;
@@ -354,7 +343,15 @@ public class HomeActivity extends BaseActivity {
         setLoadSir(this.contentLayout);
         //mHandler.postDelayed(mFindFocus, 250);
     }
-
+    public static boolean reHome(Context appContext) {
+        Intent intent = new Intent(appContext, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("useCache", true);
+        intent.putExtras(bundle);
+        appContext.startActivity(intent);
+        return true;
+    }
     private void initViewModel() {
         sourceViewModel = new ViewModelProvider(this).get(SourceViewModel.class);
         sourceViewModel.sortResult.observe(this, new Observer<AbsSortXml>() {
@@ -434,10 +431,10 @@ public class HomeActivity extends BaseActivity {
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                // if (!useCacheConfig)
-                                //   if (Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, false)) {
-                                //      jumpActivity(LivePlayActivity.class);
-                                //  }
+                               // if (!useCacheConfig)
+                                 //   if (Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, false)) {
+                                  //      jumpActivity(LivePlayActivity.class);
+                                  //  }
                                 Toast.makeText(HomeActivity.this, getString(R.string.hm_ok), Toast.LENGTH_SHORT).show();
                                 initData();
                             }
@@ -807,7 +804,7 @@ public class HomeActivity extends BaseActivity {
             }
 
             dialog.setTip(getString(R.string.dia_source));
-            dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<SourceBean>() {
+            dialog.setAdapter(tvRecyclerView, new SelectDialogAdapter.SelectDialogInterface<SourceBean>() {
                 @Override
                 public void click(SourceBean value, int pos) {
                     ApiConfig.get().setSourceBean(value);

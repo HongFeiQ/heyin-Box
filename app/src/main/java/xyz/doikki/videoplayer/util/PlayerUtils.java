@@ -1,7 +1,6 @@
 package xyz.doikki.videoplayer.util;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -21,6 +20,7 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -133,10 +133,10 @@ public final class PlayerUtils {
     /**
      * 获取Activity
      */
-    public static Activity scanForActivity(Context context) {
+    public static AppCompatActivity scanForActivity(Context context) {
         if (context == null) return null;
-        if (context instanceof Activity) {
-            return (Activity) context;
+        if (context instanceof AppCompatActivity) {
+            return (AppCompatActivity) context;
         } else if (context instanceof ContextWrapper) {
             return scanForActivity(((ContextWrapper) context).getBaseContext());
         }

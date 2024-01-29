@@ -1,6 +1,5 @@
 rootProject.name = "HE影"
 include ':app'
 include ':wrapper-android'
-include ':pyramid'
-//gradle.ext.androidxMediaModulePrefix = 'media-'
-//apply from: file("/media/core_settings.gradle")
+gradle.ext.androidxMediaModulePrefix = 'media-'
+apply from: file("/media/core_settings.gradle")

@@ -1,6 +1,5 @@
 package xyz.doikki.videoplayer.controller;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.util.AttributeSet;
@@ -15,6 +14,7 @@ import androidx.annotation.AttrRes;
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -45,7 +45,7 @@ public abstract class BaseVideoController extends FrameLayout
     protected ControlWrapper mControlWrapper;
 
     @Nullable
-    protected Activity mActivity;
+    protected AppCompatActivity mActivity;
 
     //控制器是否处于显示状态
     protected boolean mShowing;
@@ -280,12 +280,6 @@ public abstract class BaseVideoController extends FrameLayout
     @Override
     public boolean isLocked() {
         return mIsLocked;
-    }
-
-    @Override
-    public void setLocked(boolean locked) {
-        mIsLocked = locked;
-        handleLockStateChanged(locked);
     }    /**
      * 隐藏播放视图Runnable
      */
@@ -295,6 +289,12 @@ public abstract class BaseVideoController extends FrameLayout
             hide();
         }
     };
+
+    @Override
+    public void setLocked(boolean locked) {
+        mIsLocked = locked;
+        handleLockStateChanged(locked);
+    }
 
     /**
      * 开始刷新进度，注意：需在STATE_PLAYING时调用才会开始刷新进度
@@ -494,7 +494,7 @@ public abstract class BaseVideoController extends FrameLayout
     /**
      * 竖屏
      */
-    protected void onOrientationPortrait(Activity activity) {
+    protected void onOrientationPortrait(AppCompatActivity activity) {
         //屏幕锁定的情况
         if (mIsLocked) return;
         //没有开启设备方向监听的情况
@@ -507,7 +507,7 @@ public abstract class BaseVideoController extends FrameLayout
     /**
      * 横屏
      */
-    protected void onOrientationLandscape(Activity activity) {
+    protected void onOrientationLandscape(AppCompatActivity activity) {
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         if (mControlWrapper.isFullScreen()) {
             handlePlayerStateChanged(VideoView.PLAYER_FULL_SCREEN);
@@ -519,7 +519,7 @@ public abstract class BaseVideoController extends FrameLayout
     /**
      * 反向横屏
      */
-    protected void onOrientationReverseLandscape(Activity activity) {
+    protected void onOrientationReverseLandscape(AppCompatActivity activity) {
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
         if (mControlWrapper.isFullScreen()) {
             handlePlayerStateChanged(VideoView.PLAYER_FULL_SCREEN);
@@ -558,6 +558,8 @@ public abstract class BaseVideoController extends FrameLayout
         onPlayStateChanged(playState);
     }
 
+    //------------------------ start handle event change ------------------------//
+
     /**
      * 子类重写此方法并在其中更新控制器在不同播放状态下的ui
      */
@@ -582,8 +584,6 @@ public abstract class BaseVideoController extends FrameLayout
                 break;
         }
     }
-
-    //------------------------ start handle event change ------------------------//
 
     private void handlePlayerStateChanged(int playerState) {
         for (Map.Entry<IControlComponent, Boolean> next

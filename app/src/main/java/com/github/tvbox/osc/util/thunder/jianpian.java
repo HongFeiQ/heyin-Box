@@ -12,7 +12,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 
-public class jianpian {
+public class Jianpian {
 
     public static String JPUrlDec(String url) {
         if (App.getp2p() != null) {

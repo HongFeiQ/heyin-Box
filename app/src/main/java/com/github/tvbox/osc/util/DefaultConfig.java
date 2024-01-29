@@ -1,12 +1,13 @@
 package com.github.tvbox.osc.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.text.TextUtils;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
@@ -93,8 +94,7 @@ public class DefaultConfig {
         }
         return -1;
     }
-
-    public static void resetApp(Context mContext) {
+    public static void resetApp(Context mContext){
         //使用
         clearPublic(mContext);
         clearPrivate(mContext);
@@ -102,7 +102,7 @@ public class DefaultConfig {
     }
 
     public static void restartApp() {
-        Activity activity = AppManager.getInstance().getActivity(HomeActivity.class);
+        AppCompatActivity activity = AppManager.getInstance().getActivity(HomeActivity.class);
         final Intent intent = activity.getPackageManager().getLaunchIntentForPackage(activity.getPackageName());
         if (intent != null) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -136,7 +136,7 @@ public class DefaultConfig {
     /**
      * 清空私有目录
      */
-    public static void clearPrivate(Context mContext) {
+    public static  void clearPrivate(Context mContext) {
         //清空文件夹
         File dir = new File(Objects.requireNonNull(mContext.getFilesDir().getParent()));
         File[] files = dir.listFiles();
@@ -160,7 +160,6 @@ public class DefaultConfig {
         }
         return "";
     }
-
     public static String getAppVersionName(Context mContext) {
         //包管理操作管理类
         PackageManager pm = mContext.getPackageManager();

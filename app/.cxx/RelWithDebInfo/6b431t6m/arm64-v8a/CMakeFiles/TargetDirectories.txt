@@ -1,3 +1,0 @@
-D:/Android app/20240110/Box-main/app/.cxx/RelWithDebInfo/6b431t6m/arm64-v8a/CMakeFiles/glrender.dir
-D:/Android app/20240110/Box-main/app/.cxx/RelWithDebInfo/6b431t6m/arm64-v8a/CMakeFiles/edit_cache.dir
-D:/Android app/20240110/Box-main/app/.cxx/RelWithDebInfo/6b431t6m/arm64-v8a/CMakeFiles/rebuild_cache.dir

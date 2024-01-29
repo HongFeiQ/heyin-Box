@@ -8,10 +8,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.blankj.utilcode.util.GsonUtils;
+
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.blankj.utilcode.util.GsonUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
@@ -19,17 +20,15 @@ import com.github.tvbox.osc.base.BaseLazyFragment;
 import com.github.tvbox.osc.bean.AbsXml;
 import com.github.tvbox.osc.bean.Movie;
 import com.github.tvbox.osc.bean.MovieSort;
+import com.github.tvbox.osc.bean.SourceBean;
 import com.github.tvbox.osc.event.RefreshEvent;
 import com.github.tvbox.osc.ui.activity.DetailActivity;
 import com.github.tvbox.osc.ui.activity.FastSearchActivity;
-import com.github.tvbox.osc.ui.activity.SearchActivity;
 import com.github.tvbox.osc.ui.adapter.GridAdapter;
 import com.github.tvbox.osc.ui.dialog.GridFilterDialog;
 import com.github.tvbox.osc.ui.tv.widget.LoadMoreView;
 import com.github.tvbox.osc.util.FastClickCheckUtil;
-import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.viewmodel.SourceViewModel;
-import com.orhanobut.hawk.Hawk;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
@@ -37,6 +36,12 @@ import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Stack;
+
+
+
+import com.github.tvbox.osc.ui.activity.SearchActivity;
+import com.github.tvbox.osc.util.HawkConfig;
+import com.orhanobut.hawk.Hawk;
 
 /**
  * @author pj567
@@ -76,7 +81,6 @@ public class GridFragment extends BaseLazyFragment {
         initViewModel();
         initData();
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,13 +88,11 @@ public class GridFragment extends BaseLazyFragment {
             this.sortData = GsonUtils.fromJson(savedInstanceState.getString("sortDataJson"), MovieSort.SortData.class);
         }
     }
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("sortDataJson", GsonUtils.toJson(sortData));
     }
-
     private void changeView(String id) {
         initView();
         this.sortData.id = id; // 修改sortData.id为新的ID
@@ -108,9 +110,7 @@ public class GridFragment extends BaseLazyFragment {
     }
 
     // 是否允许聚合搜索 sortData.flag的第二个字符为‘1’时允许聚搜
-    public boolean enableFastSearch() {
-        return sortData.flag == null || sortData.flag.length() < 2 || (sortData.flag.charAt(1) == '1');
-    }
+    public boolean enableFastSearch() {  return sortData.flag == null || sortData.flag.length() < 2 || (sortData.flag.charAt(1) == '1'); }
     //public boolean enableFastSearch() {  return (sortData.flag == null || sortData.flag.length() < 2) ? true : (sortData.flag.charAt(1) == '1'); }
 
     // 保存当前页面
@@ -224,9 +224,9 @@ public class GridFragment extends BaseLazyFragment {
                         changeView(video.id);
                     } else {
                         if (video.id == null || video.id.isEmpty() || video.id.startsWith("msearch:")) {
-                            if (Hawk.get(HawkConfig.FAST_SEARCH_MODE, false) && enableFastSearch()) {
+                            if(Hawk.get(HawkConfig.FAST_SEARCH_MODE, false) && enableFastSearch()){
                                 jumpActivity(FastSearchActivity.class, bundle);
-                            } else {
+                            }else {
                                 jumpActivity(SearchActivity.class, bundle);
                             }
                         } else {
@@ -304,7 +304,7 @@ public class GridFragment extends BaseLazyFragment {
     }
 
     private void initData() {
-        if (ApiConfig.get().getHomeSourceBean().getApi() == null) {
+        if (ApiConfig.get().getHomeSourceBean().getApi()==null) {
             showEmpty();
             return;
         }
@@ -333,7 +333,7 @@ public class GridFragment extends BaseLazyFragment {
 
     public void showFilter() {
         //if (!sortData.filters.isEmpty() && gridFilterDialog == null) {
-        if (sortData != null && !sortData.filters.isEmpty() && gridFilterDialog == null) {
+        if (sortData!=null && !sortData.filters.isEmpty() && gridFilterDialog == null) {
             gridFilterDialog = new GridFilterDialog(mContext);
             gridFilterDialog.setData(sortData);
             gridFilterDialog.setOnDismiss(new GridFilterDialog.Callback() {

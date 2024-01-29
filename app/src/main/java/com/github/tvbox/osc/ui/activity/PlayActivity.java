@@ -35,12 +35,10 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +50,6 @@ import androidx.media3.common.text.Cue;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.acsbendi.requestinspectorwebview.RequestInspectorWebViewClient;
-import com.acsbendi.requestinspectorwebview.WebViewRequest;
 import com.github.catvod.crawler.Spider;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
@@ -83,13 +80,12 @@ import com.github.tvbox.osc.util.FileUtils;
 import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.util.MD5;
-import com.github.tvbox.osc.util.OkGoHelper;
 import com.github.tvbox.osc.util.PlayerHelper;
 import com.github.tvbox.osc.util.StringUtils;
 import com.github.tvbox.osc.util.VideoParseRuler;
 import com.github.tvbox.osc.util.XWalkUtils;
 import com.github.tvbox.osc.util.thunder.Thunder;
-import com.github.tvbox.osc.util.thunder.jianpian;
+import com.github.tvbox.osc.util.thunder.Jianpian;
 import com.github.tvbox.osc.viewmodel.SourceViewModel;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -100,7 +96,6 @@ import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.Response;
 import com.obsez.android.lib.filechooser.ChooserDialog;
 import com.orhanobut.hawk.Hawk;
-import com.whl.quickjs.wrapper.QuickJSContext;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
@@ -126,14 +121,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import me.jessyan.autosize.AutoSize;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
 import xyz.doikki.videoplayer.player.AbstractPlayer;
@@ -180,6 +170,7 @@ public class PlayActivity extends BaseActivity {
     private LinkedList<String> loadFoundVideoUrls = new LinkedList<>();
     private HashMap<String, HashMap<String, String>> loadFoundVideoUrlsHeader = new HashMap<>();
     private AtomicInteger loadFoundCount = new AtomicInteger(0);
+    private boolean loadFound = false;
     private final Observer<JSONObject> mObserverPlayResult = new Observer<JSONObject>() {
         @Override
         public void onChanged(JSONObject info) {
@@ -249,9 +240,6 @@ public class PlayActivity extends BaseActivity {
                         }
                     }
                     if (parse || jx) {
-                        if(parse){
-                            isVideo = info.optString("isVideo", "");
-                        }
                         boolean userJxList = (playUrl.isEmpty() && ApiConfig.get().getVipParseFlags().contains(flag)) || jx;
                         initParse(flag, userJxList, playUrl, url);
                     } else {
@@ -600,7 +588,7 @@ public class PlayActivity extends BaseActivity {
         }
         SelectDialog<TrackInfoBean> dialog = new SelectDialog<>(PlayActivity.this);
         dialog.setTip(getString(R.string.vod_sub_sel));
-        dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<TrackInfoBean>() {
+        dialog.setAdapter(null, new SelectDialogAdapter.SelectDialogInterface<TrackInfoBean>() {
             @Override
             public void click(TrackInfoBean value, int pos) {
                 mController.mSubtitleView.setVisibility(View.VISIBLE);
@@ -682,7 +670,7 @@ public class PlayActivity extends BaseActivity {
         if (bean.size() < 1) return;
         SelectDialog<TrackInfoBean> dialog = new SelectDialog<>(PlayActivity.this);
         dialog.setTip(getString(R.string.vod_audio));
-        dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<TrackInfoBean>() {
+        dialog.setAdapter(null, new SelectDialogAdapter.SelectDialogInterface<TrackInfoBean>() {
             @Override
             public void click(TrackInfoBean value, int pos) {
                 try {
@@ -1093,9 +1081,64 @@ public class PlayActivity extends BaseActivity {
     String isVideo;
     private void initViewModel() {
         sourceViewModel = new ViewModelProvider(this).get(SourceViewModel.class);
-        sourceViewModel.playResult.observeForever(mObserverPlayResult);
-    }
+        sourceViewModel.playResult.observe(this, new Observer<JSONObject>() {
+            @Override
+            public void onChanged(JSONObject info) {
+                if (info != null) {
+                    try {
+                        progressKey = info.optString("proKey", null);
+                        boolean parse = info.optString("parse", "1").equals("1");
 
+                        boolean jx = info.optString("jx", "0").equals("1");
+                        playSubtitle = info.optString("subt", /*"https://dash.akamaized.net/akamai/test/caption_test/ElephantsDream/ElephantsDream_en.vtt"*/"");
+                        subtitleCacheKey = info.optString("subtKey", null);
+                        String playUrl = info.optString("playUrl", "");
+                        String flag = info.optString("flag");
+                        String url = info.getString("url");
+                        HashMap<String, String> headers = null;
+                        webUserAgent = null;
+                        webHeaderMap = null;
+                        if (info.has("header")) {
+                            try {
+                                JSONObject hds = new JSONObject(info.getString("header"));
+                                Iterator<String> keys = hds.keys();
+                                while (keys.hasNext()) {
+                                    String key = keys.next();
+                                    if (headers == null) {
+                                        headers = new HashMap<>();
+                                    }
+                                    headers.put(key, hds.getString(key));
+                                    if (key.equalsIgnoreCase("user-agent")) {
+                                        webUserAgent = hds.getString(key).trim();
+                                    }
+                                }
+                                webHeaderMap = headers;
+                            } catch (Throwable th) {
+
+                            }
+                        }
+                        //if(StringUtils.isEmpty(webUserAgent)){
+                        //    webUserAgent = UA.random();
+                        //}
+                        if (parse || jx) {
+                            if(parse){
+                                isVideo = info.optString("isVideo", "");
+                            }
+                            boolean userJxList = (playUrl.isEmpty() && ApiConfig.get().getVipParseFlags().contains(flag)) || jx;
+                            initParse(flag, userJxList, playUrl, url);
+                        } else {
+                            mController.showParse(false);
+                            playUrl(playUrl + url, headers);
+                        }
+                    } catch (Throwable th) {
+                        errorWithRetry("获取播放信息错误", true);
+                    }
+                } else {
+                    errorWithRetry("获取播放信息错误", true);
+                }
+            }
+        });
+    }
     private void initData() {
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null) {
@@ -1228,7 +1271,7 @@ public class PlayActivity extends BaseActivity {
         stopLoadWebView(true);
         stopParse();
         Thunder.stop(false); // 停止磁力下载
-        jianpian.finish();//停止p2p下载
+        Jianpian.finish();//停止p2p下载
         App.getInstance().setDashData(null);
     }
 
@@ -1244,12 +1287,11 @@ public class PlayActivity extends BaseActivity {
             }
         }
         if (!hasNext) {
-            if(mVodInfo.reverseSort){
-                Toast.makeText(this, "已经是第一集了", Toast.LENGTH_SHORT).show();
-            }else {
-                Toast.makeText(this, "已经是最后一集了", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "已经是最后一集了", Toast.LENGTH_SHORT).show();
+            // takagen99: To auto go back to Detail Page after last episode
+            if (inProgress) {
+                this.finish();
             }
-
             return;
         }
         if (mVodInfo.reverseSort) {
@@ -1260,25 +1302,24 @@ public class PlayActivity extends BaseActivity {
         play(false);
     }
 
-    public void playPrevious() {
+    private void playPrevious() {
         boolean hasPre = true;
         if (mVodInfo == null || mVodInfo.seriesMap.get(mVodInfo.playFlag) == null) {
             hasPre = false;
         } else {
-            hasPre = mVodInfo.getplayIndex() - 1 >= 0;
+            if (mVodInfo.reverseSort) {
+                hasPre = mVodInfo.playIndex + 1 < mVodInfo.seriesMap.get(mVodInfo.playFlag).size();
+            } else {
+                hasPre = mVodInfo.playIndex - 1 >= 0;
+            }
         }
         if (!hasPre) {
-            if(mVodInfo.reverseSort){
-                Toast.makeText(this, "已经是最后一集了", Toast.LENGTH_SHORT).show();
-            }else {
-                Toast.makeText(this, "已经是第一集了", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(this, "已经是第一集了", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(mVodInfo.playIndex == 0){
-            mVodInfo.playGroup--;
-            mVodInfo.playIndex = mVodInfo.playGroupCount - 1;
-        }else{
+        if (mVodInfo.reverseSort) {
+            mVodInfo.playIndex++;
+        } else {
             mVodInfo.playIndex--;
         }
         play(false);
@@ -1315,7 +1356,6 @@ public class PlayActivity extends BaseActivity {
         VodInfo.VodSeries vs = mVodInfo.seriesMap.get(mVodInfo.playFlag).get(mVodInfo.playIndex);
         EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_REFRESH, mVodInfo.playIndex));
         EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_REFRESH_NOTIFY, mVodInfo.name + "&&" + vs.name));
-        setTip("正在获取播放信息", true, false);
         String playTitleInfo = mVodInfo.name + " : " + vs.name;
         mController.setTitle(playTitleInfo);
 
@@ -1353,7 +1393,7 @@ public class PlayActivity extends BaseActivity {
             }
             if (!TextUtils.isEmpty(vs.url.substring(9))) {
                 mController.showParse(false);
-                playUrl(jianpian.JPUrlDec(vs.url.substring(9)), null);
+                playUrl(Jianpian.JPUrlDec(vs.url.substring(9)), null);
                 return;
             }
         }
@@ -1735,11 +1775,8 @@ public class PlayActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // webUserAgent = "Mozilla/5.0 (Linux; Android 6.0.1; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Mobile Safari/537.36";
                 if (mXwalkWebView != null) {
                     mXwalkWebView.stopLoading();
-                    Map<String, String> map = new HashMap<String, String>();
-
                     if (webUserAgent != null) {
                         mXwalkWebView.getSettings().setUserAgentString(webUserAgent);
                     }
@@ -1903,8 +1940,10 @@ public class PlayActivity extends BaseActivity {
         settings.setJavaScriptEnabled(true);
 
         settings.setBlockNetworkImage(!Hawk.get(HawkConfig.DEBUG_OPEN, false));
-        settings.setLoadsImagesAutomatically(false);
-        settings.setMediaPlaybackRequiresUserGesture(false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            settings.setMediaPlaybackRequiresUserGesture(false);
+        }
         settings.setUseWideViewPort(true);
         settings.setDomStorageEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -1912,7 +1951,7 @@ public class PlayActivity extends BaseActivity {
         settings.setLoadWithOverviewMode(true);
         settings.setBuiltInZoomControls(true);
         settings.setSupportZoom(false);
-        // settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         // settings.setUserAgentString(ANDROID_UA);
 
@@ -1977,11 +2016,11 @@ public class PlayActivity extends BaseActivity {
             return false;
         }
     }
-    private boolean loadFound = false;
 
-    private class SysWebClient extends WebViewClient {
+    private class SysWebClient extends RequestInspectorWebViewClient {
 
-        public SysWebClient(WebView mSysWebView) {
+        public SysWebClient(@NonNull WebView webView) {
+            super(webView);
         }
 
         @Override
@@ -1993,26 +2032,35 @@ public class PlayActivity extends BaseActivity {
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             return false;
         }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return false;
+        }
+
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted( view,  url, favicon);
+            super.onPageStarted(view, url, favicon);
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view,url);
-            String click=sourceBean.getClickSelector();
+            super.onPageFinished(view, url);
+            String click = sourceBean.getClickSelector();
             LOG.i("onPageFinished url:" + url);
-            if(!click.isEmpty()){
-                String selector;
-                if(click.contains(";")){
-                    if(!url.contains(click.split(";")[0]))return;
-                    selector=click.split(";")[1];
-                }else {
-                    selector=click.trim();
+            if (!click.isEmpty()) {
+               /* String selector;
+                if (click.contains(";")) {
+                    if (!url.contains(click.split(";")[0])) return;
+                    selector = click.split(";")[1];
+                } else {
+                    selector = click.trim();
                 }
-                String js="$(\""+ selector+"\").click();";
-                mSysWebView.loadUrl("javascript:"+js);
+                String js = "$(\"" + selector + "\").click();";
+                mSysWebView.loadUrl("javascript:" + js);
+
+                */
+                mSysWebView.loadUrl("javascript:" + click);
             }
         }
 
@@ -2114,10 +2162,8 @@ public class PlayActivity extends BaseActivity {
 
         @Override
         public void onLoadResource(WebView webView, String url) {
-
             super.onLoadResource(webView, url);
         }
-
     }
 
     private class XWalkWebClient extends XWalkResourceClient {
@@ -2139,6 +2185,7 @@ public class PlayActivity extends BaseActivity {
         public void onLoadFinished(XWalkView view, String url) {
             super.onLoadFinished(view, url);
         }
+
         @Override
         public void onProgressChanged(XWalkView view, int progressInPercent) {
             super.onProgressChanged(view, progressInPercent);
@@ -2147,9 +2194,13 @@ public class PlayActivity extends BaseActivity {
         @Override
         public XWalkWebResourceResponse shouldInterceptLoadRequest(XWalkView view, XWalkWebResourceRequest request) {
             String url = request.getUrl().toString();
+            LOG.i("shouldInterceptLoadRequest url:" + url);
             // suppress favicon requests as we don't display them anywhere
             if (url.endsWith("/favicon.ico")) {
-                return createXWalkWebResourceResponse("image/png", null, null);
+                if (url.startsWith("http://127.0.0.1")) {
+                    return createXWalkWebResourceResponse("image/x-icon", "UTF-8", null);
+                }
+                return null;
             }
             LOG.i("shouldInterceptLoadRequest url:" + url);
             boolean isVid = VideoParseRuler.IsVideoRules(isVideo, url);
@@ -2174,12 +2225,12 @@ public class PlayActivity extends BaseActivity {
                 if(!TextUtils.isEmpty(cookie))webHeaders.put("Cookie", " " + cookie);//携带cookie
                 stopLoadWebView(false);
             }
-
             boolean isFilter = VideoParseRuler.isFilter(webUrl, url);
             if (isFilter) {
-                LOG.i( "shouldInterceptLoadRequest filter:" + url);
+                LOG.i("shouldInterceptLoadRequest filter:" + url);
                 return null;
             }
+
             boolean ad;
             if (!loadedUrls.containsKey(url)) {
                 ad = AdBlocker.isAd(url);
@@ -2187,14 +2238,12 @@ public class PlayActivity extends BaseActivity {
             } else {
                 ad = loadedUrls.get(url);
             }
-            if (!ad && !loadFound) {
+            if (!ad) {
                 try {
                     if (checkVideoFormat(url)) {
-                        mHandler.removeMessages(100);
-                        loadFound = true;
                         HashMap<String, String> webHeaders = new HashMap<>();
-                        try {
-                            Map<String, String> hds = request.getRequestHeaders();
+                        Map<String, String> hds = request.getRequestHeaders();
+                        if (hds != null && hds.keySet().size() > 0) {
                             for (String k : hds.keySet()) {
                                 if (k.equalsIgnoreCase("user-agent")
                                         || k.equalsIgnoreCase("referer")
@@ -2202,20 +2251,27 @@ public class PlayActivity extends BaseActivity {
                                     webHeaders.put(k, " " + hds.get(k));
                                 }
                             }
-                        } catch (Throwable th) {
-
                         }
-                        String cookie = CookieManager.getInstance().getCookie(url);
-                        if(!TextUtils.isEmpty(cookie))webHeaders.put("Cookie", " " + cookie);//携带cookie
-                        stopLoadWebView(false);
+                        loadFoundVideoUrls.add(url);
+                        loadFoundVideoUrlsHeader.put(url, webHeaders);
+                        LOG.i("loadFoundVideoUrl:" + url);
+                        if (loadFoundCount.incrementAndGet() == 1) {
+                            mHandler.removeMessages(100);
+                            url = loadFoundVideoUrls.poll();
+                            String cookie = CookieManager.getInstance().getCookie(url);
+                            if (!TextUtils.isEmpty(cookie))
+                                webHeaders.put("Cookie", " " + cookie);//携带cookie
+                            playUrl(url, webHeaders);
+                            stopLoadWebView(false);
+                        }
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
-            return ad || loadFound ?
+            return ad || loadFoundCount.get() > 0 ?
                     createXWalkWebResourceResponse("text/plain", "utf-8", new ByteArrayInputStream("".getBytes())) :
-                    super.shouldInterceptLoadRequest(view, request);
+                    null;
         }
 
         @Override

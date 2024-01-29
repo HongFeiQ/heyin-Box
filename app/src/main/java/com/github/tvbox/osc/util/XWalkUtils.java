@@ -1,8 +1,9 @@
 package com.github.tvbox.osc.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.xwalk.core.XWalkInitializer;
 
@@ -83,7 +84,7 @@ public class XWalkUtils {
         }
     }
 
-    private static boolean checkEmbedded(Activity activity) {
+    private static boolean checkEmbedded(AppCompatActivity activity) {
         try {
             Class clazz = Class.forName("org.xwalk.core.XWalkCoreWrapper");
             if (clazz != null) {

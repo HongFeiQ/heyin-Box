@@ -1,6 +1,5 @@
 package xyz.doikki.videoplayer.player;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -20,6 +19,7 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.tvbox.osc.R;
 
@@ -787,7 +787,7 @@ public class BaseVideoView<P extends AbstractPlayer> extends FrameLayout
      * 获取DecorView
      */
     protected ViewGroup getDecorView() {
-        Activity activity = getActivity();
+        AppCompatActivity activity = getActivity();
         if (activity == null) return null;
         return (ViewGroup) activity.getWindow().getDecorView();
     }
@@ -796,7 +796,7 @@ public class BaseVideoView<P extends AbstractPlayer> extends FrameLayout
      * 获取activity中的content view,其id为android.R.id.content
      */
     protected ViewGroup getContentView() {
-        Activity activity = getActivity();
+        AppCompatActivity activity = getActivity();
         if (activity == null) return null;
         return activity.findViewById(android.R.id.content);
     }
@@ -804,8 +804,8 @@ public class BaseVideoView<P extends AbstractPlayer> extends FrameLayout
     /**
      * 获取Activity，优先通过Controller去获取Activity
      */
-    protected Activity getActivity() {
-        Activity activity;
+    protected AppCompatActivity getActivity() {
+        AppCompatActivity activity;
         if (mVideoController != null) {
             activity = PlayerUtils.scanForActivity(mVideoController.getContext());
             if (activity == null) {

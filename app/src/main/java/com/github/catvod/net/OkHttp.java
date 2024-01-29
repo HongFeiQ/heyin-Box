@@ -16,6 +16,7 @@ import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 
 public class OkHttp {
@@ -25,6 +26,9 @@ public class OkHttp {
     private OkHttpClient client;
     private OkHttpClient noRedirect;
     private Dns dns;
+    private static class Loader {
+        static volatile OkHttp INSTANCE = new OkHttp();
+    }
 
     public static OkHttp get() {
         return Loader.INSTANCE;
@@ -42,9 +46,9 @@ public class OkHttp {
 
     public static Dns dns() {
 
-        //return OkGoHelper.dnsOverHttps != null ? OkGoHelper.dnsOverHttps : Dns.SYSTEM;
+        return OkGoHelper.dnsOverHttps != null ? OkGoHelper.dnsOverHttps : Dns.SYSTEM;
         //        return get().dns != null ? get().dns : Dns.SYSTEM; // 由于 setDoh(Doh doh)没有被调用导致这里选择的是 Dns.SYSTEM
-        return get().dns != null ? get().dns : OkGoHelper.dnsOverHttps;
+       // return get().dns != null ? get().dns : OkGoHelper.dnsOverHttps;
 
     }
 
@@ -64,20 +68,28 @@ public class OkHttp {
         return client().newCall(new Request.Builder().url(url).headers(headers).build());
     }
 
+
     public static Call newCall(String url, Map<String, String> params) {
         return client().newCall(new Request.Builder().url(buildUrl(url, (ArrayMap<String, String>) params)).build());
     }
-
 
     public static Call newCall(String url, Headers headers, Map<String, String> params) {
         return client().newCall(new Request.Builder().url(buildUrl(url, (ArrayMap<String, String>) params)).headers(headers).build());
     }
 
-    private static HttpUrl buildUrl(String url, Map<String, String> params) {
+   /* private static HttpUrl buildUrl(String url, ArrayMap<String, String> params) {
         HttpUrl.Builder builder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
-        for (Map.Entry<String, String> entry : params.entrySet()) builder.addQueryParameter(entry.getKey(), entry.getValue());
+        for (Map.Entry<String, String> entry : params.entrySet())
+            builder.addQueryParameter(entry.getKey(), entry.getValue());
         return builder.build();
     }
+
+    */
+   private static HttpUrl buildUrl(String url, Map<String, String> params) {
+       HttpUrl.Builder builder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
+       for (Map.Entry<String, String> entry : params.entrySet()) builder.addQueryParameter(entry.getKey(), entry.getValue());
+       return builder.build();
+   }
     public static String string(String url, Map<String, String> headerMap) {
         try {
             return newCall(url, headerMap).execute().body().string();
@@ -85,7 +97,6 @@ public class OkHttp {
             return "";
         }
     }
-
     public static String string(String url) {
         try {
             return newCall(url).execute().body().string();
@@ -94,7 +105,4 @@ public class OkHttp {
         }
     }
 
-    private static class Loader {
-        static volatile OkHttp INSTANCE = new OkHttp();
-    }
 }

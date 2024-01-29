@@ -1,11 +1,11 @@
 package com.github.tvbox.osc.ui.dialog;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.tvbox.osc.R;
 
@@ -24,7 +24,7 @@ public class LivePasswordDialog extends BaseDialog {
 
     public LivePasswordDialog(@NonNull @NotNull Context context) {
         super(context);
-        setOwnerActivity((Activity) context);
+        setOwnerActivity((AppCompatActivity) context);
         setContentView(R.layout.dialog_live_password);
         inputPassword = findViewById(R.id.input);
         findViewById(R.id.inputSubmit).setOnClickListener(new View.OnClickListener() {

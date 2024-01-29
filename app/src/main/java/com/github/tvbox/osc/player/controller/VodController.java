@@ -36,6 +36,7 @@ import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.bean.IJKCode;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.event.RefreshEvent;
+
 import com.github.tvbox.osc.subtitle.widget.SimpleSubtitleView;
 import com.github.tvbox.osc.ui.activity.DetailActivity;
 import com.github.tvbox.osc.ui.activity.HomeActivity;
@@ -50,7 +51,6 @@ import com.github.tvbox.osc.util.SubtitleHelper;
 import com.orhanobut.hawk.Hawk;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
-
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -67,112 +67,6 @@ import xyz.doikki.videoplayer.player.VideoView;
 import xyz.doikki.videoplayer.util.PlayerUtils;
 
 public class VodController extends BaseController {
-    // pause container
-    public static FrameLayout mProgressTop;
-    public SimpleSubtitleView mSubtitleView;
-    public TextView mPlayerTimeResetBtn;
-    public ImageView mLvPortraitBtn;
-    public LinearLayout mLandscapePortraitBtn;
-    // top container
-    LinearLayout mTopHide;
-    LinearLayout mTopRoot;
-    TextView mPlayTitle;
-    TextView mPlayerResolution;
-    LinearLayout mSpeedHidell;
-    LinearLayout mSpeedll;
-    ImageView mPauseIcon;
-    LinearLayout mTapSeek;
-    // progress container
-    LinearLayout mProgressRoot;
-    ImageView mProgressIcon;
-    TextView mProgressText;
-    ProgressBar mDialogVideoProgressBar;
-    ProgressBar mDialogVideoPauseBar;
-    // center BACK button
-    LinearLayout mBack;
-    ImageView mLockView;
-    LockRunnable lockRunnable = new LockRunnable();
-    // screen_display
-    TextView mPlayPauseTime;
-    TextView mPlayLoadNetSpeedRightTop;
-    LinearLayout mTopRoot2;
-    TextView seekTime; //右上角进度时间显示
-    LinearLayout mScreendisplay; //增加屏显开关
-    // bottom container
-    LinearLayout mBottomRoot;
-    private final Runnable mUpdateLayout = new Runnable() {
-        @Override
-        public void run() {
-            mBottomRoot.requestLayout();
-        }
-    };
-    TextView mTime;
-    // takagen99 : To get system time
-    private final Runnable mTimeRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Date date = new Date();
-            //SimpleDateFormat timeFormat = new SimpleDateFormat("EEHH:mm:ss", Locale.ENGLISH);
-            SimpleDateFormat timeFormat = new SimpleDateFormat(getString(R.string.hm_date1) + getString(R.string.hm_date2));
-            mPlayPauseTime.setText(timeFormat.format(date));
-            String speed = PlayerHelper.getDisplaySpeed(mControlWrapper.getTcpSpeed());
-            mPlayLoadNetSpeedRightTop.setText(speed);
-            mTime.setText(timeFormat.format(date));
-            mHandler.postDelayed(this, 1000);
-        }
-    };
-    TextView mTimeEnd;
-    TextView mCurrentTime;
-    SeekBar mSeekBar;
-    TextView mTotalTime;
-    boolean mIsDragging;
-    // 1. media control
-    LinearLayout mPreBtn;
-    LinearLayout mPauseBtn;
-    ImageView mPauseImg;
-    LinearLayout mNextBtn;
-    float mSpeed;
-    LinearLayout mPlayerRetry;
-    // Fast Forward Buttons
-    LinearLayout mFFwdBtn;
-    ImageView mFFwdImg;
-    TextView mFFwdTxt;
-    // Scale Buttons
-    LinearLayout mPlayerScaleBtn;
-    ImageView mPlayerScaleImg;
-    TextView mPlayerScaleTxt;
-    // Player Buttons
-    LinearLayout mPlayerBtn;
-    ImageView mPlayerImg;
-    TextView mPlayerTxt;
-    TextView mPlayerIJKBtn;
-    LinearLayout mSubtitleBtn;
-    LinearLayout mAudioTrackBtn;
-    TextView mPlayerTimeStartBtn;
-    TextView mPlayerTimeSkipBtn;
-    TextView mPlayerTimeStepBtn;
-    // parse container
-    LinearLayout mParseRoot;
-    TvRecyclerView mGridView;
-    //center LOCK button
-    private boolean isLock = false;
-    private JSONObject mPlayerConfig = null;
-    private boolean mxPlayerExist = false;
-    private boolean reexPlayerExist = false;
-    private boolean KodiExist = false;
-    private VodControlListener listener;
-    private boolean skipEnd = true;
-    private boolean simSlideStart = false;
-    private int simSeekPosition = 0;
-    private long simSlideOffset = 0;
-    private int tapDirection;
-    // takagen99 : Check Pause
-    private boolean isPaused = false;
-    private boolean isKeyUp = false;
-    // takagen99 : Add long press to fast forward x3 speed
-    private boolean fromLongPress;
-    private float currentSpeed;
-
     public VodController(@NonNull @NotNull Context context) {
         super(context);
         mHandlerCallback = new HandlerCallback() {
@@ -332,41 +226,109 @@ public class VodController extends BaseController {
         };
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void circularReveal(View v, int direction) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            int radius = Math.max(v.getWidth(), v.getHeight()) / 2;
-            int width = 0;
-            if (direction == 1) {
-                width = v.getWidth();
-            }
-            TransitionManager.beginDelayedTransition((ViewGroup) v);
-            Animator anim = ViewAnimationUtils.createCircularReveal(v, width, v.getHeight() / 2, 0, radius);
-            anim.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    v.setVisibility(VISIBLE);
-                }
+    // top container
+    LinearLayout mTopHide;
+    LinearLayout mTopRoot;
+    TextView mPlayTitle;
+    TextView mPlayerResolution;
+    LinearLayout mSpeedHidell;
+    LinearLayout mSpeedll;
 
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    v.setVisibility(GONE);
-                }
+    // pause container
+    public static FrameLayout mProgressTop;
+    ImageView mPauseIcon;
+    LinearLayout mTapSeek;
 
-                @Override
-                public void onAnimationCancel(Animator animation) {
+    // progress container
+    LinearLayout mProgressRoot;
+    ImageView mProgressIcon;
+    TextView mProgressText;
+    ProgressBar mDialogVideoProgressBar;
+    ProgressBar mDialogVideoPauseBar;
 
-                }
+    // center BACK button
+    LinearLayout mBack;
 
-                @Override
-                public void onAnimationRepeat(Animator animation) {
+    //center LOCK button
+    private boolean isLock = false;
+    ImageView mLockView;
+    LockRunnable lockRunnable = new LockRunnable();
 
-                }
-            });
-            anim.setDuration(600);
-            anim.start();
+    // screen_display
+    TextView mPlayPauseTime;
+    TextView mPlayLoadNetSpeedRightTop;
+    LinearLayout mTopRoot2;
+    TextView seekTime; //右上角进度时间显示
+    LinearLayout mScreendisplay; //增加屏显开关
+
+    // bottom container
+    LinearLayout mBottomRoot;
+    TextView mTime;
+    TextView mTimeEnd;
+    TextView mCurrentTime;
+    SeekBar mSeekBar;
+    TextView mTotalTime;
+    boolean mIsDragging;
+
+    // 1. media control
+    LinearLayout mPreBtn;
+    LinearLayout mPauseBtn;
+    ImageView mPauseImg;
+    LinearLayout mNextBtn;
+    float mSpeed;
+    LinearLayout mPlayerRetry;
+
+    // Fast Forward Buttons
+    LinearLayout mFFwdBtn;
+    ImageView mFFwdImg;
+    TextView mFFwdTxt;
+
+    // Scale Buttons
+    LinearLayout mPlayerScaleBtn;
+    ImageView mPlayerScaleImg;
+    TextView mPlayerScaleTxt;
+
+    // Player Buttons
+    LinearLayout mPlayerBtn;
+    ImageView mPlayerImg;
+    TextView mPlayerTxt;
+    TextView mPlayerIJKBtn;
+    LinearLayout mSubtitleBtn;
+
+    public SimpleSubtitleView mSubtitleView;
+    LinearLayout mAudioTrackBtn;
+    TextView mPlayerTimeStartBtn;
+    TextView mPlayerTimeSkipBtn;
+    TextView mPlayerTimeStepBtn;
+    public TextView mPlayerTimeResetBtn;
+    public ImageView mLvPortraitBtn;
+    public LinearLayout mLandscapePortraitBtn;
+
+    // parse container
+    LinearLayout mParseRoot;
+    TvRecyclerView mGridView;
+
+    // takagen99 : To get system time
+    private final Runnable mTimeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Date date = new Date();
+            //SimpleDateFormat timeFormat = new SimpleDateFormat("EEHH:mm:ss", Locale.ENGLISH);
+            SimpleDateFormat timeFormat = new SimpleDateFormat(getString(R.string.hm_date1) + getString(R.string.hm_date2));
+            mPlayPauseTime.setText(timeFormat.format(date));
+            String speed = PlayerHelper.getDisplaySpeed(mControlWrapper.getTcpSpeed());
+            mPlayLoadNetSpeedRightTop.setText(speed);
+            mTime.setText(timeFormat.format(date));
+            mHandler.postDelayed(this, 1000);
         }
-    }
+    };
+
+    private final Runnable mUpdateLayout = new Runnable() {
+        @Override
+        public void run() {
+            mBottomRoot.requestLayout();
+        }
+    };
 
     private void showLockView() {
         mLockView.setVisibility(ScreenUtils.isTv(getContext()) ? INVISIBLE : VISIBLE);
@@ -485,23 +447,21 @@ public class VodController extends BaseController {
         });
 
         View rootView = findViewById(R.id.rootView);
-        rootView.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (isLock) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        showLockView();
-                    }
+        rootView.setOnTouchListener(new OnTouchListener() {@Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (isLock) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    showLockView();
                 }
-                return isLock;
             }
+            return isLock;
+        }
         });
 
-        mPlayPauseTime.post(new Runnable() {
-            @Override
-            public void run() {
-                mHandler.post(mTimeRunnable);
-            }
+        mPlayPauseTime.post(new Runnable() {@Override
+        public void run() {
+            mHandler.post(mTimeRunnable);
+        }
         });
 
         mGridView.setLayoutManager(new V7LinearLayoutManager(getContext(), 0, false));
@@ -735,7 +695,7 @@ public class VodController extends BaseController {
                     players.add(0);  // System
                     players.add(1);  // IJK
                     players.add(2);  // Exo
-                    players.add(3);  // Ali
+                   // players.add(3);  // Ali
                     if (mxPlayerExist) {
                         players.add(10);
                     }
@@ -747,7 +707,7 @@ public class VodController extends BaseController {
                     }
                     SelectDialog<Integer> dialog = new SelectDialog<>(mActivity);
                     dialog.setTip(HomeActivity.getRes().getString(R.string.dia_player));
-                    dialog.setAdapter(new SelectDialogAdapter.SelectDialogInterface<Integer>() {
+                    dialog.setAdapter(null, new SelectDialogAdapter.SelectDialogInterface<Integer>() {
                         @Override
                         public void click(Integer value, int pos) {
                             try {
@@ -840,35 +800,33 @@ public class VodController extends BaseController {
             }
         });
         //        增加播放页面片头片尾时间重置
-        mPlayerTimeResetBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mHandler.removeCallbacks(mHideBottomRunnable);
-                mHandler.postDelayed(mHideBottomRunnable, 8000);
-                try {
-                    mPlayerConfig.put("et", 0);
-                    mPlayerConfig.put("st", 0);
-                    updatePlayerCfgView();
-                    listener.updatePlayerCfg();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        mPlayerTimeResetBtn.setOnClickListener(new OnClickListener() {@Override
+        public void onClick(View v) {
+            mHandler.removeCallbacks(mHideBottomRunnable);
+            mHandler.postDelayed(mHideBottomRunnable, 8000);
+            try {
+                mPlayerConfig.put("et", 0);
+                mPlayerConfig.put("st", 0);
+                updatePlayerCfgView();
+                listener.updatePlayerCfg();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+        }
         });
-        mPlayerTimeResetBtn.setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                try {
-                    mPlayerConfig.put("st", 110);
-                    mPlayerConfig.put("et", 150);
-                    updatePlayerCfgView();
-                    listener.updatePlayerCfg();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Toast.makeText(getContext(), "已预设片头片尾", Toast.LENGTH_SHORT).show();
-                return true;
+        mPlayerTimeResetBtn.setOnLongClickListener(new OnLongClickListener() {@Override
+        public boolean onLongClick(View view) {
+            try {
+                mPlayerConfig.put("st", 110);
+                mPlayerConfig.put("et", 150);
+                updatePlayerCfgView();
+                listener.updatePlayerCfg();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            Toast.makeText(getContext(), "已预设片头片尾", Toast.LENGTH_SHORT).show();
+            return true;
+        }
         });
         // Button : SKIP time start -----------------------------------------
         mPlayerTimeStartBtn.setOnClickListener(new OnClickListener() {
@@ -1000,20 +958,19 @@ public class VodController extends BaseController {
 
         //屏显开关
         mTopRoot2.setVisibility(Hawk.get(HawkConfig.SCREEN_DISPLAY, GONE));
-        mScreendisplay.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mTopRoot2.setVisibility(mTopRoot2.getVisibility() == VISIBLE ? GONE : VISIBLE);
-                Hawk.put(HawkConfig.SCREEN_DISPLAY, mTopRoot2.getVisibility());
-                hideBottom();
-                //Toast.makeText(getContext(), "点击显示网速 播放进度 时间", Toast.LENGTH_SHORT).show();
-            }
+        mScreendisplay.setOnClickListener(new OnClickListener() {@Override
+        public void onClick(View view) {
+            mTopRoot2.setVisibility(mTopRoot2.getVisibility() == VISIBLE ? GONE : VISIBLE);
+            Hawk.put(HawkConfig.SCREEN_DISPLAY, mTopRoot2.getVisibility());
+            hideBottom();
+            //Toast.makeText(getContext(), "点击显示网速 播放进度 时间", Toast.LENGTH_SHORT).show();
+        }
         });
 
     }
 
     public void initLandscapePortraitBtnInfo() {
-        if (mControlWrapper != null) {
+        if(mControlWrapper!=null){
             int width = mControlWrapper.getVideoSize()[0];
             int height = mControlWrapper.getVideoSize()[1];
             if (width < height) {
@@ -1047,6 +1004,12 @@ public class VodController extends BaseController {
     public void showParse(boolean userJxList) {
         mParseRoot.setVisibility(userJxList ? VISIBLE : GONE);
     }
+
+    private JSONObject mPlayerConfig = null;
+
+    private boolean mxPlayerExist = false;
+    private boolean reexPlayerExist = false;
+    private boolean KodiExist = false;
 
     public void setPlayerConfig(JSONObject playerCfg) {
         this.mPlayerConfig = playerCfg;
@@ -1082,25 +1045,36 @@ public class VodController extends BaseController {
         mHandler.sendEmptyMessageDelayed(1004, 100);
     }
 
+    public interface VodControlListener {
+        void playNext(boolean rmProgress);
+
+        void playPre();
+
+        void prepared();
+
+        void changeParse(ParseBean pb);
+
+        void updatePlayerCfg();
+
+        void replay(boolean replay);
+
+        void errReplay();
+
+        void selectSubtitle();
+
+        void selectAudioTrack();
+
+        void openVideo();
+
+    }
+
     public void setListener(VodControlListener listener) {
         this.listener = listener;
     }
 
-    // takagen99: (Optional) Hide Bottom Control if trigger Brightness / Volume Slider
-//    @Override
-//    protected void slideToChangeBrightness(float deltaY) {
-//        if (isBottomVisible()) {
-//            hideBottom();
-//        }
-//        super.slideToChangeBrightness(deltaY);
-//    }
-//    @Override
-//    protected void slideToChangeVolume(float deltaY) {
-//        if (isBottomVisible()) {
-//            hideBottom();
-//        }
-//        super.slideToChangeVolume(deltaY);
-//    }
+    private VodControlListener listener;
+
+    private boolean skipEnd = true;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -1150,6 +1124,11 @@ public class VodController extends BaseController {
         }
     }
 
+    private boolean simSlideStart = false;
+    private int simSeekPosition = 0;
+    private long simSlideOffset = 0;
+    private int tapDirection;
+
     public void tvSlideStop() {
         if (!simSlideStart)
             return;
@@ -1196,12 +1175,23 @@ public class VodController extends BaseController {
         mHandler.sendEmptyMessage(1000);
         mHandler.removeMessages(1001);
         mHandler.sendEmptyMessageDelayed(1001, 1000);
-    }    Runnable mHideBottomRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hideBottom();
-        }
-    };
+    }
+
+    // takagen99: (Optional) Hide Bottom Control if trigger Brightness / Volume Slider
+//    @Override
+//    protected void slideToChangeBrightness(float deltaY) {
+//        if (isBottomVisible()) {
+//            hideBottom();
+//        }
+//        super.slideToChangeBrightness(deltaY);
+//    }
+//    @Override
+//    protected void slideToChangeVolume(float deltaY) {
+//        if (isBottomVisible()) {
+//            hideBottom();
+//        }
+//        super.slideToChangeVolume(deltaY);
+//    }
 
     @Override
     protected void onPlayStateChanged(int playState) {
@@ -1250,6 +1240,13 @@ public class VodController extends BaseController {
         mHandler.post(mTimeRunnable);
         mHandler.postDelayed(mHideBottomRunnable, 8000);
     }
+
+    Runnable mHideBottomRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideBottom();
+        }
+    };
 
     public void hideBottom() {
         mHandler.removeMessages(1002);
@@ -1337,6 +1334,10 @@ public class VodController extends BaseController {
             e.printStackTrace();
         }
     }
+
+    // takagen99 : Check Pause
+    private boolean isPaused = false;
+    private boolean isKeyUp = false;
 
     @Override
     public boolean onKeyEvent(KeyEvent event) {
@@ -1441,6 +1442,10 @@ public class VodController extends BaseController {
         return true;
     }
 
+    // takagen99 : Add long press to fast forward x3 speed
+    private boolean fromLongPress;
+    private float currentSpeed;
+
     @Override
     public void onLongPress(MotionEvent e) {
         if (!isPaused) {
@@ -1512,6 +1517,48 @@ public class VodController extends BaseController {
         return true;
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void circularReveal(View v, int direction) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int radius = Math.max(v.getWidth(), v.getHeight()) / 2;
+            int width = 0;
+            if (direction == 1) {
+                width = v.getWidth();
+            }
+            TransitionManager.beginDelayedTransition((ViewGroup) v);
+            Animator anim = ViewAnimationUtils.createCircularReveal(v, width, v.getHeight() / 2, 0, radius);
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    v.setVisibility(VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    v.setVisibility(GONE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+            anim.setDuration(600);
+            anim.start();
+        }
+    }
+
+    private class LockRunnable implements Runnable {@Override
+    public void run() {
+        mLockView.setVisibility(INVISIBLE);
+    }
+    }
+
     @Override
     public boolean onBackPressed() {
         if (super.onBackPressed()) {
@@ -1527,36 +1574,4 @@ public class VodController extends BaseController {
         }
         return false;
     }
-
-    public interface VodControlListener {
-        void playNext(boolean rmProgress);
-
-        void playPre();
-
-        void prepared();
-
-        void changeParse(ParseBean pb);
-
-        void updatePlayerCfg();
-
-        void replay(boolean replay);
-
-        void errReplay();
-
-        void selectSubtitle();
-
-        void selectAudioTrack();
-
-        void openVideo();
-
-    }
-
-    private class LockRunnable implements Runnable {
-        @Override
-        public void run() {
-            mLockView.setVisibility(INVISIBLE);
-        }
-    }
-
-
 }

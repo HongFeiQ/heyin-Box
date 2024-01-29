@@ -1,0 +1,2 @@
+../../proguard#noinspection ShrinkerInvalidFlags
+-rules.txt

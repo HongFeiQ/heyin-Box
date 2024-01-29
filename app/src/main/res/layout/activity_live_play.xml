@@ -14,7 +14,6 @@
         android:id="@+id/mVideoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
     <TextView
         android:id="@+id/tv_selected_channel"
         android:layout_width="wrap_content"
@@ -89,7 +88,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:padding="@dimen/vs_4"
-                android:src="@drawable/scrollviewleft" />
+                app:srcCompat="@drawable/scrollviewleft" />
 
             <TextView
                 android:layout_width="20dp"
@@ -168,7 +167,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:padding="@dimen/vs_4"
-                android:src="@drawable/scrollviewright" />
+                app:srcCompat="@drawable/scrollviewright" />
 
             <TextView
                 android:layout_width="20dp"
@@ -681,7 +680,7 @@
             android:layout_width="@dimen/vs_40"
             android:layout_height="@dimen/vs_40"
             android:layout_gravity="center"
-            android:src="@drawable/v_back" />
+            app:srcCompat="@drawable/v_back" />
     </LinearLayout>
 
 </FrameLayout>

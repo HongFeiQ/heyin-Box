@@ -157,11 +157,6 @@ public class VodInfo implements Serializable {
         }
         return vodSeries;
     }
-    public int playGroup = 0;
-    public int playGroupCount = 0;
-    public int getplayIndex() {
-        return this.playGroup * this.playGroupCount + this.playIndex;
-    }
 
     public static class VodSeriesFlag implements Serializable {
 

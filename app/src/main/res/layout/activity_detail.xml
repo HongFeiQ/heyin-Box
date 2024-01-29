@@ -218,7 +218,6 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/vs_20"
                         tools:ignore="TextSizeCheck" />
-
                     <TextView
                         android:id="@+id/tvDesc"
                         android:layout_width="@dimen/vs_100"
@@ -230,8 +229,7 @@
                         android:gravity="center"
                         android:text="@string/det_desc"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/vs_20"
-                        tools:ignore="TextSizeCheck" />
+                        android:textSize="@dimen/vs_20" />
 
                     <TextView
                         android:id="@+id/tvCollect"
@@ -272,7 +270,7 @@
                 android:layout_width="@dimen/vs_128"
                 android:layout_height="@dimen/vs_128"
                 android:layout_gravity="center"
-                android:src="@drawable/icon_empty" />
+                app:srcCompat="@drawable/icon_empty" />
 
             <TextView
                 android:layout_width="wrap_content"

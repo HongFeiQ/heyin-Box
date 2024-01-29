@@ -53,6 +53,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import xyz.doikki.videoplayer.utils.TsBinarySearchSeeker;
+import xyz.doikki.videoplayer.utils.TsDurationReader;
+
 @SuppressWarnings("ALL")
 @UnstableApi
 /** Extracts data from the MPEG-2 TS container format. */

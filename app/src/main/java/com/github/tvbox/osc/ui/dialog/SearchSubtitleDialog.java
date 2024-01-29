@@ -1,6 +1,5 @@
 package com.github.tvbox.osc.ui.dialog;
 
-import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -62,8 +62,8 @@ public class SearchSubtitleDialog extends BaseDialog {
     public SearchSubtitleDialog(@NonNull @NotNull Context context) {
         super(context);
         mContext = context;
-        if (context instanceof Activity) {
-            setOwnerActivity((Activity) context);
+        if (context instanceof AppCompatActivity) {
+            setOwnerActivity((AppCompatActivity) context);
         }
         setContentView(R.layout.dialog_search_subtitle);
         initView(context);
